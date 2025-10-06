@@ -12,6 +12,7 @@ public class Slider {
 
     private double xLocation;
     private Rectangle slider;
+    
 
     public Slider(double startX) {
         this.xLocation = startX;
