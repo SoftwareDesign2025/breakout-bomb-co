@@ -4,6 +4,7 @@ import javafx.scene.Group;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
+import javafx.scene.shape.Circle;
 import javafx.scene.shape.Rectangle;
 
 public class Screen {
@@ -13,6 +14,7 @@ public class Screen {
     private Slider slider;
     private Rectangle background;
     private Rectangle outOfBounds;
+    private Ball ball;
 
     public Screen() {
         root = new Group();
@@ -35,6 +37,10 @@ public class Screen {
         outOfBounds = new Rectangle(0,580,800,600);
         outOfBounds.setFill(Color.RED);
         root.getChildren().add(outOfBounds);
+        
+        Ball ball = new Ball(0,0);
+        root.getChildren().add(ball.getBall());
+        
     }
     public Rectangle getOutOfBound() {
     	return outOfBounds;
