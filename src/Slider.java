@@ -1,3 +1,4 @@
+//Author Gavin Collins
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.input.KeyCode;
@@ -5,7 +6,7 @@ import javafx.scene.input.KeyCode;
 public class Slider {
 
     public static final double YLOCATION = 500;
-    public static final double SPEED = 8.0;
+    public static final double SPEED = 15.0;
     public static final double WIDTH = 80;
     public static final double HEIGHT = 20;
 
