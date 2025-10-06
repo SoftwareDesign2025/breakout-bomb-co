@@ -1,6 +1,5 @@
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
-import javafx.scene.shape.Shape;
 import javafx.scene.input.KeyCode;
 
 public class Slider {
@@ -12,19 +11,18 @@ public class Slider {
 
     private double xLocation;
     private Rectangle slider;
-    
 
     public Slider(double startX) {
         this.xLocation = startX;
         slider = new Rectangle(xLocation, YLOCATION, WIDTH, HEIGHT);
-        slider.setFill(Color.HOTPINK);
+        slider.setFill(Color.BLACK);
     }
 
     public void moveSideToSide(boolean goLeft) {
-    	if (goLeft) {
-            xLocation -= SPEED;  
+        if (goLeft) {
+            xLocation -= SPEED;
         } else {
-            xLocation += SPEED;  
+            xLocation += SPEED;
         }
         stopAtEdges(800);
     }
@@ -34,26 +32,47 @@ public class Slider {
             moveSideToSide(true);
         } else if (code == KeyCode.RIGHT || code == KeyCode.D) {
             moveSideToSide(false);
-            
-            
         }
     }
+
     private void stopAtEdges(double screenWidth) {
-    	if (xLocation < 0) {
-    		xLocation = 0;
-    	}else if(xLocation + WIDTH > screenWidth) {
-    		xLocation = screenWidth - WIDTH;
-    	}
-    	slider.setX(xLocation);
+        if (xLocation < 0) {
+            xLocation = 0;
+        } else if (xLocation + WIDTH > screenWidth) {
+            xLocation = screenWidth - WIDTH;
+        }
+        slider.setX(xLocation);
     }
-    
-//    public boolean checkBallCollision(Ball ball) {
-//    	boolean hit = false;
-//		if (ball.getBoundsInParent().intersects(slider.getBoundsInParent())) {
-//				hit = true;
-//				
-//			}
-//    }
+
+   
+    public void checkSliderCollision(Ball ball) {
+        if (ball.getBall().getBoundsInParent().intersects(slider.getBoundsInParent())) {
+
+            double sliderX = slider.getX();
+            double sliderWidth = slider.getWidth();
+            double ballX = ball.getBall().getCenterX();
+            double zoneWidth = sliderWidth / 3;
+
+            
+            if (ballX < sliderX + zoneWidth) {
+                ball.changeXDirection(-1.5);
+                ball.reverseYDirection();
+            }
+            
+            else if (ballX < sliderX + 2 * zoneWidth) {
+                ball.changeXDirection(0);
+                ball.reverseYDirection();
+            }
+            
+            else {
+                ball.changeXDirection(1.5);
+                ball.reverseYDirection();
+            }
+        }
+    }
+    public void checkPowerUpCollision() {
+    	
+    }
 
     public Rectangle getNode() {
         return slider;
