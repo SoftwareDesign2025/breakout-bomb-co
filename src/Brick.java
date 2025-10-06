@@ -3,17 +3,20 @@ import javafx.scene.paint.Color;
 
 public class Brick {
     private boolean active;
-    private Location location;
     private Rectangle brick;
-    public static final double WIDTH = 80;
-    public static final double HEIGHT = 20;
+    public final double WIDTH = 80;
+    public final double HEIGHT = 20;
 
-    public Brick(Location location){
-        this.location = location;
+    public Brick(double startX, double startY){
         active = true;
-        brick = new Rectangle(location.getX(), location.getY(), WIDTH, HEIGHT);
+        brick = new Rectangle(startX, startY, WIDTH, HEIGHT);
         brick.setFill(Color.BLUE);
     }
+
+    public Rectangle getBrick() {
+        return brick;
+    }
+
 
     public void deactivateBrick(){
         active = false;
