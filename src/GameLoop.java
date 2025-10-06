@@ -1,21 +1,19 @@
-import javafx.animation.AnimationTimer;
+import javafx.stage.Stage;
 
-public class GameLoop extends AnimationTimer {
-	private Ball ball;
-	private Slider slider;
-	private Screen screen;
+public class GameLoop {
+	Ball ball;
+	Screen screen;
+	Slider slider;
 	
 	public GameLoop(Ball ball, Slider slider, Screen screen) {
-		this.ball = ball;
-		this.slider = slider;
-		this.screen = screen;
+        this.ball = ball;
+        this.slider = slider;
+        this.screen = screen;
 	}
 	
-	@Override
-	public void handle(long now) {
-		
+	public void step(double elapsedTime) {
 		ball.updateBallLocation();
-		
 		
 	}
 }
+        
