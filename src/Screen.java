@@ -1,19 +1,24 @@
+
+
 import javafx.scene.Group;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
+import javafx.scene.shape.Rectangle;
 
 public class Screen {
 
     private Group root;          
     private Text scoreboard;     
     private Slider slider;
+    private Rectangle background;
+    private Rectangle outOfBounds;
 
     public Screen() {
         root = new Group();
 
         
-        javafx.scene.shape.Rectangle background = new javafx.scene.shape.Rectangle(0, 0, 800, 600);
+        background = new Rectangle(0, 0, 800, 600);
         background.setFill(Color.WHITE);
         root.getChildren().add(background);
 
@@ -26,7 +31,15 @@ public class Screen {
         
         slider = new Slider(360); 
         root.getChildren().add(slider.getNode());
+        
+        outOfBounds = new Rectangle(0,580,800,600);
+        outOfBounds.setFill(Color.RED);
+        root.getChildren().add(outOfBounds);
     }
+    public Rectangle getOutOfBound() {
+    	return outOfBounds;
+    }
+    
 
     public Group getRoot() {
         return root;
