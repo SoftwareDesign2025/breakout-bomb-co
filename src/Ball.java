@@ -42,4 +42,5 @@ public class Ball {
     public void changeSpeed(double speed){
         this.speed = speed;
     }
+
 }
