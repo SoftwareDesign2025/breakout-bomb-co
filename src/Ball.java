@@ -2,18 +2,19 @@ import javafx.scene.shape.Circle;
 import javafx.scene.paint.Color;
 
 public class Ball {
-    private final double RADIUS = 10;
     private final double STARTING_BALL_SPEED = 1;
+    private double radius;
     private double speed;
     private double xDirection;
     private double yDirection;
     private Circle ball;
 
-    public Ball(double startX, double startY){
+    public Ball(double radius, double startX, double startY){
+        this.radius = radius;
         speed = STARTING_BALL_SPEED;
         xDirection = 1.5;
         yDirection = 2;
-        ball = new Circle(startX, startY, RADIUS, Color.RED);
+        ball = new Circle(startX, startY, radius, Color.GREEN);
     }
     public Circle getBall() {
         return ball;
