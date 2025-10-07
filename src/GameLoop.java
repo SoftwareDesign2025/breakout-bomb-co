@@ -1,4 +1,5 @@
 import javafx.stage.Stage;
+import javafx.scene.input.KeyCode;
 
 public class GameLoop {
 	Ball ball;
@@ -11,8 +12,15 @@ public class GameLoop {
         this.screen = screen;
 	}
 	
+	public void handleKeyInput(KeyCode code) {
+        slider.handleMovement(code);
+    }
+	
 	public void step(double elapsedTime) {
 		ball.updateBallLocation();
+		screen.checkBallToWall();
+		slider.checkSliderCollision(ball);
+		
 		
 	}
 }
