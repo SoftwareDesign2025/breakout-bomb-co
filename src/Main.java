@@ -27,12 +27,14 @@ public class Main extends Application {
         Ball mockBall = new Ball(10, 250, 250); 
         Slider slider = screen.getSlider();
         
+        
         // 🚨 ADD THIS LINE 🚨 to add the ball's shape to the scene graph
         screen.getRoot().getChildren().add(mockBall.getBall());
 
         // 3. Create your GameLoop instance, passing in the objects
         GameLoop gameLoop = new GameLoop(mockBall, slider, screen);
-
+        
+        scene.setOnKeyPressed(e -> gameLoop.handleKeyInput(e.getCode()));
         // 4. Set up the game loop using Timeline
         KeyFrame frame = new KeyFrame(Duration.seconds(SECOND_DELAY), e -> gameLoop.step(SECOND_DELAY));
         Timeline animation = new Timeline();
