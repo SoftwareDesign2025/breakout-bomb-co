@@ -2,9 +2,12 @@ import javafx.stage.Stage;
 import javafx.scene.input.KeyCode;
 
 public class GameLoop {
-	Ball ball;
-	Screen screen;
-	Slider slider;
+	private Ball ball;
+	private Screen screen;
+	private Slider slider;
+	private int lives = 3;
+	private int points = 0;
+	private boolean movingBall = false;
 	
 	public GameLoop(Ball ball, Slider slider, Screen screen) {
         this.ball = ball;
@@ -17,11 +20,19 @@ public class GameLoop {
     }
 	
 	public void step(double elapsedTime) {
-		ball.updateBallLocation();
-		screen.checkBallToWall();
-		slider.checkSliderCollision(ball);
-		
-		
+		if (movingBall) {
+			ball.updateBallLocation();
+			slider.checkSliderCollision(ball);
+			screen.checkBallToWall(ball);
+		}
+	}
+	
+	public void startMoving() {
+		movingBall = true;
+	}
+	
+	public void resetBall() {
+		movingBall = true;
 	}
 }
         

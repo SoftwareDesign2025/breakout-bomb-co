@@ -10,16 +10,15 @@ import javafx.scene.shape.Rectangle;
 
 public class Screen {
 
-    private Group root;          
-    private Text scoreboard;     
+    private Group root;
+    private Text scoreboard;
     private Slider slider;
     private Rectangle background;
     private Rectangle outOfBounds;
     private Brick brick;
     private List<Brick> bricks;
-    private Ball ball;
 
-    public Screen() {
+    public Screen(Ball ball) {
         root = new Group();
 
         background = new Rectangle(0, 0, 800, 600);
@@ -40,10 +39,8 @@ public class Screen {
 
         bricks = new ArrayList<>();
         makeBrickPicture(7, 9);
-    }
 
-    public void setBall(Ball ball) {
-        this.ball = ball;
+       
         root.getChildren().add(ball.getBall());
     }
 
@@ -77,12 +74,15 @@ public class Screen {
         return slider;
     }
 
+    public Brick getBrick() {
+        return brick;
+    }
+
     public Rectangle getOutOfBounds() {
         return outOfBounds;
     }
 
-    public void checkBallToWall() {
-        if (ball == null) return;
+    public void checkBallToWall(Ball ball) {
         double ballX = ball.getBall().getCenterX();
         double ballY = ball.getBall().getCenterY();
         double radius = ball.getBall().getRadius();
@@ -90,21 +90,19 @@ public class Screen {
         if (ballX - radius <= 0 || ballX + radius >= 800) {
             ball.reverseXDirection();
         }
+
         if (ballY - radius <= 0) {
             ball.reverseYDirection();
         }
     }
 
+    public boolean ballOutOfBounds(Ball ball) {
+        return ball.getBall().getBoundsInParent().intersects(outOfBounds.getBoundsInParent());
+    }
+
     public void displayScoreBoard(int score, int lives) {
         scoreboard.setText("Score: " + score + "  Lives: " + lives);
     }
-    public void checkIfBallTouchesOutOfBounds() {
-        if (ball.getBall().getBoundsInParent().intersects(outOfBounds.getBoundsInParent())) {
-            ball.getBall().setCenterX(400);
-            ball.getBall().setCenterY(300);
-        }
-    }
-
 
     public void gameOverScreen() {
         Text gameOver = new Text(300, 300, "GAME OVER");
