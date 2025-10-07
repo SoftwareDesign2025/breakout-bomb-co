@@ -23,7 +23,7 @@ public class GameLoop {
 		if (movingBall) {
 			ball.updateBallLocation();
 			slider.checkSliderCollision(ball);
-			screen.checkBallToWall();
+			screen.checkBallToWall(ball);
 		}
 	}
 	

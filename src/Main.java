@@ -17,22 +17,26 @@ public class Main extends Application {
     @Override
     public void start(Stage primaryStage) {
         // 1. Create the screen object, which sets up the scene graph
-        Screen screen = new Screen();
+    	Ball ball = new Ball(10, 400, 400);
+        Screen screen = new Screen(ball);
         
         // Use the Screen's root group for the scene
         Scene scene = new Scene(screen.getRoot(), GAME_WIDTH, GAME_HEIGHT, Color.AZURE);
 
         // 2. Instantiate the other game objects
         // (You'll need a Ball constructor that matches your class)
-        Ball mockBall = new Ball(10, 250, 250); 
+        //Ball mockBall = new Ball(10, 250, 250); 
         Slider slider = screen.getSlider();
         
         
-        // 🚨 ADD THIS LINE 🚨 to add the ball's shape to the scene graph
-        screen.getRoot().getChildren().add(mockBall.getBall());
+     
 
         // 3. Create your GameLoop instance, passing in the objects
-        GameLoop gameLoop = new GameLoop(mockBall, slider, screen);
+        GameLoop gameLoop = new GameLoop(ball, slider, screen);
+        
+        scene.setOnMouseClicked(e -> {
+            gameLoop.startMoving();
+        });
         
         scene.setOnMouseClicked(e -> {
             gameLoop.startMoving();
