@@ -38,6 +38,10 @@ public class Main extends Application {
             gameLoop.startMoving();
         });
         
+        scene.setOnMouseClicked(e -> {
+            gameLoop.startMoving();
+        });
+        
         scene.setOnKeyPressed(e -> gameLoop.handleKeyInput(e.getCode()));
         // 4. Set up the game loop using Timeline
         KeyFrame frame = new KeyFrame(Duration.seconds(SECOND_DELAY), e -> gameLoop.step(SECOND_DELAY));
