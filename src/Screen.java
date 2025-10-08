@@ -117,4 +117,15 @@ public class Screen {
         win.setFont(new Font(36));
         root.getChildren().add(win);
     }
+
+    public boolean checkBrickCollisions(Ball ball){
+        for (Brick brick : bricks) {
+            if(brick.isBrickActive()) {
+                if(brick.detectCollisionWithBall(ball)){
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
 }
