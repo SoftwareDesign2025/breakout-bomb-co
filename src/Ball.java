@@ -46,4 +46,8 @@ public class Ball {
         this.speed = speed;
     }
 
+    public void increaseSpeed(){
+        speed+=0.05;
+    }
+
 }
