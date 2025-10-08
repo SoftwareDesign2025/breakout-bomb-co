@@ -6,7 +6,7 @@ import javafx.scene.input.KeyCode;
 public class Slider {
 
     public static final double YLOCATION = 500;
-    public static final double SPEED = 15.0;
+    public static final double SPEED = 20.0;
     public static final double WIDTH = 80;
     public static final double HEIGHT = 20;
 
