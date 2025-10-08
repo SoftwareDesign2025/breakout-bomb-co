@@ -102,7 +102,7 @@ public class Screen {
     }
 
     public void displayScoreBoard(int HighScore,int score, int lives) {
-        scoreboard.setText("High Score" + HighScore + "Score: " + score + "  Lives: " + lives);
+        scoreboard.setText("High Score: " + HighScore + " Score: " + score + "  Lives: " + lives);
     }
 
     public void gameOverScreen() {
