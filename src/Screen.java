@@ -25,7 +25,7 @@ public class Screen {
         background.setFill(Color.WHITE);
         root.getChildren().add(background);
 
-        scoreboard = new Text(10, 20, "Score: 0  Lives: 3");
+        scoreboard = new Text(10, 20, "High Score: 0 Score: 0  Lives: 3");
         scoreboard.setFill(Color.BLACK);
         scoreboard.setFont(new Font(23));
         root.getChildren().add(scoreboard);
@@ -101,8 +101,8 @@ public class Screen {
         return ball.getBall().getBoundsInParent().intersects(outOfBounds.getBoundsInParent());
     }
 
-    public void displayScoreBoard(int score, int lives) {
-        scoreboard.setText("Score: " + score + "  Lives: " + lives);
+    public void displayScoreBoard(int HighScore,int score, int lives) {
+        scoreboard.setText("High Score" + HighScore + "Score: " + score + "  Lives: " + lives);
     }
 
     public void gameOverScreen() {
