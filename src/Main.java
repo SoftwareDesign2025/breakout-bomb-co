@@ -35,11 +35,7 @@ public class Main extends Application {
         GameLoop gameLoop = new GameLoop(ball, slider, screen);
         
         scene.setOnMouseClicked(e -> {
-            gameLoop.startMoving();
-        });
-        
-        scene.setOnMouseClicked(e -> {
-            gameLoop.startMoving();
+        		gameLoop.startMoving();
         });
         
         scene.setOnKeyPressed(e -> gameLoop.handleKeyInput(e.getCode()));
