@@ -5,11 +5,12 @@ import javafx.scene.paint.Color;
 public class Brick {
     private boolean active;
     private Rectangle brick;
-    //public final double WIDTH = 80;
-    //public final double HEIGHT = 20;
+    private int pointValue;
 
-    public Brick(double width, double height, double startX, double startY){
+
+    public Brick(double width, double height, double startX, double startY, int pointValue){
         active = true;
+        this.pointValue = pointValue;
         brick = new Rectangle(startX, startY, width, height);
         brick.setFill(Color.BLUE);
     }
@@ -28,12 +29,12 @@ public class Brick {
         return active;
     }
 
-    public boolean detectCollisionWithBall(Ball ball) {
+    public int detectCollisionWithBall(Ball ball) {
         if (brick.getBoundsInParent().intersects(ball.getBall().getBoundsInParent())) {
             connectWithBall(ball);
-            return true;
+            return pointValue;
         }
-        return false;
+        return 0;
     }
     public void connectWithBall(Ball ball){
         deactivateBrick();

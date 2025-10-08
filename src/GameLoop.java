@@ -24,10 +24,9 @@ public class GameLoop {
 			ball.updateBallLocation();
 			slider.checkSliderCollision(ball);
 			screen.checkBallToWall(ball);
-			if(screen.checkBrickCollisions(ball)) {
-				points++;
-			}
-			//System.out.println(points);
+			points += screen.checkBrickCollisions(ball);
+
+			System.out.println(points);
 		}
 	}
 	

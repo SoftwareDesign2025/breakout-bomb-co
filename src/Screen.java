@@ -50,12 +50,13 @@ public class Screen {
         double startX = 35;
         double startY = 60;
         double brickGap = 10;
+        int pointValue = 1;
 
         for (int row = 0; row < rows; row++) {
             for (int col = 0; col < cols; col++) {
                 double x = startX + col * (brickWidth + brickGap);
                 double y = startY + row * (brickHeight + brickGap);
-                Brick brick = new Brick(brickWidth, brickHeight, x, y);
+                Brick brick = new Brick(brickWidth, brickHeight, x, y, pointValue);
                 bricks.add(brick);
                 root.getChildren().add(brick.getBrick());
             }
@@ -118,14 +119,13 @@ public class Screen {
         root.getChildren().add(win);
     }
 
-    public boolean checkBrickCollisions(Ball ball){
+    public int checkBrickCollisions(Ball ball){
+        int pointsUpdate = 0;
         for (Brick brick : bricks) {
             if(brick.isBrickActive()) {
-                if(brick.detectCollisionWithBall(ball)){
-                    return true;
-                }
+                pointsUpdate += brick.detectCollisionWithBall(ball);
             }
         }
-        return false;
+        return pointsUpdate;
     }
 }
