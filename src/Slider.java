@@ -53,21 +53,27 @@ public class Slider {
             double sliderWidth = slider.getWidth();
             double ballX = ball.getBall().getCenterX();
             double zoneWidth = sliderWidth / 3;
+            
 
             
             if (ballX < sliderX + zoneWidth) {
                 ball.changeXDirection(-1.5);
                 ball.reverseYDirection();
+                ball.increaseSpeed();
+                
+                
             }
             
             else if (ballX < sliderX + 2 * zoneWidth) {
                 ball.changeXDirection(0);
                 ball.reverseYDirection();
+                ball.increaseSpeed();
             }
             
             else {
                 ball.changeXDirection(1.5);
                 ball.reverseYDirection();
+                ball.increaseSpeed();
             }
         }
     }
