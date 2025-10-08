@@ -24,6 +24,9 @@ public class GameLoop {
 			ball.updateBallLocation();
 			slider.checkSliderCollision(ball);
 			screen.checkBallToWall(ball);
+			points += screen.checkBrickCollisions(ball);
+
+			System.out.println(points);
 		}
 	}
 	
@@ -34,5 +37,7 @@ public class GameLoop {
 	public void resetBall() {
 		movingBall = true;
 	}
+
+
 }
         

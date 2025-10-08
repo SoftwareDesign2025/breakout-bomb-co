@@ -3,6 +3,8 @@ import javafx.scene.paint.Color;
 
 public class Ball {
     private final double STARTING_BALL_SPEED = 1;
+    private final double STARTING_X_DIRECTION = 0.2;
+    private  final double STARTING_Y_DIRECTION = 2;
     private double radius;
     private double speed;
     private double xDirection;
@@ -12,8 +14,8 @@ public class Ball {
     public Ball(double radius, double startX, double startY){
         this.radius = radius;
         speed = STARTING_BALL_SPEED;
-        xDirection = 1.5;
-        yDirection = 2;
+        xDirection = STARTING_X_DIRECTION;
+        yDirection = STARTING_Y_DIRECTION;
         ball = new Circle(startX, startY, radius, Color.GREEN);
     }
     public Circle getBall() {
