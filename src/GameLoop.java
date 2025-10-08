@@ -8,6 +8,10 @@ public class GameLoop {
 	private int lives = 3;
 	private int points = 0;
 	private boolean movingBall = false;
+	private final double RESET_BALL_SPEED = 1;
+    private final double RESET_X_DIRECTION = 0.2;
+    private  final double RESET_Y_DIRECTION = 2;
+    private boolean gameOver = false;
 	
 	public GameLoop(Ball ball, Slider slider, Screen screen) {
         this.ball = ball;
@@ -16,18 +20,28 @@ public class GameLoop {
 	}
 	
 	public void handleKeyInput(KeyCode code) {
-        slider.handleMovement(code);
+		if (!gameOver) {
+			slider.handleMovement(code);
+		}
     }
 	
 	public void step(double elapsedTime) {
-		if (movingBall) {
+		if (movingBall && !gameOver) {
 			ball.updateBallLocation();
 			slider.checkSliderCollision(ball);
 			screen.checkBallToWall(ball);
 			points += screen.checkBrickCollisions(ball);
-
-			System.out.println(points);
+			if (screen.ballOutOfBounds(ball)) {
+				resetBall();
+			}
+			screen.displayScoreBoard(points, lives);
+			if (lives == 0) {
+				gameOver = true;
+				movingBall = false;
+				screen.gameOverScreen();
+			}
 		}
+		
 	}
 	
 	public void startMoving() {
@@ -35,7 +49,14 @@ public class GameLoop {
 	}
 	
 	public void resetBall() {
-		movingBall = true;
+		movingBall = false;
+		lives -= 1;
+		ball.getBall().setCenterX(400);
+	    ball.getBall().setCenterY(400);
+	    ball.changeSpeed(RESET_BALL_SPEED);
+	    ball.changeXDirection(RESET_X_DIRECTION);
+	    ball.changeYDirection(RESET_Y_DIRECTION);
+		
 	}
 
 
