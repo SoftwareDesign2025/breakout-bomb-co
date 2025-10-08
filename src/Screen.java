@@ -25,7 +25,7 @@ public class Screen {
         background.setFill(Color.WHITE);
         root.getChildren().add(background);
 
-        scoreboard = new Text(10, 20, "High Score: 0 Score: 0  Lives: 3");
+        scoreboard = new Text(10, 20, "High Score: 0   Score: 0   Lives: 3");
         scoreboard.setFill(Color.BLACK);
         scoreboard.setFont(new Font(23));
         root.getChildren().add(scoreboard);
