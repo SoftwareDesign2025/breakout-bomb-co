@@ -28,11 +28,15 @@ public class Brick {
         return active;
     }
 
+    public boolean detectCollisionWithBall(Ball ball) {
+        if (brick.getBoundsInParent().intersects(ball.getBall().getBoundsInParent())) {
+            connectWithBall(ball);
+            return true;
+        }
+        return false;
+    }
     public void connectWithBall(Ball ball){
-        //if (brick.getBoundsInParent().intersects(ball.getBall().getBoundsInParent())) {
         deactivateBrick();
         ball.reverseYDirection();
-            //Murph will add to score in game loop and check for collison there?
-        //}
     }
 }
