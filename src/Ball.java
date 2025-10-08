@@ -47,7 +47,7 @@ public class Ball {
     }
 
     public void increaseSpeed(){
-        speed++;
+        speed+=0.05;
     }
 
 }
