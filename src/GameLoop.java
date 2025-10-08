@@ -36,9 +36,19 @@ public class GameLoop {
 			}
 			screen.displayScoreBoard(points, lives);
 			if (lives == 0) {
-				gameOver = true;
-				movingBall = false;
+				gameOverLogic();
 				screen.gameOverScreen();
+			}
+			int activeCount = 0;
+			for (Brick brick: screen.getBricks()) {
+				if (brick.isBrickActive()) {
+					activeCount++;
+					break;
+				}
+			}
+			if (activeCount == 0) {
+				gameOverLogic();
+				screen.gameWinScreen();
 			}
 		}
 		
@@ -57,6 +67,11 @@ public class GameLoop {
 	    ball.changeXDirection(RESET_X_DIRECTION);
 	    ball.changeYDirection(RESET_Y_DIRECTION);
 		
+	}
+	
+	public void gameOverLogic()  {
+		gameOver = true;
+		movingBall = false;
 	}
 
 
