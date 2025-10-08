@@ -1,5 +1,9 @@
 import javafx.stage.Stage;
 import javafx.scene.input.KeyCode;
+import java.util.Scanner;
+import java.io.File;
+import java.io.IOException;
+import java.io.PrintWriter;
 
 public class GameLoop {
 	private Ball ball;
@@ -7,16 +11,19 @@ public class GameLoop {
 	private Slider slider;
 	private int lives = 3;
 	private int points = 0;
+	private int highScore;
 	private boolean movingBall = false;
 	private final double RESET_BALL_SPEED = 1;
     private final double RESET_X_DIRECTION = 0.2;
     private  final double RESET_Y_DIRECTION = 2;
     private boolean gameOver = false;
+  
 	
 	public GameLoop(Ball ball, Slider slider, Screen screen) {
         this.ball = ball;
         this.slider = slider;
         this.screen = screen;
+        this.highScore = getHighScore();
 	}
 	
 	public void handleKeyInput(KeyCode code) {
@@ -26,6 +33,7 @@ public class GameLoop {
     }
 	
 	public void step(double elapsedTime) {
+		screen.displayScoreBoard(highScore, points, lives);
 		if (movingBall && !gameOver) {
 			ball.updateBallLocation();
 			slider.checkSliderCollision(ball);
@@ -34,7 +42,6 @@ public class GameLoop {
 			if (screen.ballOutOfBounds(ball)) {
 				resetBall();
 			}
-			screen.displayScoreBoard(points, lives);
 			if (lives == 0) {
 				gameOverLogic();
 				screen.gameOverScreen();
@@ -49,6 +56,9 @@ public class GameLoop {
 			if (activeCount == 0) {
 				gameOverLogic();
 				screen.gameWinScreen();
+				if (points > highScore) {
+					setHighScore();
+				}
 			}
 		}
 		
@@ -72,6 +82,24 @@ public class GameLoop {
 	public void gameOverLogic()  {
 		gameOver = true;
 		movingBall = false;
+	}
+	
+	private int getHighScore() {
+		try (Scanner in = new Scanner(new File("/Users/alennemann/git/breakout-bomb-co/src/HighScore.txt"))) {
+		    highScore = in.nextInt();
+		} catch (IOException e) {
+		    highScore = 0;
+		}
+		return highScore;
+	}
+
+	
+	public void setHighScore() {
+	    try (PrintWriter out = new PrintWriter("/Users/alennemann/git/breakout-bomb-co/src/HighScore.txt")) {
+	        out.println(points);
+	    } catch (IOException e) {
+	        e.printStackTrace();
+	    }
 	}
 
 
