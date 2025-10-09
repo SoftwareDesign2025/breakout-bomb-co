@@ -9,6 +9,7 @@ public class GameLoop {
 	private Ball ball;
 	private Screen screen;
 	private Slider slider;
+	private PowerUp powerUp;
 	private int lives = 3;
 	private int points = 0;
 	private int highScore;
@@ -19,11 +20,12 @@ public class GameLoop {
     private boolean gameOver = false;
   
 	
-	public GameLoop(Ball ball, Slider slider, Screen screen) {
+	public GameLoop(Ball ball, Slider slider, Screen screen, PowerUp powerUp) {
         this.ball = ball;
         this.slider = slider;
         this.screen = screen;
         this.highScore = getHighScore();
+        this.powerUp = powerUp;
 	}
 	
 	public void handleKeyInput(KeyCode code) {
@@ -56,9 +58,6 @@ public class GameLoop {
 			if (activeCount == 0) {
 				gameOverLogic();
 				screen.gameWinScreen();
-				if (points > highScore) {
-					setHighScore();
-				}
 			}
 		}
 		
@@ -82,6 +81,9 @@ public class GameLoop {
 	public void gameOverLogic()  {
 		gameOver = true;
 		movingBall = false;
+		if (points > highScore) {
+			setHighScore();
+		}
 	}
 	
 	private int getHighScore() {
