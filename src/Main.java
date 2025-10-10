@@ -8,6 +8,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
 import javafx.stage.Stage;
 import javafx.util.Duration;
+import java.util.ArrayList;
 
 public class Main extends Application {
 
@@ -26,8 +27,8 @@ public class Main extends Application {
     	Ball ball = new Ball(10, 400, 400);
         Screen screen = new Screen(ball);
         Slider slider = screen.getSlider();
-        PowerUp powerUp = new PowerUp(100,100);
-        gameLoop = new GameLoop(ball, slider, screen,powerUp);
+        ArrayList<PowerUp> powerUpList = new ArrayList<>();
+        gameLoop = new GameLoop(ball, slider, screen, powerUpList);
         Group root = screen.getRoot();
         myScene = new Scene(root, GAME_WIDTH, GAME_HEIGHT, Color.AZURE);
         myScene.setOnKeyPressed(e -> gameLoop.handleKeyInput(e.getCode()));
