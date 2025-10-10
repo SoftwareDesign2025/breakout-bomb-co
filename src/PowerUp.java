@@ -19,7 +19,7 @@ public class PowerUp {
 	private static double WIDTH = 7.0;
 	private static double HEIGHT = 7.0;
 	//private static COLOR = ;
-	private static double DROP_RATE= .1;
+	private static double DROP_RATE= 1;
 	private final Circle powerUp;
 	private boolean activated = false;
 	//change
@@ -40,7 +40,7 @@ public class PowerUp {
 	
 	//if brick is destroyed, drop power up DROP_RATE of the time
 	public PowerUp maybeDropPowerUp(double x, double y) {
-		double chance = Math.random();
+		double chance = Math.random()*20;
 		if(chance< DROP_RATE) {
 			return new BiggerSlider(x,y);
 		}
