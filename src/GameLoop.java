@@ -4,6 +4,9 @@ import java.util.Scanner;
 import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
+import java.util.List;
+
 
 public class GameLoop {
 	private Ball ball;
@@ -18,6 +21,8 @@ public class GameLoop {
     private final double RESET_X_DIRECTION = 0.2;
     private  final double RESET_Y_DIRECTION = 2;
     private boolean gameOver = false;
+    private final List<PowerUp> activePowerUps = new ArrayList<>();
+
   
 	
 	public GameLoop(Ball ball, Slider slider, Screen screen, PowerUp powerUp) {
@@ -40,7 +45,22 @@ public class GameLoop {
 			ball.updateBallLocation();
 			slider.checkSliderCollision(ball);
 			screen.checkBallToWall(ball);
-			points += screen.checkBrickCollisions(ball);
+			int gained = screen.checkBrickCollisions(ball);
+			if (gained > 0) {
+			    points += gained;
+
+			    // Spawn chance happens only when a brick was just broken.
+			    double bx = ball.getBall().getCenterX();
+			    double by = ball.getBall().getCenterY();
+
+			    PowerUp spawned = powerUp.maybeDropPowerUp(bx, by); // uses your spawner instance
+			    if (spawned != null) {
+			        screen.getRoot().getChildren().add(spawned.getNode());
+			        activePowerUps.add(spawned);
+			    }
+			}
+
+
 			if (screen.ballOutOfBounds(ball)) {
 				resetBall();
 			}
@@ -59,6 +79,19 @@ public class GameLoop {
 				gameOverLogic();
 				screen.gameWinScreen();
 			}
+			// Update all falling power-ups and clean up any that fall off-screen
+			for (int i = activePowerUps.size() - 1; i >= 0; i--) {
+			    PowerUp pu = activePowerUps.get(i);
+			    pu.update_position();
+
+			    // remove if off the bottom of the screen (600 tall)
+			    if (pu.getNode().getBoundsInParent().getMinY() > 600) {
+			        screen.getRoot().getChildren().remove(pu.getNode());
+			        activePowerUps.remove(i);
+			    }
+			}
+			slider.checkPowerUpCollision(activePowerUps, screen);
+
 		}
 		
 	}

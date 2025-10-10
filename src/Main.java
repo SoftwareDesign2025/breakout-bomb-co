@@ -26,8 +26,8 @@ public class Main extends Application {
     	Ball ball = new Ball(10, 400, 400);
         Screen screen = new Screen(ball);
         Slider slider = screen.getSlider();
-        PowerUp powerUp = new PowerUp();
-        gameLoop = new GameLoop(ball, slider, screen, powerUp);
+        PowerUp powerUp = new PowerUp(100,100);
+        gameLoop = new GameLoop(ball, slider, screen,powerUp);
         Group root = screen.getRoot();
         myScene = new Scene(root, GAME_WIDTH, GAME_HEIGHT, Color.AZURE);
         myScene.setOnKeyPressed(e -> gameLoop.handleKeyInput(e.getCode()));
