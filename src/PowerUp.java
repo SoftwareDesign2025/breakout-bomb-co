@@ -28,7 +28,7 @@ public class PowerUp {
 	
 	private int countdownFrames = -1;
 	
-	PowerUp(double x, double y) {
+	public PowerUp(double x, double y) {
 		powerUp = new Circle(WIDTH, Color.POWDERBLUE);
 		powerUp.setCenterX(x);		
         powerUp.setCenterY(y);
@@ -82,7 +82,7 @@ public class PowerUp {
 	*/
 	
 	// your team calls this when THEY detect a pickup
-    void onPickup(Slider slider) {
+    public void onPickup(Slider slider) {
         if (activated) return;
         activated = true;
         startEffect(slider);   // <-- base declares this so subclasses can override
