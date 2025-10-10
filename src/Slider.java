@@ -2,6 +2,7 @@
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.input.KeyCode;
+import java.util.List; 
 
 public class Slider {
 
@@ -77,9 +78,23 @@ public class Slider {
             }
         }
     }
-    public void checkPowerUpCollision() {
-    	
+ // checks if slider collides with any power-ups
+    public void checkPowerUpCollision(List<PowerUp> activePowerUps, Screen screen) {
+        for (int i = activePowerUps.size() - 1; i >= 0; i--) {
+            PowerUp pu = activePowerUps.get(i);
+            if (pu.getNode().getBoundsInParent().intersects(slider.getBoundsInParent())) {
+                // tell the power-up it was picked up
+                pu.onPickup(this);
+
+                // remove the visual node from the screen
+                screen.getRoot().getChildren().remove(pu.getNode());
+
+                // remove it from the active list so it stops updating
+                activePowerUps.remove(i);
+            }
+        }
     }
+
 
     public Rectangle getNode() {
         return slider;
