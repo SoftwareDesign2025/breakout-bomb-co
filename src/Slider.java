@@ -83,14 +83,11 @@ public class Slider {
         for (int i = activePowerUps.size() - 1; i >= 0; i--) {
             PowerUp pu = activePowerUps.get(i);
             if (pu.getNode().getBoundsInParent().intersects(slider.getBoundsInParent())) {
-                // tell the power-up it was picked up
+                // apply effect
                 pu.onPickup(this);
 
-                // remove the visual node from the screen
+                // remove the visual from the screen (but keep it in the list)
                 screen.getRoot().getChildren().remove(pu.getNode());
-
-                // remove it from the active list so it stops updating
-                activePowerUps.remove(i);
             }
         }
     }

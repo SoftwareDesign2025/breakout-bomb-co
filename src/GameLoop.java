@@ -84,13 +84,29 @@ public class GameLoop {
 			    PowerUp pu = activePowerUps.get(i);
 			    pu.update_position();
 
-			    // remove if off the bottom of the screen (600 tall)
-			    if (pu.getNode().getBoundsInParent().getMinY() > 600) {
+			    // If NOT picked up yet, allow off-screen removal
+			    if (!pu.isactivated() && pu.getNode().getBoundsInParent().getMinY() > 600) {
 			        screen.getRoot().getChildren().remove(pu.getNode());
 			        activePowerUps.remove(i);
+			        continue;
 			    }
 			}
+
+			// After they’ve fallen this frame, check for paddle pickups
 			slider.checkPowerUpCollision(activePowerUps, screen);
+
+			// Drive timers for active effects and remove when done
+			for (int i = activePowerUps.size() - 1; i >= 0; i--) {
+			    PowerUp pu = activePowerUps.get(i);
+
+			    if (pu instanceof BiggerSlider) {
+			        BiggerSlider bs = (BiggerSlider) pu;
+			        bs.tick();                   // decrement the per-powerup countdown
+			        if (bs.isPowerUpOver()) {
+			            activePowerUps.remove(i);  // effect already reverted in stopPowerUp()
+			        }
+			    }
+			}
 
 		}
 		

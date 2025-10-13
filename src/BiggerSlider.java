@@ -3,12 +3,15 @@ import javafx.scene.Node;
 
 class BiggerSlider extends PowerUp {
     // widen factor and duration (in frames)
-    private double factor = 1.5;          // 50% wider
-    private int durationFrames = 600;     // ~10s at 60 FPS
+    private double bigScale = 1.5;          // 50% wider
+    private double originalScale = 1.0;
+    private int durationFrames = 300;     // ~5s at 60 FPS
 
     // to restore later
     private Slider slider;
-    private double originalScaleX = 1.0;
+    boolean active = false;
+    private int framesLeft = 0;
+    private boolean powerUpOver = false; //
 
     BiggerSlider(double x, double y) {
         super(x, y);
@@ -19,29 +22,41 @@ class BiggerSlider extends PowerUp {
         this.slider = slider;
         Node paddle = slider.getNode();
 
-        // current scale factor
-        double currentScale = paddle.getScaleX();
-        originalScaleX = currentScale;
-
-        // only increase if below max (1.5× original size)
-        double targetScale = Math.min(currentScale * factor, 1.5);
-
-        paddle.setScaleX(targetScale);
-
-        beginCountdown(durationFrames);
+        if (!active) {
+        	//make the slider bigger
+        	paddle.setScaleX(bigScale);
+        	active = true;
+        }
+        framesLeft = durationFrames;
+        powerUpOver = false;
+    }
+    
+    void tick() {
+    	if(!active) return;
+    	if (framesLeft > 0) {
+    		framesLeft--;
+    		}
+    	if (framesLeft < 1) {
+    		stopPowerUp();
+    	}
     }
 
     @Override
     public void stopPowerUp() {
         // restore the paddle scale if we had applied it
+        if (!active) return;
+        active = false;
         if (slider != null) {
-            slider.getNode().setScaleX(originalScaleX);
+            slider.getNode().setScaleX(originalScale);
         }
-        
+        powerUpOver = true;
         super.stopPowerUp();
+    }
+    boolean isPowerUpOver(){
+    	return powerUpOver;
     }
 
     // optional tuning if you need it from elsewhere
-    void setFactor(double f)         { factor = f; }
+    
     void setDurationFrames(int f)    { durationFrames = f; }
 }

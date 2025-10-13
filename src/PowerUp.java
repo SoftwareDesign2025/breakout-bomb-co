@@ -19,9 +19,10 @@ public class PowerUp {
 	private static double WIDTH = 7.0;
 	private static double HEIGHT = 7.0;
 	//private static COLOR = ;
-	private static double DROP_RATE= .1;
+	private static double DROP_RATE= .3;
 	private final Circle powerUp;
 	private boolean activated = false;
+	public boolean finished = false;
 	//change
 	private int xpos;
 	private int ypos;
@@ -59,6 +60,7 @@ public class PowerUp {
 		if (powerUp == null) {
 			return;
 		}
+		if (!activated) {
 		powerUp.setCenterY(powerUp.getCenterY()+FALL_SPEED);
 		xpos = (int) powerUp.getCenterX();
 	    ypos= (int) powerUp.getCenterY();
@@ -66,22 +68,12 @@ public class PowerUp {
 	    if (countdownFrames > 0) {
 	    	countdownFrames = updatePowerUpCountdown(countdownFrames);
 	    }
+	    
+		}
 	}
-	//checks if slider and power up collide
-	/*
-	public void checkCollision(Slider slider, Runnable onConsume) {
-		Node paddle = slider.getNode();//confused here
-		 if (paddle.getBoundsInParent().intersects(powerUp.getBoundsInParent())) {
-			 if (!activated) { 		//only activate once
-				 activated = true;
-				 startEffect(slider); 
-				 if (onConsume != null) onConsume.run();
-			 }
-		 }
-	}
-	*/
 	
-	// your team calls this when THEY detect a pickup
+	
+	// activates after collision
     void onPickup(Slider slider) {
         if (activated) return;
         activated = true;
@@ -89,7 +81,7 @@ public class PowerUp {
     }
 	
 	public int updatePowerUpCountdown(int countdown) {
-		countdown -= 1;
+		countdown --;
 		if (countdown <= 1) {
 			stopPowerUp();
 		}
@@ -115,6 +107,9 @@ public class PowerUp {
 	//helper functions
 	boolean isactivated() {
 		return activated;
+	}
+	boolean isPowerUpOver() {
+		return finished;
 	}
 	Circle getNode() { 
 		return powerUp;
