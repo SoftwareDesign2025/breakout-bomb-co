@@ -44,7 +44,6 @@ public class Screen {
    }
 
    // Everything else remains exactly the same...
-   public List<Brick> getBricks() { return bricks; }
    public Group getRoot() { return root; }
    public Slider getSlider() { return slider; }
    public Brick getBrick() { return brick; }
@@ -84,16 +83,5 @@ public class Screen {
        root.getChildren().add(win);
    }
 
-   public int checkBrickCollisions(Ball ball){
-       int pointsUpdate = 0;
-       for (Brick brick : bricks) {
-           if(brick.isBrickActive()) {
-               pointsUpdate += brick.detectCollisionWithBall(ball);
-               if (pointsUpdate > 0) {
-                   return pointsUpdate;
-               }
-           }
-       }
-       return pointsUpdate;
-   }
+
 }
