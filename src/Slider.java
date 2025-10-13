@@ -40,32 +40,38 @@ public class Slider {
    }
  
    public void checkSliderCollision(Ball ball) {
-       if (ball.getBall().getBoundsInParent().intersects(slider.getBoundsInParent())) {
-           double sliderX = slider.getX();
-           double sliderWidth = slider.getWidth();
-           double ballX = ball.getBall().getCenterX();
-           double zoneWidth = sliderWidth / 3;
+	  
+	       if (ball.getBall().getBoundsInParent().intersects(slider.getBoundsInParent())) {
+	           double sliderX = slider.getX();
+	           double sliderWidth = slider.getWidth();
+	           double ballX = ball.getBall().getCenterX();
+	           double zoneWidth = sliderWidth / 3;
+	          
+	           double angleMath = (sliderX + 40) - ballX;
+	           ball.changeXDirection(angleMath/-20);
+	           ball.reverseYDirection();
+	           ball.increaseSpeed();
           
           
-           if (ballX < sliderX + zoneWidth) {
-               ball.changeXDirection(-1.5);
-               ball.reverseYDirection();
-               ball.increaseSpeed();
-              
-              
-           }
-          
-           else if (ballX < sliderX + 2 * zoneWidth) {
-               ball.changeXDirection(0);
-               ball.reverseYDirection();
-               ball.increaseSpeed();
-           }
-          
-           else {
-               ball.changeXDirection(1.5);
-               ball.reverseYDirection();
-               ball.increaseSpeed();
-           }
+//           if (ballX < sliderX + zoneWidth) {
+//               ball.changeXDirection(-1.5);
+//               ball.reverseYDirection();
+//               ball.increaseSpeed();
+//              
+//              
+//           }
+//          
+//           else if (ballX < sliderX + 2 * zoneWidth) {
+//               ball.changeXDirection(0);
+//               ball.reverseYDirection();
+//               ball.increaseSpeed();
+//           }
+//          
+//           else {
+//               ball.changeXDirection(1.5);
+//               ball.reverseYDirection();
+//               ball.increaseSpeed();
+//           }
        }
    }
   
