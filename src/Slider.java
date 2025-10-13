@@ -51,27 +51,7 @@ public class Slider {
 	           ball.changeXDirection(angleMath/-20);
 	           ball.reverseYDirection();
 	           ball.increaseSpeed();
-          
-          
-//           if (ballX < sliderX + zoneWidth) {
-//               ball.changeXDirection(-1.5);
-//               ball.reverseYDirection();
-//               ball.increaseSpeed();
-//              
-//              
-//           }
-//          
-//           else if (ballX < sliderX + 2 * zoneWidth) {
-//               ball.changeXDirection(0);
-//               ball.reverseYDirection();
-//               ball.increaseSpeed();
-//           }
-//          
-//           else {
-//               ball.changeXDirection(1.5);
-//               ball.reverseYDirection();
-//               ball.increaseSpeed();
-//           }
+           
        }
    }
   
