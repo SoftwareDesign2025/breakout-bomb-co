@@ -19,7 +19,9 @@ public class PowerUp {
 	private static double WIDTH = 7.0;
 	private static double HEIGHT = 7.0;
 	//private static COLOR = ;
+
 	private static double DROP_RATE= .3;
+
 	private final Circle powerUp;
 	private boolean activated = false;
 	public boolean finished = false;
@@ -29,7 +31,7 @@ public class PowerUp {
 	
 	private int countdownFrames = -1;
 	
-	PowerUp(double x, double y) {
+	public PowerUp(double x, double y) {
 		powerUp = new Circle(WIDTH, Color.POWDERBLUE);
 		powerUp.setCenterX(x);		
         powerUp.setCenterY(y);
@@ -41,7 +43,7 @@ public class PowerUp {
 	
 	//if brick is destroyed, drop power up DROP_RATE of the time
 	public PowerUp maybeDropPowerUp(double x, double y) {
-		double chance = Math.random();
+		double chance = Math.random()*20;
 		if(chance< DROP_RATE) {
 			return new BiggerSlider(x,y);
 		}
@@ -72,9 +74,8 @@ public class PowerUp {
 		}
 	}
 	
-	
-	// activates after collision
-    void onPickup(Slider slider) {
+	// your team calls this when THEY detect a pickup
+    public void onPickup(Slider slider) {
         if (activated) return;
         activated = true;
         startEffect(slider);   // <-- base declares this so subclasses can override

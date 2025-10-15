@@ -49,5 +49,8 @@ public class Ball {
     public void increaseSpeed(){
         speed+=0.05;
     }
+    public double getX() { return ball.getCenterX(); }
+    public double getY() { return ball.getCenterY(); }
+
 
 }
