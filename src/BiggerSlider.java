@@ -3,7 +3,7 @@ import javafx.scene.Node;
 
 class BiggerSlider extends PowerUp {
     // widen factor and duration (in frames)
-    private double bigScale = 1.5;          // 50% wider
+    private final double BIG_SIZE = 1.5;          // 50% wider
     private double originalScale = 1.0;
     private int durationFrames = 300;     // ~5s at 60 FPS
 
@@ -24,7 +24,7 @@ class BiggerSlider extends PowerUp {
 
         if (!active) {
         	//make the slider bigger
-        	paddle.setScaleX(bigScale);
+        	paddle.setScaleX(BIG_SIZE);
         	active = true;
         }
         framesLeft = durationFrames;
@@ -52,11 +52,8 @@ class BiggerSlider extends PowerUp {
         powerUpOver = true;
         super.stopPowerUp();
     }
-    boolean isPowerUpOver(){
+
+    boolean isPowerUpOver() {
     	return powerUpOver;
     }
-
-    // optional tuning if you need it from elsewhere
-    
-    void setDurationFrames(int f)    { durationFrames = f; }
 }
