@@ -1,4 +1,5 @@
 // BiggerSlider.java
+r;
 import javafx.scene.Node;
 
 class BiggerSlider extends PowerUp {

@@ -1,0 +1,4 @@
+
+class PiercePowerUp extends PowerUp{
+
+}
