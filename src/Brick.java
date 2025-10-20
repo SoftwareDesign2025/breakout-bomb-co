@@ -29,12 +29,12 @@ public class Brick {
         return active;
     }
 
-    public int detectCollisionWithBall(Ball ball) {
+    public Boolean detectCollisionWithBall(Ball ball) {
         if (brick.getBoundsInParent().intersects(ball.getBall().getBoundsInParent())) {
             connectWithBall(ball);
-            return pointValue;
+            return true;
         }
-        return 0;
+        return false;
     }
     public void connectWithBall(Ball ball) {
         double ballX = ball.getBall().getCenterX();
