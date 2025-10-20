@@ -9,7 +9,7 @@ import java.util.ArrayList;
 public class GameLoop {
 	private Ball ball;
 	private Screen screen;
-	private Slider slider;
+	private ArrayList<Slider> sliderList;
 	private ArrayList<PowerUp> powerUpList;
 	private int lives = 3;
 	private int points = 0;
@@ -19,27 +19,29 @@ public class GameLoop {
     private final double RESET_X_DIRECTION = 0.2;
     private  final double RESET_Y_DIRECTION = 2;
     private boolean gameOver = false;
-  
 	
-	public GameLoop(Ball ball, Slider slider, Screen screen) {
+	public GameLoop(Ball ball, Screen screen) {
         this.ball = ball;
-        this.slider = slider;
         this.screen = screen;
         this.highScore = getHighScore();
-       
-        
+        LevelMaker levelMaker = new LevelMaker(screen.getRoot(), screen.getBricks());
+        this.sliderList = screen.getSlider();
 	}
 	
 	public void handleKeyInput(KeyCode code) {
 		if (!gameOver) {
-			slider.handleMovement(code);
+			for (Slider slider: sliderList) {
+				slider.handleMovement(code);
+			}
 		}
     }
 	
 	public void step(double elapsedTime) {
 		screen.displayScoreBoard(highScore, points, lives);
+		
 		if (movingBall && !gameOver) {
 			ball.updateBallLocation();
+			for (Slider slider: sliderList)
 			slider.checkSliderCollision(ball);
 			screen.checkBallToWall(ball);
 			ArrayList<Brick> contactList = screen.checkBrickCollisions(ball);
