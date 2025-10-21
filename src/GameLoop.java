@@ -14,31 +14,35 @@ public class GameLoop {
 	private int lives = 3;
 	private int points = 0;
 	private int highScore;
+	private int level = 1;
 	private boolean movingBall = false;
 	private final double RESET_BALL_SPEED = 1;
     private final double RESET_X_DIRECTION = 0.2;
     private  final double RESET_Y_DIRECTION = 2;
     private boolean gameOver = false;
+    private LevelMaker levelMaker;
 	
 	public GameLoop(Ball ball, Screen screen) {
         this.ball = ball;
         this.screen = screen;
         this.highScore = getHighScore();
-        LevelMaker levelMaker = new LevelMaker(screen.getRoot(), screen.getBricks());
+        levelMaker = screen.getLevelMaker();
+        screen.loadLevel(level);
         this.sliderList = screen.getSlider();
+        ball.getBall().setCenterX(levelMaker.getBallX());
+        ball.getBall().setCenterY(levelMaker.getBallY());
 	}
 	
 	public void handleKeyInput(KeyCode code) {
 		if (!gameOver) {
-			for (Slider slider: sliderList) {
-				slider.handleMovement(code);
+			for (Slider slider : sliderList) {
+			    slider.handleMovement(code);
 			}
 		}
     }
 	
 	public void step(double elapsedTime) {
 		screen.displayScoreBoard(highScore, points, lives);
-		
 		if (movingBall && !gameOver) {
 			ball.updateBallLocation();
 			for (Slider slider: sliderList)
@@ -65,8 +69,19 @@ public class GameLoop {
 				}
 			}
 			if (activeCount == 0) {
-				gameOverLogic();
-				screen.gameWinScreen();
+				level++;
+				if (level <= 2) {
+					movingBall = false;
+					screen.loadLevel(level);
+					ball.getBall().setCenterX(levelMaker.getBallX());
+					ball.getBall().setCenterY(levelMaker.getBallY());
+					sliderList = screen.getSlider();
+				}
+				else {
+					gameOverLogic();
+					screen.gameWinScreen();
+				}
+				
 			}
 		}
 		
@@ -79,8 +94,8 @@ public class GameLoop {
 	public void resetBall() {
 		movingBall = false;
 		lives -= 1;
-		ball.getBall().setCenterX(400);
-	    ball.getBall().setCenterY(400);
+		ball.getBall().setCenterX(levelMaker.getBallX());
+		ball.getBall().setCenterY(levelMaker.getBallY());
 	    ball.changeSpeed(RESET_BALL_SPEED);
 	    ball.changeXDirection(RESET_X_DIRECTION);
 	    ball.changeYDirection(RESET_Y_DIRECTION);
@@ -112,6 +127,8 @@ public class GameLoop {
 	        e.printStackTrace();
 	    }
 	}
+	
+	
 
 
 }

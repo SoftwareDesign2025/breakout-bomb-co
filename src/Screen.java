@@ -10,7 +10,6 @@ import javafx.scene.shape.Rectangle;
 public class Screen {
    private Group root;
    private Text scoreboard;
-   private Slider slider;
    private Rectangle background;
    private Brick brick;
    private List<Brick> bricks;
@@ -31,7 +30,6 @@ public class Screen {
 
        // Now LevelMaker handles all level creation
        levelMaker = new LevelMaker(root, bricks);
-       levelMaker.makeLevelOne();
        root.getChildren().add(ball.getBall());
    }
 
@@ -86,17 +84,19 @@ public class Screen {
        lvlClear.setFont(new Font(36));
        root.getChildren().add(lvlClear);
    }
+   
+   public void loadLevel(int levelNumber) {
+		levelMaker.resetLevel();
+		if (levelNumber == 1) {
+			levelMaker.makeLevelTwo();
+		}
+		else if (levelNumber == 2) {
+			levelMaker.makeLevelTwo();
+		}
+		
+	}
 
-    public int checkBrickCollisions(Ball ball){
-        int pointsUpdate = 0;
-        for (Brick brick : bricks) {
-            if(brick.isBrickActive()) {
-                pointsUpdate+= brick.detectCollisionWithBall(ball);
-                if (pointsUpdate > 0){
-                    return pointsUpdate;
-                }
-            }
-        }
-        return pointsUpdate;
-    }
+   public LevelMaker getLevelMaker() {
+	    return levelMaker;
+	}
 }
