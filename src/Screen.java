@@ -10,11 +10,11 @@ import javafx.scene.shape.Rectangle;
 public class Screen {
    private Group root;
    private Text scoreboard;
-   private Slider slider;
    private Rectangle background;
    private Brick brick;
-   private List<Brick> bricks;
-   LevelMaker levelMaker;
+   private List<Brick> bricksList;
+   private LevelMaker levelMaker;
+   private Bricks bricks;
 
    public Screen(Ball ball) {
        root = new Group();
@@ -27,16 +27,15 @@ public class Screen {
        scoreboard.setFont(new Font(23));
        root.getChildren().add(scoreboard);
 
-       bricks = new ArrayList<>();
+       bricksList = new ArrayList<>();
 
        // Now LevelMaker handles all level creation
-       levelMaker = new LevelMaker(root, bricks);
-       levelMaker.makeLevelOne();
-       root.getChildren().add(ball.getBall());
+       levelMaker = new LevelMaker(root, bricksList);
+       bricks = new Bricks(bricksList);
    }
 
    // Everything else remains exactly the same...
-   public List<Brick> getBricks() { return bricks; }
+   public Bricks getBricks() { return bricks; }
    public Group getRoot() { return root; }
    public ArrayList<Slider> getSlider() { return levelMaker.getSliderList(); }
    public Brick getBrick() { return brick; }
@@ -86,17 +85,23 @@ public class Screen {
        lvlClear.setFont(new Font(36));
        root.getChildren().add(lvlClear);
    }
+   
+   public void loadLevel(int levelNumber) {
+		levelMaker.resetLevel();
+		
+		if (levelNumber == 1) {
+			levelMaker.makeLevelOne();
+		}
+		else if (levelNumber == 2) {
+			levelMaker.makeLevelTwo();
+		}
+		else if (levelNumber == 3) {
+			levelMaker.makeLevelThree();
+		}
+		
+	}
 
-    public int checkBrickCollisions(Ball ball){
-        int pointsUpdate = 0;
-        for (Brick brick : bricks) {
-            if(brick.isBrickActive()) {
-                pointsUpdate+= brick.detectCollisionWithBall(ball);
-                if (pointsUpdate > 0){
-                    return pointsUpdate;
-                }
-            }
-        }
-        return pointsUpdate;
-    }
+   public LevelMaker getLevelMaker() {
+	    return levelMaker;
+	}
 }
