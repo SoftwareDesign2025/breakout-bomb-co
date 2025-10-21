@@ -21,6 +21,8 @@ public class GameLoop {
     private  final double RESET_Y_DIRECTION = 2;
     private boolean gameOver = false;
     private LevelMaker levelMaker;
+    private Bricks bricks;
+    
 	
 	public GameLoop(Ball ball, Screen screen) {
         this.ball = ball;
@@ -31,6 +33,7 @@ public class GameLoop {
         this.sliderList = screen.getSlider();
         ball.getBall().setCenterX(levelMaker.getBallX());
         ball.getBall().setCenterY(levelMaker.getBallY());
+        bricks = screen.getBricks();
 	}
 	
 	public void handleKeyInput(KeyCode code) {
@@ -53,7 +56,7 @@ public class GameLoop {
 //			for (Brick contact: contactList) {
 //				points += 1;
 //			}
-			points += screen.checkBrickCollisions(ball);
+			points += bricks.checkBrickCollisions(ball);
 			if (screen.ballOutOfBounds(ball)) {
 				resetBall();
 			}
@@ -62,7 +65,7 @@ public class GameLoop {
 				screen.gameOverScreen();
 			}
 			int activeCount = 0;
-			for (Brick brick: screen.getBricks()) {
+			for (Brick brick: bricks.getBricks()) {
 				if (brick.isBrickActive()) {
 					activeCount++;
 					break;
@@ -70,11 +73,12 @@ public class GameLoop {
 			}
 			if (activeCount == 0) {
 				level++;
-				if (level <= 2) {
+				if (level <= 3) {
 					movingBall = false;
 					screen.loadLevel(level);
 					ball.getBall().setCenterX(levelMaker.getBallX());
 					ball.getBall().setCenterY(levelMaker.getBallY());
+					ball.changeSpeed(1);
 					sliderList = screen.getSlider();
 				}
 				else {
