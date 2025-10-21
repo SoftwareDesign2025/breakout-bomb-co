@@ -1,5 +1,6 @@
 // Author: Gavin Collins
 import javafx.scene.Group;
+import javafx.scene.Node;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 
@@ -8,11 +9,14 @@ import java.util.Random;
 import java.util.ArrayList;
 
 public class LevelMaker {
-
+	
+	private double ballX;
+	private double ballY;
     private Group root;
     private List<Brick> bricks;
     private ArrayList<Slider> sliderList = new ArrayList<>();
-   private ArrayList<Rectangle> outBoundsList = new ArrayList<>();
+    private ArrayList<Rectangle> outBoundsList = new ArrayList<>();
+    private ArrayList<Node> nodeList = new ArrayList<>();
 
     public LevelMaker(Group root, List<Brick> bricks) {
         this.root = root;
@@ -28,14 +32,27 @@ public class LevelMaker {
     }
     
     public void resetLevel() { 
+    	if (!nodeList.isEmpty()) {
+    		root.getChildren().removeAll(nodeList);
+    		nodeList.clear();
+    	}
+    	if (!bricks.isEmpty()) {
+    		for (Brick b : new ArrayList<>(bricks)) {
+                root.getChildren().remove(b.getBrick());
+            }
+            bricks.clear();
+    	}
     	sliderList.clear();
     	outBoundsList.clear();
+    	ballX  = 0;
+    	ballY = 0;
     }
     
     public void addSlider(double startX, double startY) {
     	Slider s = new Slider(startX, startY);
         sliderList.add(s);
         root.getChildren().add(s.getNode());
+        nodeList.add(s.getNode());
     }
     
     public void addOutOfBounds(double x, double y, double width, double height, Color color) {
@@ -43,6 +60,14 @@ public class LevelMaker {
         r.setFill(color);
         outBoundsList.add(r);
         root.getChildren().add(r);
+        nodeList.add(r);
+    }
+    public double getBallX() {
+    	return ballX;
+    }
+    
+    public double getBallY() {
+    	return ballY;
     }
 
     public void makeLevelOne() {
@@ -54,6 +79,8 @@ public class LevelMaker {
         double startY = 60;
         double brickGap = 10;
         int pointValue = 1;
+        ballX = 400;
+        ballY = 400;
 
         int [][] sixPattern = {
             {1,1,1,1},
@@ -120,6 +147,9 @@ public class LevelMaker {
         int pointValue = 1;
         addSlider(360,540);
     	addSlider(360, 80);
+    	ballX = 400;
+    	ballY = 500;
+    	
         int [][] ePattern = {
                 {1,1,1,1,1},
                 {1,0,0,0,0},
