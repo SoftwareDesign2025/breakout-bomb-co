@@ -92,7 +92,9 @@ public class Screen {
         for (Brick brick : bricks) {
             if(brick.isBrickActive()) {
                 pointsUpdate+= brick.detectCollisionWithBall(ball);
-
+                if (pointsUpdate > 0){
+                    return pointsUpdate;
+                }
             }
         }
         return pointsUpdate;
