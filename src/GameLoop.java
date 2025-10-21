@@ -7,7 +7,8 @@ import java.io.PrintWriter;
 import java.util.ArrayList;
 
 public class GameLoop {
-	private Ball ball;
+	private Ball freshBall;
+	private ArrayList<Ball> balls;
 	private Screen screen;
 	private ArrayList<Slider> sliderList;
 	private ArrayList<PowerUp> powerUpList;
@@ -24,15 +25,19 @@ public class GameLoop {
     private Bricks bricks;
     
 	
-	public GameLoop(Ball ball, Screen screen) {
-        this.ball = ball;
+	public GameLoop( Screen screen) {
         this.screen = screen;
         this.highScore = getHighScore();
         levelMaker = screen.getLevelMaker();
         screen.loadLevel(level);
         this.sliderList = screen.getSlider();
-        ball.getBall().setCenterX(levelMaker.getBallX());
-        ball.getBall().setCenterY(levelMaker.getBallY());
+        this.balls = new ArrayList<>();
+        freshBall = new Ball(10, levelMaker.getBallX(), levelMaker.getBallY());
+        balls.add(freshBall);
+        screen.getRoot().getChildren().add(freshBall.getBall());
+        freshBall.changeSpeed(RESET_BALL_SPEED);
+        freshBall.changeXDirection(RESET_X_DIRECTION);
+        freshBall.changeYDirection(RESET_Y_DIRECTION);
         bricks = screen.getBricks();
 	}
 	
@@ -42,22 +47,35 @@ public class GameLoop {
 			    slider.handleMovement(code);
 			}
 		}
+		if (code == KeyCode.B) {
+			for (Brick brick : bricks.getBricks()) {
+		        screen.getRoot().getChildren().remove(brick.getBrick());
+		    }
+			bricks.getBricks().clear();
+			
+		}
     }
 	
 	public void step(double elapsedTime) {
 		screen.displayScoreBoard(highScore, points, lives);
 		if (movingBall && !gameOver) {
-			ball.updateBallLocation();
-			for (Slider slider: sliderList)
-			slider.checkSliderCollision(ball);
-			screen.checkBallToWall(ball);
-			//Oscar changed this so bricks can have different pointValue
-//			ArrayList<Brick> contactList = screen.checkBrickCollisions(ball);
-//			for (Brick contact: contactList) {
-//				points += 1;
-//			}
-			points += bricks.checkBrickCollisions(ball);
-			if (screen.ballOutOfBounds(ball)) {
+			ArrayList<Ball> toRemove = new ArrayList<>();
+			for (Ball ball: balls) {
+				ball.updateBallLocation();
+				for (Slider slider: sliderList) {
+					slider.checkSliderCollision(ball);
+				}
+				screen.checkBallToWall(ball);
+				points += bricks.checkBrickCollisions(ball);
+				if (screen.ballOutOfBounds(ball)) {
+					toRemove.add(ball);
+				}
+			}
+			for (Ball ball : toRemove) {
+	            screen.getRoot().getChildren().remove(ball.getBall());
+	            balls.remove(ball);
+	        }
+			if (balls.isEmpty()) {
 				resetBall();
 			}
 			if (lives == 0) {
@@ -75,10 +93,17 @@ public class GameLoop {
 				level++;
 				if (level <= 3) {
 					movingBall = false;
+					for (Ball ball: balls) {
+						screen.getRoot().getChildren().remove(ball.getBall());
+					}
+					balls.clear();
 					screen.loadLevel(level);
-					ball.getBall().setCenterX(levelMaker.getBallX());
-					ball.getBall().setCenterY(levelMaker.getBallY());
-					ball.changeSpeed(1);
+					freshBall = new Ball(10, levelMaker.getBallX(), levelMaker.getBallY());
+					freshBall.changeSpeed(RESET_BALL_SPEED);
+				    freshBall.changeXDirection(RESET_X_DIRECTION);
+				    freshBall.changeYDirection(RESET_Y_DIRECTION);
+				    screen.getRoot().getChildren().add(freshBall.getBall());
+					balls.add(freshBall);
 					sliderList = screen.getSlider();
 				}
 				else {
@@ -98,12 +123,12 @@ public class GameLoop {
 	public void resetBall() {
 		movingBall = false;
 		lives -= 1;
-		ball.getBall().setCenterX(levelMaker.getBallX());
-		ball.getBall().setCenterY(levelMaker.getBallY());
-	    ball.changeSpeed(RESET_BALL_SPEED);
-	    ball.changeXDirection(RESET_X_DIRECTION);
-	    ball.changeYDirection(RESET_Y_DIRECTION);
-		
+		freshBall = new Ball(10, levelMaker.getBallX(), levelMaker.getBallY());
+	    freshBall.changeSpeed(RESET_BALL_SPEED);
+	    freshBall.changeXDirection(RESET_X_DIRECTION);
+	    freshBall.changeYDirection(RESET_Y_DIRECTION);
+	    screen.getRoot().getChildren().add(freshBall.getBall());
+		balls.add(freshBall);
 	}
 	
 	public void gameOverLogic()  {

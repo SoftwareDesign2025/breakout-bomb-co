@@ -31,7 +31,6 @@ public class Screen {
 
        // Now LevelMaker handles all level creation
        levelMaker = new LevelMaker(root, bricksList);
-       root.getChildren().add(ball.getBall());
        bricks = new Bricks(bricksList);
    }
 
