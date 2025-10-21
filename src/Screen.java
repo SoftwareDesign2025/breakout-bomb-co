@@ -32,6 +32,7 @@ public class Screen {
        // Now LevelMaker handles all level creation
        levelMaker = new LevelMaker(root, bricks);
        levelMaker.makeLevelTwo();
+       //levelMaker.makeLevelThree();
        root.getChildren().add(ball.getBall());
    }
 
@@ -81,15 +82,14 @@ public class Screen {
        root.getChildren().add(win);
    }
 
-   public ArrayList<Brick> checkBrickCollisions(Ball ball){
-       ArrayList<Brick> contactBricks = new ArrayList<>();
-       for (Brick brick : bricks) {
-           if(brick.isBrickActive()) {
-               if (brick.detectCollisionWithBall(ball)) {
-            	   contactBricks.add(brick);
-               }
-           }
-       }
-       return contactBricks;
-   }
+    public int checkBrickCollisions(Ball ball){
+        int pointsUpdate = 0;
+        for (Brick brick : bricks) {
+            if(brick.isBrickActive()) {
+                pointsUpdate+= brick.detectCollisionWithBall(ball);
+
+            }
+        }
+        return pointsUpdate;
+    }
 }

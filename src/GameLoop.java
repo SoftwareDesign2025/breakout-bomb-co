@@ -44,10 +44,12 @@ public class GameLoop {
 			for (Slider slider: sliderList)
 			slider.checkSliderCollision(ball);
 			screen.checkBallToWall(ball);
-			ArrayList<Brick> contactList = screen.checkBrickCollisions(ball);
-			for (Brick contact: contactList) {
-				points += 1;
-			}
+			//Oscar changed this so bricks can have different pointValue
+//			ArrayList<Brick> contactList = screen.checkBrickCollisions(ball);
+//			for (Brick contact: contactList) {
+//				points += 1;
+//			}
+			points += screen.checkBrickCollisions(ball);
 			if (screen.ballOutOfBounds(ball)) {
 				resetBall();
 			}
