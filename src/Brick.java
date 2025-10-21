@@ -2,17 +2,21 @@
 import javafx.scene.shape.Rectangle;
 import javafx.scene.paint.Color;
 
+
+//This class contains the Brick class
 public class Brick {
     private boolean active;
     private Rectangle brick;
     private int pointValue;
+    private PowerUp powerUp;
 
 
-    public Brick(double width, double height, double startX, double startY, int pointValue){
+    public Brick(double width, double height, double startX, double startY, int pointValue, Color color, PowerUp powerUp){
         active = true;
         this.pointValue = pointValue;
         brick = new Rectangle(startX, startY, width, height);
-        brick.setFill(Color.BLUE);
+        brick.setFill(color);
+        this.powerUp = powerUp;
     }
 
     public Rectangle getBrick() {
@@ -29,12 +33,16 @@ public class Brick {
         return active;
     }
 
-    public Boolean detectCollisionWithBall(Ball ball) {
+    public PowerUp getPowerUp(){
+        return powerUp;
+    }
+
+    public int detectCollisionWithBall(Ball ball) {
         if (brick.getBoundsInParent().intersects(ball.getBall().getBoundsInParent())) {
             connectWithBall(ball);
-            return true;
+            return pointValue;
         }
-        return false;
+        return 0;
     }
     public void connectWithBall(Ball ball) {
         double ballX = ball.getBall().getCenterX();

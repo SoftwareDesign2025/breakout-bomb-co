@@ -78,17 +78,11 @@ public class Screen {
        win.setFont(new Font(36));
        root.getChildren().add(win);
    }
-
-   public ArrayList<Brick> checkBrickCollisions(Ball ball){
-       ArrayList<Brick> contactBricks = new ArrayList<>();
-       for (Brick brick : bricks) {
-           if(brick.isBrickActive()) {
-               if (brick.detectCollisionWithBall(ball)) {
-            	   contactBricks.add(brick);
-               }
-           }
-       }
-       return contactBricks;
+   public void levelClearScreen() {
+       Text lvlClear = new Text(300, 300, "LEVEL CLEARED!");
+       lvlClear.setFill(Color.GREEN);
+       lvlClear.setFont(new Font(36));
+       root.getChildren().add(lvlClear);
    }
    
    public void loadLevel(int levelNumber) {
