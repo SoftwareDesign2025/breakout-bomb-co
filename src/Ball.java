@@ -1,6 +1,7 @@
 import javafx.scene.shape.Circle;
 import javafx.scene.paint.Color;
 
+//This class contains the Ball object
 public class Ball {
     private final double STARTING_BALL_SPEED = 1;
     private final double STARTING_X_DIRECTION = 0.2;

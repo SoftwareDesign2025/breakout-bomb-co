@@ -87,15 +87,14 @@ public class Screen {
        root.getChildren().add(lvlClear);
    }
 
-   public ArrayList<Brick> checkBrickCollisions(Ball ball){
-       ArrayList<Brick> contactBricks = new ArrayList<>();
-       for (Brick brick : bricks) {
-           if(brick.isBrickActive()) {
-               if (brick.detectCollisionWithBall(ball)) {
-            	   contactBricks.add(brick);
-               }
-           }
-       }
-       return contactBricks;
-   }
+    public int checkBrickCollisions(Ball ball){
+        int pointsUpdate = 0;
+        for (Brick brick : bricks) {
+            if(brick.isBrickActive()) {
+                pointsUpdate+= brick.detectCollisionWithBall(ball);
+
+            }
+        }
+        return pointsUpdate;
+    }
 }

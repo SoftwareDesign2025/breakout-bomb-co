@@ -161,13 +161,80 @@ public class LevelMaker {
                 if (val != 0) {
                     double x = startX + col * (brickWidth + brickGap);
                     double y = startY + row * (brickHeight + brickGap);
-                    Brick brick = new Brick(brickWidth, brickHeight, x, y, pointValue);
+                    Brick brick = new Brick(brickWidth, brickHeight, x, y, pointValue, Color.BLUE, null);
                     bricks.add(brick);
                     root.getChildren().add(brick.getBrick());
                 }
             }
         } 
     }
+    //bomb
+    public void makeLevelThree() {
+        addOutOfBounds(0, 580, 800, 20, Color.RED);
+        addSlider(360, 500);
+
+        double brickWidth = 50;
+        double brickHeight = 25;
+        int rows = 12;
+        int cols = 12;
+
+        double totalWidth = cols * brickWidth;
+        double totalHeight = rows * brickHeight;
+        double startX = (800 - totalWidth) / 2;
+        double startY = 100;
+
+        double centerRow = rows / 2.0;
+        double centerCol = cols / 2.0;
+        double radius = 5.2;
+
+        //bomb
+        for (int row = 0; row < rows; row++) {
+            for (int col = 0; col < cols; col++) {
+                double dx = col - centerCol;
+                double dy = row - centerRow;
+                double dist = Math.sqrt(dx * dx + dy * dy);
+
+                if (dist < radius + 0.5) {
+                    double x = startX + col * brickWidth;
+                    double y = startY + row * brickHeight;
+
+                    Color color;
+                    if (dist < radius * 0.5) color = Color.rgb(10, 10, 10);   // pure black center
+                    else if (dist < radius * 0.8) color = Color.rgb(25, 25, 25);
+                    else color = Color.rgb(45, 45, 45);
+
+                    Brick brick = new Brick(brickWidth - 2, brickHeight - 2, x, y, 1, color, null);
+                    bricks.add(brick);
+                    root.getChildren().add(brick.getBrick());
+                }
+            }
+        }
+        //fuse
+        double fuseBaseX = startX + centerCol * brickWidth + brickWidth / 4.0;
+        double fuseBaseY = startY - (brickHeight * 0.3); // lowered to meet bomb
+
+        for (int i = 0; i < 5; i++) {
+            double fx = fuseBaseX + i * 6;
+            double fy = fuseBaseY - i * (brickHeight * 0.9);
+
+            Color color;
+            if (i <= 1) color = Color.RED;
+            else if (i == 2) color = Color.ORANGE;
+            else color = Color.YELLOW;
+
+            Brick fuseBrick = new Brick(brickWidth - 20, brickHeight - 12, fx, fy, 5, color, null);
+            bricks.add(fuseBrick);
+            root.getChildren().add(fuseBrick.getBrick());
+        }
+    }
+
+
+
+
+
+
+
+
 }
 
        
