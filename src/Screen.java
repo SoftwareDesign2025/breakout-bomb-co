@@ -31,8 +31,7 @@ public class Screen {
 
        // Now LevelMaker handles all level creation
        levelMaker = new LevelMaker(root, bricks);
-       levelMaker.makeLevelTwo();
-       //levelMaker.makeLevelThree();
+       levelMaker.makeLevelOne();
        root.getChildren().add(ball.getBall());
    }
 
@@ -80,6 +79,12 @@ public class Screen {
        win.setFill(Color.GREEN);
        win.setFont(new Font(36));
        root.getChildren().add(win);
+   }
+   public void levelClearScreen() {
+       Text lvlClear = new Text(300, 300, "LEVEL CLEARED!");
+       lvlClear.setFill(Color.GREEN);
+       lvlClear.setFont(new Font(36));
+       root.getChildren().add(lvlClear);
    }
 
     public int checkBrickCollisions(Ball ball){
