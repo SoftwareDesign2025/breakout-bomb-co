@@ -18,8 +18,6 @@ public class PowerUp {
 	private static double FALL_SPEED = 1.5;
 	private static double WIDTH = 7.0;
 	private static double HEIGHT = 7.0;
-	//private static COLOR = ;
-
 	private static double DROP_RATE= .3;
 
 	private final Circle powerUp;
@@ -41,6 +39,8 @@ public class PowerUp {
 	
 	
 	
+	/*
+	 * original design for unstructured levels
 	//if brick is destroyed, drop power up DROP_RATE of the time
 	public PowerUp maybeDropPowerUp(double x, double y) {
 		double chance = Math.random()*20;
@@ -51,27 +51,17 @@ public class PowerUp {
 		
 	}
 	
+	*/
 	
+	//new powerup design for structured levels
 	
-	public void powerUpSelect() {
-		//placeholder for different powerups later
-	}
 	
 	public void update_position() {
-		//powerUp.setCenterX(powerUp.getCenterX());
-		if (powerUp == null) {
+		if (activated) 
 			return;
-		}
-		if (!activated) {
 		powerUp.setCenterY(powerUp.getCenterY()+FALL_SPEED);
 		xpos = (int) powerUp.getCenterX();
 	    ypos= (int) powerUp.getCenterY();
-	    
-	    if (countdownFrames > 0) {
-	    	countdownFrames = updatePowerUpCountdown(countdownFrames);
-	    }
-	    
-		}
 	}
 	
 	// your team calls this when THEY detect a pickup
@@ -80,15 +70,7 @@ public class PowerUp {
         activated = true;
         startEffect(slider);   // <-- base declares this so subclasses can override
     }
-	
-	public int updatePowerUpCountdown(int countdown) {
-		countdown --;
-		if (countdown <= 1) {
-			stopPowerUp();
-		}
-		return countdown;
-	}
-	
+    
 	// declare these so subclasses can override ======
     void startEffect(Slider slider) {
         // base no-op; BiggerSlider overrides
@@ -115,6 +97,13 @@ public class PowerUp {
 	Circle getNode() { 
 		return powerUp;
 		}
+
+
+
+	public PowerUp spawnAt(double x, double y) {
+		 
+		return new PowerUp(x,y);
+	}
 }
 	
 
