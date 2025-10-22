@@ -1,3 +1,4 @@
+package Game;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.application.Application;
@@ -7,6 +8,9 @@ import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 import java.util.ArrayList;
+
+import Objects.Ball;
+import Powerups.PowerUp;
 
 public class SetUpProject extends Application {
 

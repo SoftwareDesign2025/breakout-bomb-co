@@ -1,7 +1,9 @@
+package Powerups;
 
+import Objects.Slider;
 import javafx.scene.Node;
 
-class BiggerSlider extends PowerUp {
+public class BiggerSlider extends PowerUp {
     private final double BIG_SIZE = 1.5;      // bigger state
     private final int DURATION_FRAMES = 600;  // ~5s @ 60 FPS
 
@@ -10,7 +12,7 @@ class BiggerSlider extends PowerUp {
     private int framesLeft = 0;
     private boolean over = false;
 
-    BiggerSlider(double x, double y) { super(x, y); }
+    public BiggerSlider(double x, double y) { super(x, y); }
 
     @Override
     void startEffect(Slider slider) {
@@ -26,7 +28,7 @@ class BiggerSlider extends PowerUp {
         over = false;
     }
 
-    void tick() {
+    public void tick() {
         if (!active) return;
         if (framesLeft > 0) {
             framesLeft--;
@@ -50,5 +52,5 @@ class BiggerSlider extends PowerUp {
         super.stopPowerUp();
     }
 
-    boolean isPowerUpOver() { return over; }
+    public boolean isPowerUpOver() { return over; }
 }

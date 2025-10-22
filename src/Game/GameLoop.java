@@ -1,6 +1,18 @@
+package Game;
+
 import javafx.stage.Stage;
 import javafx.scene.input.KeyCode;
 import java.util.Scanner;
+
+import Objects.Ball;
+import Objects.BallPowerUp;
+import Objects.Brick;
+import Objects.Bricks;
+import Objects.Slider;
+import Powerups.BiggerSlider;
+import Powerups.PiercePowerUp;
+import Powerups.PowerUp;
+
 import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;

@@ -1,3 +1,4 @@
+package Objects;
 import java.util.List;
 
 //This class contains the Bricks class, a list of Bricks
