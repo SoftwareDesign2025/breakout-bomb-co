@@ -1,6 +1,10 @@
 //Author Ben farmer
+package Powerups;
+
 import java.util.ArrayList;
 import java.util.List;
+
+import Objects.Slider;
 import javafx.scene.Group;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
@@ -88,13 +92,13 @@ public class PowerUp {
 	
 	
 	//helper functions
-	boolean isactivated() {
+	public boolean isactivated() {
 		return activated;
 	}
-	boolean isPowerUpOver() {
+	 public boolean isPowerUpOver() {
 		return finished;
 	}
-	Circle getNode() { 
+	public Circle getNode() { 
 		return powerUp;
 		}
 

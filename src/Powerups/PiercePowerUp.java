@@ -1,12 +1,15 @@
+package Powerups;
+import Objects.Ball;
+import Objects.Slider;
 
-class PiercePowerUp extends PowerUp {
+public class PiercePowerUp extends PowerUp {
     private static int charges = 0;          // how many uses the player has
     private static int framesLeft = 0;       // active pierce time remaining
     private static final int PIERCE_FRAMES = 60; // ~1s at 60 FPS
     private Ball ball;
     private boolean finished = false;
 
-    PiercePowerUp(double x, double y) { super(x, y); }
+    public PiercePowerUp(double x, double y) { super(x, y); }
 
     @Override
     void startEffect(Slider slider) {
@@ -16,7 +19,7 @@ class PiercePowerUp extends PowerUp {
     }
 
     // called from your input handler (e.g., SPACE key)
-    static void tryActivate() {
+    public static void tryActivate() {
         if (charges > 0 && framesLeft == 0) {
             charges--;
             framesLeft = PIERCE_FRAMES;
@@ -24,7 +27,7 @@ class PiercePowerUp extends PowerUp {
     }
 
     // called once per frame
-    static void tickGlobal() {
+    public static void tickGlobal() {
         if (framesLeft > 0) framesLeft--;
     }
 
@@ -33,7 +36,7 @@ class PiercePowerUp extends PowerUp {
         return framesLeft > 0;
     }
 
-    boolean isPowerUpOver() { return finished; }
+    public boolean isPowerUpOver() { return finished; }
 
 	public void setBall(Ball ball) {
 		this.ball = ball;
