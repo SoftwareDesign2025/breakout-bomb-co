@@ -11,56 +11,56 @@ public class LevelMaker {
 	
 	private double ballX;
 	private double ballY;
-    private Group root;
-    private List<Brick> bricks;
-    private ArrayList<Slider> sliderList = new ArrayList<>();
-    private ArrayList<Rectangle> outBoundsList = new ArrayList<>();
-    private ArrayList<Node> nodeList = new ArrayList<>();
-    private Random rand = new Random();
+    private final Group ROOT;
+    private final List<Brick> BRICKS;
+    private final ArrayList<Slider> SLIDER_LIST = new ArrayList<>();
+    private final ArrayList<Rectangle> OUT_OF_BOUNDS_LIST = new ArrayList<>();
+    private final ArrayList<Node> NODE_LIST = new ArrayList<>();
+    private final Random RAND = new Random();
 
     public LevelMaker(Group root, List<Brick> bricks) {
-        this.root = root;
-        this.bricks = bricks;
+        this.ROOT = root;
+        this.BRICKS = bricks;
     }
     
     public ArrayList<Slider> getSliderList() {
-    	return sliderList;
+    	return SLIDER_LIST;
     }
     
     public ArrayList<Rectangle> getOutOfBounds() {
-    	return outBoundsList;
+    	return OUT_OF_BOUNDS_LIST;
     }
     
     public void resetLevel() { 
-    	if (!nodeList.isEmpty()) {
-    		root.getChildren().removeAll(nodeList);
-    		nodeList.clear();
+    	if (!NODE_LIST.isEmpty()) {
+    		ROOT.getChildren().removeAll(NODE_LIST);
+    		NODE_LIST.clear();
     	}
-    	if (!bricks.isEmpty()) {
-    		for (Brick b : new ArrayList<>(bricks)) {
-                root.getChildren().remove(b.getBrick());
+    	if (!BRICKS.isEmpty()) {
+    		for (Brick b : new ArrayList<>(BRICKS)) {
+                ROOT.getChildren().remove(b.getBrick());
             }
-            bricks.clear();
+            BRICKS.clear();
     	}
-    	sliderList.clear();
-    	outBoundsList.clear();
+    	SLIDER_LIST.clear();
+    	OUT_OF_BOUNDS_LIST.clear();
     	ballX  = 0;
     	ballY = 0;
     }
 
     public void addSlider(double startX, double startY) {
         Slider s = new Slider(startX, startY);
-        sliderList.add(s);
-        root.getChildren().add(s.getNode());
-        nodeList.add(s.getNode());
+        SLIDER_LIST.add(s);
+        ROOT.getChildren().add(s.getNode());
+        NODE_LIST.add(s.getNode());
     }
 
     public void addOutOfBounds(double x, double y, double width, double height, Color color) {
         Rectangle r = new Rectangle(x, y, width, height);
         r.setFill(color);
-        outBoundsList.add(r);
-        root.getChildren().add(r);
-        nodeList.add(r);
+        OUT_OF_BOUNDS_LIST.add(r);
+        ROOT.getChildren().add(r);
+        NODE_LIST.add(r);
     }
     public double getBallX() {
     	return ballX;
@@ -72,7 +72,7 @@ public class LevelMaker {
 
     private int randomizeBrick(int val) {
         if (val != 1) return val;
-        int chance = rand.nextInt(100);
+        int chance = RAND.nextInt(100);
         if (chance < 10) return 2;
         if (chance < 15) return 3;
         if (chance < 20) return 4;
@@ -86,7 +86,7 @@ public class LevelMaker {
         return Color.BLUE;
     }
 
-	private void printLevel(int[][] pattern, double startX, double startY, double brickWidth, double brickHeight, double brickGap, int pointValue, Color color) {
+    public void printLevel(int[][] pattern, double startX, double startY, double brickWidth, double brickHeight, double brickGap, int pointValue, Color color) {
         for (int row = 0; row < pattern.length; row++) {
             for (int col = 0; col < pattern[row].length; col++) {
                 int val = randomizeBrick(pattern[row][col]);
@@ -112,6 +112,7 @@ public class LevelMaker {
         double startY = 60;
         double brickGap = 10;
         int pointValue = 1;
+        Color color = Color.BLUE;
         ballX = 400;
         ballY = 400;
 
@@ -141,6 +142,7 @@ public class LevelMaker {
             {0,0,0,1}
         };
 
+
         printLevel(sixPattern, startX, startY, brickWidth, brickHeight, brickGap, pointValue, color);
 
         double sevenOffsetX = startX + 5 * (brickWidth + brickGap);
@@ -151,7 +153,7 @@ public class LevelMaker {
 
 
 
-    //E
+    
     public void makeLevelTwo() {
         addOutOfBounds(0,580,800,20,Color.RED);
         addOutOfBounds(0,40,800,20,Color.RED);
@@ -161,6 +163,7 @@ public class LevelMaker {
         double startY = 145;
         double brickGap = 10;
         int pointValue = 1;
+        Color color = Color.MAROON;
         addSlider(360,540);
     	addSlider(360, 80);
     	ballX = 400;
@@ -194,7 +197,6 @@ public class LevelMaker {
         int cols = 12;
 
         double totalWidth = cols * brickWidth;
-        double totalHeight = rows * brickHeight;
         double startX = (800 - totalWidth) / 2;
         double startY = 100;
 
@@ -221,8 +223,8 @@ public class LevelMaker {
                     else color = Color.rgb(45, 45, 45);
 
                     Brick brick = new Brick(brickWidth - 2, brickHeight - 2, x, y, 1, color, null);
-                    bricks.add(brick);
-                    root.getChildren().add(brick.getBrick());
+                    BRICKS.add(brick);
+                    ROOT.getChildren().add(brick.getBrick());
                 }
             }
         }
@@ -240,8 +242,8 @@ public class LevelMaker {
             else color = Color.YELLOW;
 
             Brick fuseBrick = new Brick(brickWidth - 20, brickHeight - 12, fx, fy, 5, color, null);
-            bricks.add(fuseBrick);
-            root.getChildren().add(fuseBrick.getBrick());
+            BRICKS.add(fuseBrick);
+            ROOT.getChildren().add(fuseBrick.getBrick());
         }
     }
 
