@@ -112,28 +112,20 @@ public class GameLoop {
 				screen.checkBallToWall(ball);
 				int prevPoints = points;
 				points += bricks.checkBrickCollisions(ball);
-				
-				for (Brick b : bricks.getBricks()) {
-				    if (b.consumeJustHit()) {                 // <-- event: broke this frame
-				        double bx = b.getBrick().getX() + b.getBrick().getWidth()  / 2.0;
-				        double by = b.getBrick().getY() + b.getBrick().getHeight() / 2.0;
+				// After brick collisions, spawn power-ups from destroyed bricks
+				for (Brick b : new ArrayList<>(bricks.getBricks())) {
+					if (!b.isBrickActive() && b.getPowerUp() != null) {
+						PowerUp p = b.getPowerUp().spawnAt(
+								b.getBrick().getX() + b.getBrick().getWidth() / 2.0,
+								b.getBrick().getY() + b.getBrick().getHeight() / 2.0
+						);
+						screen.getRoot().getChildren().add(p.getNode());
+						powerUpList.add(p);
 
-				        PowerUp pu = b.takeSpawn(bx, by);           // fresh falling instance, or null
-				        if (pu != null) {
-				            // wire context for special power-ups (if needed)
-				            if (pu instanceof BallPowerUp) {
-				                ((BallPowerUp) pu).setBallPosition(screen, balls);
-				            }
-				            // PiercePowerUp (static timer/charge) does not need wiring
-
-				            // add to scene + track
-				            if (powerUpList == null) powerUpList = new java.util.ArrayList<>();
-				            screen.getRoot().getChildren().add(pu.getNode());
-				            powerUpList.add(pu);
-				        }
-				    }
+						// Prevent future spawns from this same brick
+						b.setPowerUp(null);
+					}
 				}
-
 				 
 				 for (Slider s : sliderList) {
 					    s.checkPowerUpCollision(powerUpList, screen);
