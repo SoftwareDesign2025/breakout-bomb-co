@@ -1,7 +1,12 @@
 //Author Gavin Collins
+package Objects;
+
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import java.util.List;
+
+import Game.Screen;
+import Powerups.PowerUp;
 import javafx.scene.input.KeyCode;
 public class Slider {
    

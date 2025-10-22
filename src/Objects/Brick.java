@@ -1,7 +1,8 @@
+package Objects;
 
 import javafx.scene.shape.Rectangle;
+import Powerups.PowerUp;
 import javafx.scene.paint.Color;
-
 
 //This class contains the Brick class
 public class Brick {
@@ -9,7 +10,7 @@ public class Brick {
     private Rectangle brick;
     private int pointValue;
     private PowerUp powerUp;
-
+    private boolean unbreakable = false;
 
     public Brick(double width, double height, double startX, double startY, int pointValue, Color color, PowerUp powerUp){
         active = true;
@@ -23,10 +24,8 @@ public class Brick {
         return brick;
     }
 
-
-    public void deactivateBrick(){
-        active = false;
-        brick.setVisible(false);
+    public void setUnbreakable(boolean value) {
+        unbreakable = value;
     }
 
     public boolean isBrickActive(){
@@ -36,10 +35,16 @@ public class Brick {
     public PowerUp getPowerUp(){
         return powerUp;
     }
+
     public void setPowerUp(PowerUp powerUp){
-        this.powerUp=  powerUp;
+        this.powerUp= powerUp;
     }
 
+    public void deactivateBrick(){
+        if (unbreakable) return; 
+        active = false;
+        brick.setVisible(false);
+    }
 
     public int detectCollisionWithBall(Ball ball) {
         if (brick.getBoundsInParent().intersects(ball.getBall().getBoundsInParent())) {
@@ -48,6 +53,7 @@ public class Brick {
         }
         return 0;
     }
+
     public void connectWithBall(Ball ball) {
         double ballX = ball.getBall().getCenterX();
         double ballY = ball.getBall().getCenterY();
@@ -56,16 +62,15 @@ public class Brick {
         double brickTop = brick.getY();
         double brickBottom = brick.getY() + brick.getHeight();
 
-
         double overlapLeft = Math.abs(ballX + ball.getBall().getRadius() - brickLeft);
         double overlapRight = Math.abs(brickRight - (ballX - ball.getBall().getRadius()));
         double overlapTop = Math.abs(ballY + ball.getBall().getRadius() - brickTop);
         double overlapBottom = Math.abs(brickBottom - (ballY - ball.getBall().getRadius()));
 
-        //find which overlap happens more
+        // find which overlap happens more
         double minOverlap = Math.min(Math.min(overlapLeft, overlapRight), Math.min(overlapTop, overlapBottom));
 
-        //if hits the side of a brick
+        // if hits the side of a brick
         if (minOverlap == overlapLeft || minOverlap == overlapRight) {
             ball.reverseXDirection();
         } else {
@@ -76,13 +81,9 @@ public class Brick {
             powerUp.spawnAt(brick.getX(), brick.getY());
         }
 
-
-        deactivateBrick();
+        
+        if (!unbreakable) {
+            deactivateBrick();
+        }
     }
- 
-
-
-
-
-
 }

@@ -1,6 +1,13 @@
 // Author: Gavin Collins
+package Game;
+
 import java.util.ArrayList;
 import java.util.List;
+
+import Objects.Ball;
+import Objects.Brick;
+import Objects.Bricks;
+import Objects.Slider;
 import javafx.scene.Group;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;

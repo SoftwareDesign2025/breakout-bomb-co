@@ -1,18 +1,20 @@
+package Objects;
+import Game.Screen;
+import Powerups.PowerUp;
 
-class BallPowerUp extends PowerUp {
+public class BallPowerUp extends PowerUp {
     private Screen screen;
     private java.util.List<Ball> balls;
     private boolean finished = false;
 
-    BallPowerUp(double x, double y) { super(x, y); }
+    public BallPowerUp(double x, double y) { super(x, y); }
 
     // set right after spawning (so it knows where to put the new ball)
-    void setBallPosition(Screen screen, java.util.List<Ball> balls) {
+    public void setBallPosition(Screen screen, java.util.List<Ball> balls) {
         this.screen = screen;
         this.balls = balls;
     }
 
-    @Override
     void startEffect(Slider slider) {
         if (screen == null || balls == null || balls.isEmpty()) {
             finished = true;
@@ -48,5 +50,5 @@ class BallPowerUp extends PowerUp {
     	return new BallPowerUp(x, y); 
     	}
     
-    boolean isPowerUpOver() { return finished; }
+    public boolean isPowerUpOver() { return finished; }
 }
