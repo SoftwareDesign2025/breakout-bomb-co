@@ -86,6 +86,22 @@ public class LevelMaker {
         return Color.BLUE;
     }
 
+	private void printLevel(int[][] pattern, double startX, double startY, double brickWidth, double brickHeight, double brickGap, int pointValue, Color color) {
+        for (int row = 0; row < pattern.length; row++) {
+            for (int col = 0; col < pattern[row].length; col++) {
+                int val = randomizeBrick(pattern[row][col]);
+                if (val != 0) {
+                    double x = startX + col * (brickWidth + brickGap);
+                    double y = startY + row * (brickHeight + brickGap);
+                    Brick brick = new Brick(brickWidth, brickHeight, x, y, pointValue, color, null);
+                    brick.getBrick().setFill(getBrickColor(val));
+                    BRICKS.add(brick);
+                    ROOT.getChildren().add(brick.getBrick());
+                }
+            }
+        }
+    }
+
     public void makeLevelOne() {
         addSlider(360, 500);
         addOutOfBounds(0, 580, 800, 20, Color.RED);
@@ -125,35 +141,11 @@ public class LevelMaker {
             {0,0,0,1}
         };
 
-        for (int row = 0; row < sixPattern.length; row++) {
-            for (int col = 0; col < sixPattern[row].length; col++) {
-                int val = randomizeBrick(sixPattern[row][col]);
-                if (val != 0) {
-                    double x = startX + col * (brickWidth + brickGap);
-                    double y = startY + row * (brickHeight + brickGap);
-                    Brick brick = new Brick(brickWidth, brickHeight, x, y, pointValue, Color.BLUE, new BiggerSlider(x, y));
-                    brick.getBrick().setFill(getBrickColor(val));
-                    bricks.add(brick);
-                    root.getChildren().add(brick.getBrick());
-                }
-            }
-        }
+        printLevel(sixPattern, startX, startY, brickWidth, brickHeight, brickGap, pointValue, color);
 
         double sevenOffsetX = startX + 5 * (brickWidth + brickGap);
 
-        for (int row = 0; row < sevenPattern.length; row++) {
-            for (int col = 0; col < sevenPattern[row].length; col++) {
-                int val = randomizeBrick(sevenPattern[row][col]);
-                if (val != 0) {
-                    double x = sevenOffsetX + col * (brickWidth + brickGap);
-                    double y = startY + row * (brickHeight + brickGap);
-                    Brick brick = new Brick(brickWidth, brickHeight, x, y, pointValue, Color.BLUE,  new BiggerSlider(x, y));
-                    brick.getBrick().setFill(getBrickColor(val));
-                    bricks.add(brick);
-                    root.getChildren().add(brick.getBrick());
-                }
-            }
-        }
+        printLevel(sevenPattern, sevenOffsetX, startY, brickWidth, brickHeight, brickGap, pointValue, color);
     }
 
 
@@ -189,18 +181,7 @@ public class LevelMaker {
             };
 
       
-        for (int row = 0; row < ePattern.length; row++) {
-            for (int col = 0; col < ePattern[0].length; col++) {
-            	int val = randomizeBrick(ePattern[row][col]);
-                if (val != 0) {
-                    double x = startX + col * (brickWidth + brickGap);
-                    double y = startY + row * (brickHeight + brickGap);
-                    Brick brick = new Brick(brickWidth, brickHeight, x, y, pointValue, Color.MAROON, null);
-                    bricks.add(brick);
-                    root.getChildren().add(brick.getBrick());
-                }
-            }
-        } 
+        printLevel(ePattern, startX, startY, brickWidth, brickHeight, brickGap, pointValue, color);
     }
     //bomb
     public void makeLevelThree() {
