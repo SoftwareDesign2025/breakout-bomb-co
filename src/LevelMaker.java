@@ -1,4 +1,6 @@
 // Author: Gavin Collins
+package Game;
+
 import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.paint.Color;
@@ -7,10 +9,16 @@ import java.util.List;
 import java.util.Random;
 import java.util.ArrayList;
 
+import Objects.Brick;
+import Objects.Slider;
+import Powerups.BiggerSlider;
+import Powerups.PiercePowerUp;
+import Objects.BallPowerUp;
+
 public class LevelMaker {
-	
-	private double ballX;
-	private double ballY;
+    
+    private double ballX;
+    private double ballY;
     private final Group ROOT;
     private final List<Brick> BRICKS;
     private final ArrayList<Slider> SLIDER_LIST = new ArrayList<>();
@@ -24,28 +32,28 @@ public class LevelMaker {
     }
     
     public ArrayList<Slider> getSliderList() {
-    	return SLIDER_LIST;
+        return SLIDER_LIST;
     }
     
     public ArrayList<Rectangle> getOutOfBounds() {
-    	return OUT_OF_BOUNDS_LIST;
+        return OUT_OF_BOUNDS_LIST;
     }
     
     public void resetLevel() { 
-    	if (!NODE_LIST.isEmpty()) {
-    		ROOT.getChildren().removeAll(NODE_LIST);
-    		NODE_LIST.clear();
-    	}
-    	if (!BRICKS.isEmpty()) {
-    		for (Brick b : new ArrayList<>(BRICKS)) {
+        if (!NODE_LIST.isEmpty()) {
+            ROOT.getChildren().removeAll(NODE_LIST);
+            NODE_LIST.clear();
+        }
+        if (!BRICKS.isEmpty()) {
+            for (Brick b : new ArrayList<>(BRICKS)) {
                 ROOT.getChildren().remove(b.getBrick());
             }
             BRICKS.clear();
-    	}
-    	SLIDER_LIST.clear();
-    	OUT_OF_BOUNDS_LIST.clear();
-    	ballX  = 0;
-    	ballY = 0;
+        }
+        SLIDER_LIST.clear();
+        OUT_OF_BOUNDS_LIST.clear();
+        ballX  = 0;
+        ballY = 0;
     }
 
     public void addSlider(double startX, double startY) {
@@ -62,12 +70,13 @@ public class LevelMaker {
         ROOT.getChildren().add(r);
         NODE_LIST.add(r);
     }
+
     public double getBallX() {
-    	return ballX;
+        return ballX;
     }
     
     public double getBallY() {
-    	return ballY;
+        return ballY;
     }
 
     private int randomizeBrick(int val) {
@@ -86,7 +95,13 @@ public class LevelMaker {
         return Color.BLUE;
     }
 
-    public void printLevel(int[][] pattern, double startX, double startY, double brickWidth, double brickHeight, double brickGap, int pointValue, Color color) {
+    private void assignPowerUp(Brick brick, int val, double x, double y) {
+        if (val == 2) brick.setPowerUp(new BiggerSlider(x, y));
+        if (val == 3) brick.setPowerUp(new PiercePowerUp(x, y));
+        if (val == 4) brick.setPowerUp(new BallPowerUp(x, y));
+    }
+
+    private void printLevel(int[][] pattern, double startX, double startY, double brickWidth, double brickHeight, double brickGap, int pointValue, Color color) {
         for (int row = 0; row < pattern.length; row++) {
             for (int col = 0; col < pattern[row].length; col++) {
                 int val = randomizeBrick(pattern[row][col]);
@@ -95,6 +110,7 @@ public class LevelMaker {
                     double y = startY + row * (brickHeight + brickGap);
                     Brick brick = new Brick(brickWidth, brickHeight, x, y, pointValue, color, null);
                     brick.getBrick().setFill(getBrickColor(val));
+                    assignPowerUp(brick, val, x, y);
                     BRICKS.add(brick);
                     ROOT.getChildren().add(brick.getBrick());
                 }
@@ -105,7 +121,6 @@ public class LevelMaker {
     public void makeLevelOne() {
         addSlider(360, 500);
         addOutOfBounds(0, 580, 800, 20, Color.RED);
-
         double brickWidth = 70;
         double brickHeight = 20;
         double startX = 35;
@@ -142,22 +157,22 @@ public class LevelMaker {
             {0,0,0,1}
         };
 
-
         printLevel(sixPattern, startX, startY, brickWidth, brickHeight, brickGap, pointValue, color);
-
         double sevenOffsetX = startX + 5 * (brickWidth + brickGap);
-
         printLevel(sevenPattern, sevenOffsetX, startY, brickWidth, brickHeight, brickGap, pointValue, color);
+
+        double unbreakableX = 400; 
+        double unbreakableY = 200; 
+        Brick unbreakableBrick = new Brick(brickWidth, brickHeight, unbreakableX, unbreakableY, pointValue, Color.DARKGRAY, null);
+        unbreakableBrick.setUnbreakable(true); 
+        BRICKS.add(unbreakableBrick);
+        ROOT.getChildren().add(unbreakableBrick.getBrick());
     }
 
-
-
-
-    
     public void makeLevelTwo() {
         addOutOfBounds(0,580,800,20,Color.RED);
         addOutOfBounds(0,40,800,20,Color.RED);
-    	double brickWidth = 70;
+        double brickWidth = 70;
         double brickHeight = 20;
         double startX = 200;
         double startY = 145;
@@ -165,10 +180,10 @@ public class LevelMaker {
         int pointValue = 1;
         Color color = Color.MAROON;
         addSlider(360,540);
-    	addSlider(360, 80);
-    	ballX = 400;
-    	ballY = 500;
-    	
+        addSlider(360, 80);
+        ballX = 400;
+        ballY = 500;
+
         int [][] ePattern = {
                 {1,1,1,1,1},
                 {1,0,0,0,0},
@@ -181,79 +196,47 @@ public class LevelMaker {
                 {1,0,0,0,0},
                 {1,0,0,0,0},
                 {1,1,1,1,1},
-            };
+        };
 
-      
         printLevel(ePattern, startX, startY, brickWidth, brickHeight, brickGap, pointValue, color);
     }
-    //bomb
+
     public void makeLevelThree() {
         addOutOfBounds(0, 580, 800, 20, Color.RED);
         addSlider(360, 500);
-
         double brickWidth = 50;
         double brickHeight = 25;
         int rows = 12;
         int cols = 12;
-
         double totalWidth = cols * brickWidth;
         double startX = (800 - totalWidth) / 2;
         double startY = 100;
-
         double centerRow = rows / 2.0;
         double centerCol = cols / 2.0;
         double radius = 5.2;
         ballX = 400;
         ballY = 450;
 
-        //bomb
         for (int row = 0; row < rows; row++) {
             for (int col = 0; col < cols; col++) {
                 double dx = col - centerCol;
                 double dy = row - centerRow;
                 double dist = Math.sqrt(dx * dx + dy * dy);
-
                 if (dist < radius + 0.5) {
                     double x = startX + col * brickWidth;
                     double y = startY + row * brickHeight;
-
                     Color color;
-                    if (dist < radius * 0.5) color = Color.rgb(10, 10, 10);   // pure black center
+                    if (dist < radius * 0.5) color = Color.rgb(10, 10, 10);
                     else if (dist < radius * 0.8) color = Color.rgb(25, 25, 25);
                     else color = Color.rgb(45, 45, 45);
 
                     Brick brick = new Brick(brickWidth - 2, brickHeight - 2, x, y, 1, color, null);
+                    int val = randomizeBrick(1);
+                    assignPowerUp(brick, val, x, y);
                     BRICKS.add(brick);
                     ROOT.getChildren().add(brick.getBrick());
                 }
             }
         }
-        //fuse
-        double fuseBaseX = startX + centerCol * brickWidth + brickWidth / 4.0;
-        double fuseBaseY = startY - (brickHeight * 0.3); // lowered to meet bomb
-
-        for (int i = 0; i < 5; i++) {
-            double fx = fuseBaseX + i * 6;
-            double fy = fuseBaseY - i * (brickHeight * 0.9);
-
-            Color color;
-            if (i <= 1) color = Color.RED;
-            else if (i == 2) color = Color.ORANGE;
-            else color = Color.YELLOW;
-
-            Brick fuseBrick = new Brick(brickWidth - 20, brickHeight - 12, fx, fy, 5, color, null);
-            BRICKS.add(fuseBrick);
-            ROOT.getChildren().add(fuseBrick.getBrick());
-        }
     }
-
-
-
-
-
-
-
-
 }
-
-       
