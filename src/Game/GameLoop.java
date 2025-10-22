@@ -196,10 +196,10 @@ public class GameLoop {
 			}
 			int activeCount = 0;
 			for (Brick brick: bricks.getBricks()) {
-				if (brick.isBrickActive()) {
-					activeCount++;
-					break;
-				}
+			    if (brick.isBrickActive() && !brick.isUnbreakable()) {
+			        activeCount++;
+			        break;
+			    }
 			}
 			
 
