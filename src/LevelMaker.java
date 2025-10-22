@@ -131,7 +131,7 @@ public class LevelMaker {
                 if (val != 0) {
                     double x = startX + col * (brickWidth + brickGap);
                     double y = startY + row * (brickHeight + brickGap);
-                    Brick brick = new Brick(brickWidth, brickHeight, x, y, pointValue, Color.BLUE, null);
+                    Brick brick = new Brick(brickWidth, brickHeight, x, y, pointValue, Color.BLUE, new BiggerSlider(x, y));
                     brick.getBrick().setFill(getBrickColor(val));
                     bricks.add(brick);
                     root.getChildren().add(brick.getBrick());
@@ -147,7 +147,7 @@ public class LevelMaker {
                 if (val != 0) {
                     double x = sevenOffsetX + col * (brickWidth + brickGap);
                     double y = startY + row * (brickHeight + brickGap);
-                    Brick brick = new Brick(brickWidth, brickHeight, x, y, pointValue, Color.BLUE, null);
+                    Brick brick = new Brick(brickWidth, brickHeight, x, y, pointValue, Color.BLUE,  new BiggerSlider(x, y));
                     brick.getBrick().setFill(getBrickColor(val));
                     bricks.add(brick);
                     root.getChildren().add(brick.getBrick());
