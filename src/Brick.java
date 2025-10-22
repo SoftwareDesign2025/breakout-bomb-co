@@ -36,6 +36,10 @@ public class Brick {
     public PowerUp getPowerUp(){
         return powerUp;
     }
+    public void setPowerUp(PowerUp powerUp){
+        this.powerUp=  powerUp;
+    }
+
 
     public int detectCollisionWithBall(Ball ball) {
         if (brick.getBoundsInParent().intersects(ball.getBall().getBoundsInParent())) {
@@ -52,6 +56,7 @@ public class Brick {
         double brickTop = brick.getY();
         double brickBottom = brick.getY() + brick.getHeight();
 
+
         double overlapLeft = Math.abs(ballX + ball.getBall().getRadius() - brickLeft);
         double overlapRight = Math.abs(brickRight - (ballX - ball.getBall().getRadius()));
         double overlapTop = Math.abs(ballY + ball.getBall().getRadius() - brickTop);
@@ -67,6 +72,17 @@ public class Brick {
             ball.reverseYDirection();
         }
 
+        if (powerUp != null){
+            powerUp.spawnAt(brick.getX(), brick.getY());
+        }
+
+
         deactivateBrick();
     }
+ 
+
+
+
+
+
 }
