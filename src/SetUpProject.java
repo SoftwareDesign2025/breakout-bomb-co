@@ -25,7 +25,7 @@ public class SetUpProject extends Application {
     	Ball ball = new Ball(10, 400, 400);
         Screen screen = new Screen(ball);
         ArrayList<PowerUp> powerUpList = new ArrayList<>();
-        gameLoop = new GameLoop(ball, screen);
+        gameLoop = new GameLoop(screen);
         Group root = screen.getRoot();
         myScene = new Scene(root, GAME_WIDTH, GAME_HEIGHT, Color.AZURE);
         myScene.setOnKeyPressed(e -> gameLoop.handleKeyInput(e.getCode()));
