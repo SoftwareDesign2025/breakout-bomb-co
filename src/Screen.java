@@ -10,11 +10,11 @@ import javafx.scene.shape.Rectangle;
 public class Screen {
    private Group root;
    private Text scoreboard;
-   private Slider slider;
    private Rectangle background;
-   private Rectangle outOfBounds;
    private Brick brick;
-   private List<Brick> bricks;
+   private List<Brick> bricksList;
+   private LevelMaker levelMaker;
+   private Bricks bricks;
 
    public Screen(Ball ball) {
        root = new Group();
@@ -27,28 +27,19 @@ public class Screen {
        scoreboard.setFont(new Font(23));
        root.getChildren().add(scoreboard);
 
-       slider = new Slider(360);
-       root.getChildren().add(slider.getNode());
-
-       outOfBounds = new Rectangle(0, 580, 800, 20);
-       outOfBounds.setFill(Color.RED);
-       root.getChildren().add(outOfBounds);
-
-       bricks = new ArrayList<>();
+       bricksList = new ArrayList<>();
 
        // Now LevelMaker handles all level creation
-       LevelMaker levelMaker = new LevelMaker(root, bricks);
-       levelMaker.makeLevelOne();
-
-       root.getChildren().add(ball.getBall());
+       levelMaker = new LevelMaker(root, bricksList);
+       bricks = new Bricks(bricksList);
    }
 
    // Everything else remains exactly the same...
-   public List<Brick> getBricks() { return bricks; }
+   public Bricks getBricks() { return bricks; }
    public Group getRoot() { return root; }
-   public Slider getSlider() { return slider; }
+   public ArrayList<Slider> getSlider() { return levelMaker.getSliderList(); }
    public Brick getBrick() { return brick; }
-   public Rectangle getOutOfBounds() { return outOfBounds; }
+   public ArrayList<Rectangle> getOutOfBounds() { return levelMaker.getOutOfBounds(); }
 
    public void checkBallToWall(Ball ball) {
        double ballX = ball.getBall().getCenterX();
@@ -63,7 +54,12 @@ public class Screen {
    }
 
    public boolean ballOutOfBounds(Ball ball) {
-       return ball.getBall().getBoundsInParent().intersects(outOfBounds.getBoundsInParent());
+	   for (Rectangle bounds: levelMaker.getOutOfBounds()) {
+		   if (ball.getBall().getBoundsInParent().intersects(bounds.getBoundsInParent())) {
+			   return true;
+		   }
+	   }
+	   return false;
    }
 
    public void displayScoreBoard(int HighScore,int score, int lives) {
@@ -83,17 +79,29 @@ public class Screen {
        win.setFont(new Font(36));
        root.getChildren().add(win);
    }
-
-   public int checkBrickCollisions(Ball ball){
-       int pointsUpdate = 0;
-       for (Brick brick : bricks) {
-           if(brick.isBrickActive()) {
-               pointsUpdate += brick.detectCollisionWithBall(ball);
-               if (pointsUpdate > 0) {
-                   return pointsUpdate;
-               }
-           }
-       }
-       return pointsUpdate;
+   public void levelClearScreen() {
+       Text lvlClear = new Text(300, 300, "LEVEL CLEARED!");
+       lvlClear.setFill(Color.GREEN);
+       lvlClear.setFont(new Font(36));
+       root.getChildren().add(lvlClear);
    }
+   
+   public void loadLevel(int levelNumber) {
+		levelMaker.resetLevel();
+		
+		if (levelNumber == 1) {
+			levelMaker.makeLevelOne();
+		}
+		else if (levelNumber == 2) {
+			levelMaker.makeLevelTwo();
+		}
+		else if (levelNumber == 3) {
+			levelMaker.makeLevelThree();
+		}
+		
+	}
+
+   public LevelMaker getLevelMaker() {
+	    return levelMaker;
+	}
 }

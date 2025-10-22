@@ -4,15 +4,17 @@ import javafx.scene.shape.Rectangle;
 import java.util.List;
 import javafx.scene.input.KeyCode;
 public class Slider {
-   public static final double YLOCATION = 500;
+   
    public static final double SPEED = 20.0;
    public static final double WIDTH = 80;
    public static final double HEIGHT = 20;
+   private double yLocation;
    private double xLocation;
    private Rectangle slider;
-   public Slider(double startX) {
+   public Slider(double startX, double startY) {
        this.xLocation = startX;
-       slider = new Rectangle(xLocation, YLOCATION, WIDTH, HEIGHT);
+       this.yLocation = startY;
+       slider = new Rectangle(xLocation, yLocation, WIDTH, HEIGHT);
        slider.setFill(Color.BLACK);
    }
    public void moveSideToSide(boolean goLeft) {
