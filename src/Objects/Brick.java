@@ -28,6 +28,10 @@ public class Brick {
         unbreakable = value;
     }
 
+    public boolean isUnbreakable() {
+        return unbreakable;
+    }
+
     public boolean isBrickActive(){
         return active;
     }
