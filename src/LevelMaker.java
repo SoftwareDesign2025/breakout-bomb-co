@@ -159,7 +159,7 @@ public class LevelMaker {
 
 
 
-    
+    //E
     public void makeLevelTwo() {
         addOutOfBounds(0,580,800,20,Color.RED);
         addOutOfBounds(0,40,800,20,Color.RED);
@@ -195,7 +195,7 @@ public class LevelMaker {
                 if (val != 0) {
                     double x = startX + col * (brickWidth + brickGap);
                     double y = startY + row * (brickHeight + brickGap);
-                    Brick brick = new Brick(brickWidth, brickHeight, x, y, pointValue, Color.BLUE, null);
+                    Brick brick = new Brick(brickWidth, brickHeight, x, y, pointValue, Color.MAROON, null);
                     bricks.add(brick);
                     root.getChildren().add(brick.getBrick());
                 }
