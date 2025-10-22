@@ -9,7 +9,6 @@ public class Brick {
     private Rectangle brick;
     private int pointValue;
     private PowerUp powerUp;
-    private boolean justHit = false;
 
 
     public Brick(double width, double height, double startX, double startY, int pointValue, Color color, PowerUp powerUp){
@@ -27,7 +26,6 @@ public class Brick {
 
     public void deactivateBrick(){
         active = false;
-        justHit = true;
         brick.setVisible(false);
     }
 
@@ -53,8 +51,6 @@ public class Brick {
         double brickRight = brick.getX() + brick.getWidth();
         double brickTop = brick.getY();
         double brickBottom = brick.getY() + brick.getHeight();
-        boolean piercing = PiercePowerUp.isActive();
-        
 
         double overlapLeft = Math.abs(ballX + ball.getBall().getRadius() - brickLeft);
         double overlapRight = Math.abs(brickRight - (ballX - ball.getBall().getRadius()));
@@ -65,31 +61,12 @@ public class Brick {
         double minOverlap = Math.min(Math.min(overlapLeft, overlapRight), Math.min(overlapTop, overlapBottom));
 
         //if hits the side of a brick
-        if (!piercing) {
         if (minOverlap == overlapLeft || minOverlap == overlapRight) {
             ball.reverseXDirection();
         } else {
             ball.reverseYDirection();
         }
-        }
 
         deactivateBrick();
     }
- 
-    public boolean consumeJustHit() {
-        if (justHit) {
-            justHit = false;  // one-shot
-            return true;
-        }
-        return false;
-    }
-
-   public PowerUp takeSpawn(double x, double y) {
-        if (powerUp == null) return null;
-        PowerUp spawned = powerUp.spawnAt(x, y); // calls the child override
-        powerUp = null;                          
-        return spawned;
-    }
-
-
 }

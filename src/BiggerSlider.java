@@ -1,16 +1,21 @@
-
+// BiggerSlider.java
 import javafx.scene.Node;
 
 class BiggerSlider extends PowerUp {
-    private final double BIG_SIZE = 1.5;      // bigger state
-    private final int DURATION_FRAMES = 600;  // ~5s @ 60 FPS
+    // widen factor and duration (in frames)
+    private double bigScale = 1.5;          // 50% wider
+    private double originalScale = 1.0;
+    private int durationFrames = 300;     // ~5s at 60 FPS
 
+    // to restore later
     private Slider slider;
-    private boolean active = false;   // currently big?
+    boolean active = false;
     private int framesLeft = 0;
-    private boolean over = false;
+    private boolean powerUpOver = false; //
 
-    BiggerSlider(double x, double y) { super(x, y); }
+    BiggerSlider(double x, double y) {
+        super(x, y);
+    }
 
     @Override
     void startEffect(Slider slider) {
@@ -18,37 +23,40 @@ class BiggerSlider extends PowerUp {
         Node paddle = slider.getNode();
 
         if (!active) {
-            paddle.setScaleX(BIG_SIZE); // first time: go big
-            active = true;
+        	//make the slider bigger
+        	paddle.setScaleX(bigScale);
+        	active = true;
         }
-        // overlap pickup: just reset the same timer
-        framesLeft = DURATION_FRAMES;
-        over = false;
+        framesLeft = durationFrames;
+        powerUpOver = false;
+    }
+    
+    void tick() {
+    	if(!active) return;
+    	if (framesLeft > 0) {
+    		framesLeft--;
+    		}
+    	if (framesLeft < 1) {
+    		stopPowerUp();
+    	}
     }
 
-    void tick() {
-        if (!active) return;
-        if (framesLeft > 0) {
-            framesLeft--;
-            if (framesLeft == 0) {
-                stopPowerUp();
-            }
-        }
-    }
-    @Override public PowerUp spawnAt(double x, double y) { 
-    	return new BiggerSlider(x, y); 
-    	}
-    
     @Override
     public void stopPowerUp() {
+        // restore the paddle scale if we had applied it
         if (!active) return;
         active = false;
         if (slider != null) {
-            slider.getNode().setScaleX(1.0); // back to normal
+            slider.getNode().setScaleX(originalScale);
         }
-        over = true;
+        powerUpOver = true;
         super.stopPowerUp();
     }
+    boolean isPowerUpOver(){
+    	return powerUpOver;
+    }
 
-    boolean isPowerUpOver() { return over; }
+    // optional tuning if you need it from elsewhere
+    
+    void setDurationFrames(int f)    { durationFrames = f; }
 }

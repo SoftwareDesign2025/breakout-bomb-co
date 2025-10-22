@@ -58,16 +58,18 @@ public class Slider {
    }
   
    public void checkPowerUpCollision(List<PowerUp> activePowerUps, Screen screen) {
-	    for (int i = activePowerUps.size() - 1; i >= 0; i--) {
-	        PowerUp pu = activePowerUps.get(i);
-	        if (pu.getNode().getBoundsInParent().intersects(slider.getBoundsInParent())) {
-	            pu.onPickup(this);                          // start the effect
-	            screen.getRoot().getChildren().remove(pu.getNode()); // hide the circle
-	            // DO NOT remove pu from the list here — it still needs to tick
-	        }
-	    }
-	}
-
+       for (int i = activePowerUps.size() - 1; i >= 0; i--) {
+           PowerUp pu = activePowerUps.get(i);
+           if (pu.getNode().getBoundsInParent().intersects(slider.getBoundsInParent())) {
+               // tell the power-up it was picked up
+               pu.onPickup(this);
+               // remove the visual node from the screen
+               screen.getRoot().getChildren().remove(pu.getNode());
+               // remove it from the active list so it stops updating
+               activePowerUps.remove(i);
+           }
+       }
+   }
   
    public Rectangle getNode() {
        return slider;

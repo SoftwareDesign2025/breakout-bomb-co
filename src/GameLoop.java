@@ -32,7 +32,6 @@ public class GameLoop {
         screen.loadLevel(level);
         this.sliderList = screen.getSlider();
         this.balls = new ArrayList<>();
-        this.powerUpList = new ArrayList<>();
         freshBall = new Ball(10, levelMaker.getBallX(), levelMaker.getBallY());
         balls.add(freshBall);
         screen.getRoot().getChildren().add(freshBall.getBall());
@@ -55,49 +54,6 @@ public class GameLoop {
 			bricks.getBricks().clear();
 			
 		}
-		if (code == KeyCode.SPACE) {
-		    PiercePowerUp.tryActivate();
-		}
-		// in GameLoop.handleKeyInput or a temporary mouse handler:
-		// --- TEMPORARY TEST POWER-UP KEYS ---
-
-		// B = Spawn Bigger Slider power-up
-		if (code == KeyCode.Z) {
-		    double bx = 400;
-		    double by = 200;
-		    PowerUp pu = new BiggerSlider(bx, by);
-		    if (powerUpList == null) powerUpList = new ArrayList<>();
-		    screen.getRoot().getChildren().add(pu.getNode());
-		    powerUpList.add(pu);
-		    System.out.println("[TEST] Spawned BiggerSlider at (" + bx + ", " + by + ")");
-		}
-
-		// N = Spawn a second ball immediately (BallPowerUp)
-		if (code == KeyCode.X) {
-		    double bx = 400;
-		    double by = 200;
-		    BallPowerUp pu = new BallPowerUp(bx, by);
-		    pu.setBallPosition(screen, balls);
-		    if (powerUpList == null) powerUpList = new ArrayList<>();
-		    screen.getRoot().getChildren().add(pu.getNode());
-		    powerUpList.add(pu);
-		    System.out.println("[TEST] Spawned BallPowerUp at (" + bx + ", " + by + ")");
-		}
-
-		// M = Spawn Pierce Power-up (pickup will add charge)
-		if (code == KeyCode.C) {
-		    double bx = 400;
-		    double by = 200;
-		    PowerUp pu = new PiercePowerUp(bx, by);
-		    if (powerUpList == null) powerUpList = new ArrayList<>();
-		    screen.getRoot().getChildren().add(pu.getNode());
-		    powerUpList.add(pu);
-		    System.out.println("[TEST] Spawned PiercePowerUp at (" + bx + ", " + by + ")");
-		}
-
-	
-
-
     }
 	
 	public void step(double elapsedTime) {
@@ -110,70 +66,7 @@ public class GameLoop {
 					slider.checkSliderCollision(ball);
 				}
 				screen.checkBallToWall(ball);
-				int prevPoints = points;
 				points += bricks.checkBrickCollisions(ball);
-				
-				for (Brick b : bricks.getBricks()) {
-				    if (b.consumeJustHit()) {                 // <-- event: broke this frame
-				        double bx = b.getBrick().getX() + b.getBrick().getWidth()  / 2.0;
-				        double by = b.getBrick().getY() + b.getBrick().getHeight() / 2.0;
-
-				        PowerUp pu = b.takeSpawn(bx, by);           // fresh falling instance, or null
-				        if (pu != null) {
-				            // wire context for special power-ups (if needed)
-				            if (pu instanceof BallPowerUp) {
-				                ((BallPowerUp) pu).setBallPosition(screen, balls);
-				            }
-				            // PiercePowerUp (static timer/charge) does not need wiring
-
-				            // add to scene + track
-				            if (powerUpList == null) powerUpList = new java.util.ArrayList<>();
-				            screen.getRoot().getChildren().add(pu.getNode());
-				            powerUpList.add(pu);
-				        }
-				    }
-				}
-
-				 
-				 for (Slider s : sliderList) {
-					    s.checkPowerUpCollision(powerUpList, screen);
-					}
-				 PiercePowerUp.tickGlobal();
-
-				 for (int i = powerUpList.size() - 1; i >= 0; i--) {
-					    PowerUp pu = powerUpList.get(i);
-
-					    // falling (only if not yet picked up)
-					    pu.update_position();
-
-					    // if never picked up and it falls off the screen, remove it
-					    if (!pu.isactivated() && pu.getNode().getBoundsInParent().getMinY() > 600) {
-					        screen.getRoot().getChildren().remove(pu.getNode());
-					        powerUpList.remove(i);
-					        continue;
-					    }
-
-					    // drive child timers / complete effects
-					    if (pu instanceof BiggerSlider) {
-					        BiggerSlider bs = (BiggerSlider) pu;
-					        bs.tick();
-					        if (bs.isPowerUpOver()) {
-					            powerUpList.remove(i);
-					        }
-					    } else if (pu instanceof BallPowerUp) {
-					        // BallPowerUp finishes instantly after spawning the ball (see class below)
-					        if (pu.isPowerUpOver()) {
-					            powerUpList.remove(i);
-					        }
-					    } else if (pu instanceof PiercePowerUp) {
-					        // PierceCharge grants a charge immediately; it’s done right away
-					        if (pu.isPowerUpOver()) {
-					            powerUpList.remove(i);
-					        }
-					    }
-					}
-
-				
 				if (screen.ballOutOfBounds(ball)) {
 					toRemove.add(ball);
 				}
@@ -182,7 +75,6 @@ public class GameLoop {
 	            screen.getRoot().getChildren().remove(ball.getBall());
 	            balls.remove(ball);
 	        }
-			
 			if (balls.isEmpty()) {
 				resetBall();
 			}
@@ -197,8 +89,6 @@ public class GameLoop {
 					break;
 				}
 			}
-			
-
 			if (activeCount == 0) {
 				level++;
 				if (level <= 3) {
