@@ -38,6 +38,7 @@ public class PowerUp {
 	}
 	
 	
+	
 	/*
 	 * original design for unstructured levels
 	//if brick is destroyed, drop power up DROP_RATE of the time
@@ -96,6 +97,13 @@ public class PowerUp {
 	Circle getNode() { 
 		return powerUp;
 		}
+
+
+
+	public PowerUp spawnAt(double x, double y) {
+		 
+		return new PowerUp(x,y);
+	}
 }
 	
 

@@ -1,38 +1,52 @@
-import javafx.scene.paint.Color;
-import javafx.scene.shape.Circle;
 
-class BallPowerUp extends PowerUp{
-	 private Screen screen;
-	 private Slider slider;
-	 private java.util.List<Ball> balls;
-	 private Ball spawned;
-	 private boolean finished = false;
-	 
-	 BallPowerUp(double x, double y){
-		 super(x,y);
-		}
-	 
-	 void setBallPosition(Screen screen,java.util.List<Ball> balls) {
-		 this.screen = screen;
-		 this.balls = balls;
-	 }
-	 
-	 void startEffect(SLider slider) {
-		 if (screen == null || balls == null || balls.isEmpty()) {
-			 finished = true;
-			 return;
-		 }
-	 }
-	 
-	 ;
-	 double bx = one.getBall().getCenterX();
-	 double by = one.getBall().getCenterY();
-     double r  = one.getBall().getRadius();
-     
-	 
-	 addedBall = new Ball(bx,by,(int)r);
-	 addedBall.changeSpeed(1);
-	 addedBall.changeYDirection(1);
-	 addedBall.changeXDirection(0);
-	 
+class BallPowerUp extends PowerUp {
+    private Screen screen;
+    private java.util.List<Ball> balls;
+    private boolean finished = false;
+
+    BallPowerUp(double x, double y) { super(x, y); }
+
+    // set right after spawning (so it knows where to put the new ball)
+    void setBallPosition(Screen screen, java.util.List<Ball> balls) {
+        this.screen = screen;
+        this.balls = balls;
+    }
+
+    @Override
+    void startEffect(Slider slider) {
+        if (screen == null || balls == null || balls.isEmpty()) {
+            finished = true;
+            return;
+        }
+        Ball one = balls.get(0); // main ball
+        double bx = one.getBall().getCenterX();
+        double by = one.getBall().getCenterY();
+        double r  = one.getBall().getRadius();
+
+        Ball addedBall = new Ball((int) r, bx, by);
+        addedBall.changeSpeed(1);
+        addedBall.changeXDirection(randomDirection());
+        addedBall.changeYDirection(randomDirection());
+
+        screen.getRoot().getChildren().add(addedBall.getBall());
+        balls.add(addedBall);
+
+        finished = true; 
+        super.stopPowerUp();
+    }
+
+    public double randomDirection() {
+        if (Math.random() < 0.5) {
+          
+            return -2 + Math.random() * .3;
+        } else {
+           
+            return 1 + Math.random() * .3;
+        }
+    }
+    @Override public PowerUp spawnAt(double x, double y) { 
+    	return new BallPowerUp(x, y); 
+    	}
+    
+    boolean isPowerUpOver() { return finished; }
 }
