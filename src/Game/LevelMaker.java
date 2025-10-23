@@ -16,7 +16,7 @@ import Powerups.PiercePowerUp;
 import Objects.BallPowerUp;
 
 public class LevelMaker {
-    
+
     private double ballX;
     private double ballY;
     private final Group ROOT;
@@ -30,16 +30,16 @@ public class LevelMaker {
         this.ROOT = root;
         this.BRICKS = bricks;
     }
-    
+
     public ArrayList<Slider> getSliderList() {
         return SLIDER_LIST;
     }
-    
+
     public ArrayList<Rectangle> getOutOfBounds() {
         return OUT_OF_BOUNDS_LIST;
     }
-    
-    public void resetLevel() { 
+
+    public void resetLevel() {
         if (!NODE_LIST.isEmpty()) {
             ROOT.getChildren().removeAll(NODE_LIST);
             NODE_LIST.clear();
@@ -74,7 +74,7 @@ public class LevelMaker {
     public double getBallX() {
         return ballX;
     }
-    
+
     public double getBallY() {
         return ballY;
     }
@@ -88,11 +88,11 @@ public class LevelMaker {
         return 1;
     }
 
-    private Color getBrickColor(int val) {
+    private Color getBrickColor(int val, Color color) {
         if (val == 2) return Color.YELLOW;
         if (val == 3) return Color.LIMEGREEN;
         if (val == 4) return Color.BLACK;
-        return Color.BLUE;
+        return color;
     }
 
     private void assignPowerUp(Brick brick, int val, double x, double y) {
@@ -101,7 +101,7 @@ public class LevelMaker {
         if (val == 4) brick.setPowerUp(new BallPowerUp(x, y));
     }
 
-    private void printLevel(int[][] pattern, double startX, double startY, double brickWidth, double brickHeight, double brickGap, int pointValue, Color color) {
+    private void printLevel(int[][] pattern, double startX, double startY, double brickWidth, double brickHeight, double brickGap, int pointValue, Color color, boolean colorChange) {
         for (int row = 0; row < pattern.length; row++) {
             for (int col = 0; col < pattern[row].length; col++) {
                 int val = randomizeBrick(pattern[row][col]);
@@ -109,7 +109,9 @@ public class LevelMaker {
                     double x = startX + col * (brickWidth + brickGap);
                     double y = startY + row * (brickHeight + brickGap);
                     Brick brick = new Brick(brickWidth, brickHeight, x, y, pointValue, color, null);
-                    brick.getBrick().setFill(getBrickColor(val));
+                    if (colorChange) {
+                        brick.getBrick().setFill(getBrickColor(val, color));
+                    }
                     assignPowerUp(brick, val, x, y);
                     BRICKS.add(brick);
                     ROOT.getChildren().add(brick.getBrick());
@@ -130,6 +132,7 @@ public class LevelMaker {
         Color color = Color.BLUE;
         ballX = 400;
         ballY = 400;
+        boolean colorChange = true;
 
         int[][] sixPattern = {
             {1,1,1,1},
@@ -157,14 +160,14 @@ public class LevelMaker {
             {0,0,0,1}
         };
 
-        printLevel(sixPattern, startX, startY, brickWidth, brickHeight, brickGap, pointValue, color);
+        printLevel(sixPattern, startX, startY, brickWidth, brickHeight, brickGap, pointValue, color, colorChange);
         double sevenOffsetX = startX + 5 * (brickWidth + brickGap);
-        printLevel(sevenPattern, sevenOffsetX, startY, brickWidth, brickHeight, brickGap, pointValue, color);
+        printLevel(sevenPattern, sevenOffsetX, startY, brickWidth, brickHeight, brickGap, pointValue, color, colorChange);
 
-        double unbreakableX = 400; 
-        double unbreakableY = 200; 
+        double unbreakableX = 400;
+        double unbreakableY = 200;
         Brick unbreakableBrick = new Brick(brickWidth, brickHeight, unbreakableX, unbreakableY, pointValue, Color.DARKGRAY, null);
-        unbreakableBrick.setUnbreakable(true); 
+        unbreakableBrick.setUnbreakable(true);
         BRICKS.add(unbreakableBrick);
         ROOT.getChildren().add(unbreakableBrick.getBrick());
     }
@@ -183,6 +186,7 @@ public class LevelMaker {
         addSlider(360, 80);
         ballX = 400;
         ballY = 500;
+        boolean colorChange = false;
 
         int [][] ePattern = {
                 {1,1,1,1,1},
@@ -198,7 +202,7 @@ public class LevelMaker {
                 {1,1,1,1,1},
         };
 
-        printLevel(ePattern, startX, startY, brickWidth, brickHeight, brickGap, pointValue, color);
+        printLevel(ePattern, startX, startY, brickWidth, brickHeight, brickGap, pointValue, color, colorChange);
     }
 
     public void makeLevelThree() {
