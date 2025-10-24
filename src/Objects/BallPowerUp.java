@@ -3,6 +3,8 @@ package Objects;
 import Game.Screen;
 import Powerups.PowerUp;
 
+import java.util.ArrayList;
+
 public class BallPowerUp extends PowerUp {
     private Screen screen;
     private java.util.List<Ball> balls;
@@ -16,7 +18,7 @@ public class BallPowerUp extends PowerUp {
         this.balls = balls;
     }
 
-    void startEffect(Slider slider) {
+    void startEffect(ArrayList<Slider> sliders) {
         if (screen == null || balls == null || balls.isEmpty()) {
             finished = true;
             return;
@@ -56,8 +58,8 @@ public class BallPowerUp extends PowerUp {
     public boolean isPowerUpOver() { return finished; }
 
     @Override
-    public void onPickup(Slider slider) {
-        startEffect(slider);
+    public void onPickup(ArrayList<Slider> sliders) {
+        startEffect(sliders);
     }
 
 }
