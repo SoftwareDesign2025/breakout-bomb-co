@@ -135,6 +135,10 @@ public class GameLoop {
 								b.getBrick().getX() + b.getBrick().getWidth() / 2.0,
 								b.getBrick().getY() + b.getBrick().getHeight() / 2.0
 						);
+						if (p instanceof BallPowerUp) {
+							((BallPowerUp) p).setBallPosition(screen, balls);
+						}
+
 						screen.getRoot().getChildren().add(p.getNode());
 						powerUpList.add(p);
 

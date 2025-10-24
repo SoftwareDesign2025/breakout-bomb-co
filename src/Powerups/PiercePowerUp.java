@@ -32,7 +32,7 @@ public class PiercePowerUp extends PowerUp {
     }
 
     // Brick uses this to decide whether to skip the bounce
-    static boolean isActive() {
+    public static boolean isActive() {
         return framesLeft > 0;
     }
 
