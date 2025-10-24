@@ -1,6 +1,7 @@
 package Powerups;
 import Objects.Ball;
 import Objects.Slider;
+import javafx.scene.paint.Color;
 
 import java.util.ArrayList;
 
@@ -11,7 +12,10 @@ public class PiercePowerUp extends PowerUp {
     private Ball ball;
     private boolean finished = false;
 
-    public PiercePowerUp(double x, double y) { super(x, y); }
+    public PiercePowerUp(double x, double y) {
+        super(x, y);
+        getNode().setFill(Color.ORANGERED);
+    }
 
     @Override
     void startEffect(ArrayList<Slider> sliders) {

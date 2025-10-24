@@ -2,6 +2,7 @@
 package Objects;
 import Game.Screen;
 import Powerups.PowerUp;
+import javafx.scene.paint.Color;
 
 import java.util.ArrayList;
 
@@ -10,7 +11,10 @@ public class BallPowerUp extends PowerUp {
     private java.util.List<Ball> balls;
     private boolean finished = false;
 
-    public BallPowerUp(double x, double y) { super(x, y); }
+    public BallPowerUp(double x, double y) {
+        super(x, y);
+        getNode().setFill(Color.BLUEVIOLET);
+    }
 
     // set right after spawning (so it knows where to put the new ball)
     public void setBallPosition(Screen screen, java.util.List<Ball> balls) {
