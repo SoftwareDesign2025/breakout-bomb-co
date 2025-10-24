@@ -61,17 +61,6 @@ public class Slider {
            
        }
    }
-  
-   public void checkPowerUpCollision(List<PowerUp> activePowerUps, Screen screen) {
-	    for (int i = activePowerUps.size() - 1; i >= 0; i--) {
-	        PowerUp pu = activePowerUps.get(i);
-	        if (pu.getNode().getBoundsInParent().intersects(slider.getBoundsInParent())) {
-	            pu.onPickup(this);                          // start the effect
-	            screen.getRoot().getChildren().remove(pu.getNode()); // hide the circle
-	            // DO NOT remove pu from the list here — it still needs to tick
-	        }
-	    }
-	}
 
   
    public Rectangle getNode() {
