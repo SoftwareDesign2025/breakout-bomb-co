@@ -47,8 +47,21 @@ public class Screen {
    public ArrayList<Slider> getSlider() { return levelMaker.getSliderList(); }
    public Brick getBrick() { return brick; }
    public ArrayList<Rectangle> getOutOfBounds() { return levelMaker.getOutOfBounds(); }
+    private List<Ball> queuedBalls = new ArrayList<>();
 
-   public void checkBallToWall(Ball ball) {
+    public void queueNewBall(Ball b) {
+        queuedBalls.add(b);
+    }
+
+    public List<Ball> consumeQueuedBalls() {
+        List<Ball> result = new ArrayList<>(queuedBalls);
+        queuedBalls.clear();
+        return result;
+    }
+
+
+
+    public void checkBallToWall(Ball ball) {
        double ballX = ball.getBall().getCenterX();
        double ballY = ball.getBall().getCenterY();
        double radius = ball.getBall().getRadius();

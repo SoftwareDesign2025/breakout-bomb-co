@@ -2,6 +2,8 @@ package Game;
 
 import javafx.stage.Stage;
 import javafx.scene.input.KeyCode;
+
+import java.util.List;
 import java.util.Scanner;
 
 import Objects.Ball;
@@ -116,6 +118,8 @@ public class GameLoop {
 		screen.displayScoreBoard(highScore, points, lives);
 		if (movingBall && !gameOver) {
 			ArrayList<Ball> toRemove = new ArrayList<>();
+			List<Ball> newBalls = new ArrayList<>();
+
 			for (Ball ball: balls) {
 				ball.updateBallLocation();
 				for (Slider slider: sliderList) {
@@ -182,6 +186,8 @@ public class GameLoop {
 					toRemove.add(ball);
 				}
 			}
+			balls.addAll(screen.consumeQueuedBalls());
+
 			for (Ball ball : toRemove) {
 	            screen.getRoot().getChildren().remove(ball.getBall());
 	            balls.remove(ball);

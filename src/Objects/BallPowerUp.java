@@ -32,7 +32,9 @@ public class BallPowerUp extends PowerUp {
         addedBall.changeYDirection(randomDirection());
 
         screen.getRoot().getChildren().add(addedBall.getBall());
-        balls.add(addedBall);
+        if (screen != null) {
+            screen.queueNewBall(addedBall);
+        }
 
         finished = true; 
         super.stopPowerUp();
@@ -52,4 +54,10 @@ public class BallPowerUp extends PowerUp {
     	}
     
     public boolean isPowerUpOver() { return finished; }
+
+    @Override
+    public void onPickup(Slider slider) {
+        startEffect(slider);
+    }
+
 }
