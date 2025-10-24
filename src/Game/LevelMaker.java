@@ -272,7 +272,7 @@ public class LevelMaker {
                     y,
                     5,
                     color,
-                    null
+                    powerUp
             );
             BRICKS.add(fuseBrick);
             ROOT.getChildren().add(fuseBrick.getBrick());
