@@ -1,13 +1,16 @@
+
 package Powerups;
 
 import Objects.Slider;
 import javafx.scene.Node;
 
+import java.util.ArrayList;
+
 public class BiggerSlider extends PowerUp {
     private final double BIG_SIZE = 1.5;      // bigger state
     private final int DURATION_FRAMES = 600;  // ~5s @ 60 FPS
 
-    private Slider slider;
+    private ArrayList<Slider> sliders;
     private boolean active = false;   // currently big?
     private int framesLeft = 0;
     private boolean over = false;
@@ -15,15 +18,20 @@ public class BiggerSlider extends PowerUp {
     public BiggerSlider(double x, double y) { super(x, y); }
 
     @Override
-    void startEffect(Slider slider) {
-        this.slider = slider;
-        Node paddle = slider.getNode();
+    void startEffect(ArrayList<Slider> sliders) {
+        this.sliders = (sliders != null) ? sliders : new ArrayList<>();
+        if (this.sliders.isEmpty()) return;
 
-        if (!active) {
-            paddle.setScaleX(BIG_SIZE); // first time: go big
-            active = true;
+        if (active) {
+            framesLeft = DURATION_FRAMES;
+            over = false;
+            return;
         }
-        // overlap pickup: just reset the same timer
+
+        active = true;
+        for (Slider slider : this.sliders) {
+            slider.getNode().setScaleX(BIG_SIZE);
+        }
         framesLeft = DURATION_FRAMES;
         over = false;
     }
@@ -45,8 +53,10 @@ public class BiggerSlider extends PowerUp {
     public void stopPowerUp() {
         if (!active) return;
         active = false;
-        if (slider != null) {
-            slider.getNode().setScaleX(1.0); // back to normal
+        for (Slider slider : sliders) {
+            if (slider != null) {
+                slider.getNode().setScaleX(1.0);
+            }
         }
         over = true;
         super.stopPowerUp();

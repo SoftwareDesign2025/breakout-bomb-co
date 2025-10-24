@@ -2,6 +2,8 @@ package Game;
 
 import javafx.stage.Stage;
 import javafx.scene.input.KeyCode;
+
+import java.util.List;
 import java.util.Scanner;
 
 import Objects.Ball;
@@ -24,7 +26,7 @@ public class GameLoop {
 	private Screen screen;
 	private ArrayList<Slider> sliderList;
 	private ArrayList<PowerUp> powerUpList;
-	private int lives = 3;
+	private int lives = 5;
 	private int points = 0;
 	private int highScore;
 	private int level = 1;
@@ -116,6 +118,8 @@ public class GameLoop {
 		screen.displayScoreBoard(highScore, points, lives);
 		if (movingBall && !gameOver) {
 			ArrayList<Ball> toRemove = new ArrayList<>();
+			List<Ball> newBalls = new ArrayList<>();
+
 			for (Ball ball: balls) {
 				ball.updateBallLocation();
 				for (Slider slider: sliderList) {
@@ -131,6 +135,10 @@ public class GameLoop {
 								b.getBrick().getX() + b.getBrick().getWidth() / 2.0,
 								b.getBrick().getY() + b.getBrick().getHeight() / 2.0
 						);
+						if (p instanceof BallPowerUp) {
+							((BallPowerUp) p).setBallPosition(screen, balls);
+						}
+
 						screen.getRoot().getChildren().add(p.getNode());
 						powerUpList.add(p);
 
@@ -140,7 +148,14 @@ public class GameLoop {
 				}
 				 
 				 for (Slider s : sliderList) {
-					    s.checkPowerUpCollision(powerUpList, screen);
+					 for (int i = powerUpList.size() - 1; i >= 0; i--) {
+						 PowerUp pu = powerUpList.get(i);
+						 if (pu.getNode().getBoundsInParent().intersects(s.getNode().getBoundsInParent())) {
+							 pu.onPickup(sliderList);                          // start the effect
+							 screen.getRoot().getChildren().remove(pu.getNode()); // hide the circle
+							 // DO NOT remove pu from the list here — it still needs to tick
+						 }
+					 }
 					}
 				 PiercePowerUp.tickGlobal();
 
@@ -182,6 +197,8 @@ public class GameLoop {
 					toRemove.add(ball);
 				}
 			}
+			balls.addAll(screen.consumeQueuedBalls());
+
 			for (Ball ball : toRemove) {
 	            screen.getRoot().getChildren().remove(ball.getBall());
 	            balls.remove(ball);
@@ -206,19 +223,7 @@ public class GameLoop {
 			if (activeCount == 0) {
 				level++;
 				if (level <= 3) {
-					movingBall = false;
-					for (Ball ball: balls) {
-						screen.getRoot().getChildren().remove(ball.getBall());
-					}
-					balls.clear();
-					screen.loadLevel(level);
-					freshBall = new Ball(10, levelMaker.getBallX(), levelMaker.getBallY());
-					freshBall.changeSpeed(RESET_BALL_SPEED);
-				    freshBall.changeXDirection(RESET_X_DIRECTION);
-				    freshBall.changeYDirection(RESET_Y_DIRECTION);
-				    screen.getRoot().getChildren().add(freshBall.getBall());
-					balls.add(freshBall);
-					sliderList = screen.getSlider();
+					resetLevel();
 				}
 				else {
 					gameOverLogic();
@@ -271,8 +276,27 @@ public class GameLoop {
 	    }
 	}
 	
-	
+	public void resetLevel() {
+		movingBall = false;
+		for (Ball ball: balls) {
+			screen.getRoot().getChildren().remove(ball.getBall());
+		}
+		balls.clear();
+		for (PowerUp pu: powerUpList) {
+			screen.getRoot().getChildren().remove(pu.getNode());
+		}
+		powerUpList.clear();
+		screen.loadLevel(level);
+		freshBall = new Ball(10, levelMaker.getBallX(), levelMaker.getBallY());
+		freshBall.changeSpeed(RESET_BALL_SPEED);
+		freshBall.changeXDirection(RESET_X_DIRECTION);
+		freshBall.changeYDirection(RESET_Y_DIRECTION);
+		screen.getRoot().getChildren().add(freshBall.getBall());
+		balls.add(freshBall);
+		sliderList = screen.getSlider();
+	}
 
 
 }
         
+
