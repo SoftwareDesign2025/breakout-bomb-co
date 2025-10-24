@@ -1,6 +1,7 @@
 package Powerups;
 import Objects.Ball;
 import Objects.Slider;
+import javafx.scene.paint.Color;
 
 public class PiercePowerUp extends PowerUp {
     private static int charges = 0;          // how many uses the player has
@@ -9,7 +10,10 @@ public class PiercePowerUp extends PowerUp {
     private Ball ball;
     private boolean finished = false;
 
-    public PiercePowerUp(double x, double y) { super(x, y); }
+    public PiercePowerUp(double x, double y) {
+        super(x, y);
+        getNode().setFill(Color.ORANGERED);
+    }
 
     @Override
     void startEffect(Slider slider) {

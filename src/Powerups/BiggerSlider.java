@@ -3,6 +3,7 @@ package Powerups;
 
 import Objects.Slider;
 import javafx.scene.Node;
+import javafx.scene.paint.Color;
 
 public class BiggerSlider extends PowerUp {
     private final double BIG_SIZE = 1.5;      // bigger state
@@ -13,7 +14,10 @@ public class BiggerSlider extends PowerUp {
     private int framesLeft = 0;
     private boolean over = false;
 
-    public BiggerSlider(double x, double y) { super(x, y); }
+    public BiggerSlider(double x, double y) {
+        super(x, y);
+        getNode().setFill(Color.HOTPINK);
+    }
 
     @Override
     void startEffect(Slider slider) {
