@@ -1,9 +1,6 @@
 package Game;
-
-import javafx.stage.Stage;
 import javafx.scene.input.KeyCode;
 import java.util.Scanner;
-
 import Objects.Ball;
 import Objects.BallPowerUp;
 import Objects.Brick;
@@ -12,7 +9,6 @@ import Objects.Slider;
 import Powerups.BiggerSlider;
 import Powerups.PiercePowerUp;
 import Powerups.PowerUp;
-
 import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -20,11 +16,11 @@ import java.util.ArrayList;
 
 public class GameLoop {
 	private Ball freshBall;
-	private ArrayList<Ball> balls;
-	private Screen screen;
+	private final ArrayList<Ball> BALLS;
+	private final Screen screen;
 	private ArrayList<Slider> sliderList;
 	private ArrayList<PowerUp> powerUpList;
-	private int lives = 3;
+	private int lives = 5;
 	private int points = 0;
 	private int highScore;
 	private int level = 1;
@@ -33,20 +29,20 @@ public class GameLoop {
     private final double RESET_X_DIRECTION = 0.2;
     private  final double RESET_Y_DIRECTION = 2;
     private boolean gameOver = false;
-    private LevelMaker levelMaker;
-    private Bricks bricks;
+    private final LevelMaker LEVEL_MAKER;
+    private final Bricks bricks;
     
 	
 	public GameLoop( Screen screen) {
         this.screen = screen;
         this.highScore = getHighScore();
-        levelMaker = screen.getLevelMaker();
+        LEVEL_MAKER = screen.getLevelMaker();
         screen.loadLevel(level);
         this.sliderList = screen.getSlider();
-        this.balls = new ArrayList<>();
+        this.BALLS = new ArrayList<>();
         this.powerUpList = new ArrayList<>();
-        freshBall = new Ball(10, levelMaker.getBallX(), levelMaker.getBallY());
-        balls.add(freshBall);
+        freshBall = new Ball(10, LEVEL_MAKER.getBallX(), LEVEL_MAKER.getBallY());
+        BALLS.add(freshBall);
         screen.getRoot().getChildren().add(freshBall.getBall());
         freshBall.changeSpeed(RESET_BALL_SPEED);
         freshBall.changeXDirection(RESET_X_DIRECTION);
@@ -89,7 +85,7 @@ public class GameLoop {
 		    double bx = 400;
 		    double by = 200;
 		    BallPowerUp pu = new BallPowerUp(bx, by);
-		    pu.setBallPosition(screen, balls);
+		    pu.setBallPosition(screen, BALLS);
 		    if (powerUpList == null) powerUpList = new ArrayList<>();
 		    screen.getRoot().getChildren().add(pu.getNode());
 		    powerUpList.add(pu);
@@ -112,17 +108,16 @@ public class GameLoop {
 
     }
 	
-	public void step(double elapsedTime) {
+	public void step() {
 		screen.displayScoreBoard(highScore, points, lives);
 		if (movingBall && !gameOver) {
 			ArrayList<Ball> toRemove = new ArrayList<>();
-			for (Ball ball: balls) {
+			for (Ball ball: BALLS) {
 				ball.updateBallLocation();
 				for (Slider slider: sliderList) {
 					slider.checkSliderCollision(ball);
 				}
 				screen.checkBallToWall(ball);
-				int prevPoints = points;
 				points += bricks.checkBrickCollisions(ball);
 				// After brick collisions, spawn power-ups from destroyed bricks
 				for (Brick b : new ArrayList<>(bricks.getBricks())) {
@@ -131,6 +126,10 @@ public class GameLoop {
 								b.getBrick().getX() + b.getBrick().getWidth() / 2.0,
 								b.getBrick().getY() + b.getBrick().getHeight() / 2.0
 						);
+						if (p instanceof BallPowerUp) {
+							((BallPowerUp) p).setBallPosition(screen, BALLS);
+						}
+
 						screen.getRoot().getChildren().add(p.getNode());
 						powerUpList.add(p);
 
@@ -140,7 +139,14 @@ public class GameLoop {
 				}
 				 
 				 for (Slider s : sliderList) {
-					    s.checkPowerUpCollision(powerUpList, screen);
+					 for (int i = powerUpList.size() - 1; i >= 0; i--) {
+						 PowerUp pu = powerUpList.get(i);
+						 if (pu.getNode().getBoundsInParent().intersects(s.getNode().getBoundsInParent())) {
+							 pu.onPickup(sliderList);                          // start the effect
+							 screen.getRoot().getChildren().remove(pu.getNode()); // hide the circle
+							 // DO NOT remove pu from the list here — it still needs to tick
+						 }
+					 }
 					}
 				 PiercePowerUp.tickGlobal();
 
@@ -150,7 +156,7 @@ public class GameLoop {
 					    // falling (only if not yet picked up)
 					    pu.update_position();
 
-					    // if never picked up and it falls off the screen, remove it
+					    // if never picked up, and it falls off the screen, remove it
 					    if (!pu.isactivated() && pu.getNode().getBoundsInParent().getMinY() > 600) {
 					        screen.getRoot().getChildren().remove(pu.getNode());
 					        powerUpList.remove(i);
@@ -159,9 +165,9 @@ public class GameLoop {
 
 					    // drive child timers / complete effects
 					    if (pu instanceof BiggerSlider) {
-					        BiggerSlider bs = (BiggerSlider) pu;
-					        bs.tick();
-					        if (bs.isPowerUpOver()) {
+					        BiggerSlider biggerSlider = (BiggerSlider) pu;
+					        biggerSlider.tick();
+					        if (biggerSlider.isPowerUpOver()) {
 					            powerUpList.remove(i);
 					        }
 					    } else if (pu instanceof BallPowerUp) {
@@ -182,12 +188,14 @@ public class GameLoop {
 					toRemove.add(ball);
 				}
 			}
+			BALLS.addAll(screen.consumeQueuedBalls());
+
 			for (Ball ball : toRemove) {
 	            screen.getRoot().getChildren().remove(ball.getBall());
-	            balls.remove(ball);
+	            BALLS.remove(ball);
 	        }
 			
-			if (balls.isEmpty()) {
+			if (BALLS.isEmpty()) {
 				resetBall();
 			}
 			if (lives == 0) {
@@ -206,19 +214,7 @@ public class GameLoop {
 			if (activeCount == 0) {
 				level++;
 				if (level <= 3) {
-					movingBall = false;
-					for (Ball ball: balls) {
-						screen.getRoot().getChildren().remove(ball.getBall());
-					}
-					balls.clear();
-					screen.loadLevel(level);
-					freshBall = new Ball(10, levelMaker.getBallX(), levelMaker.getBallY());
-					freshBall.changeSpeed(RESET_BALL_SPEED);
-				    freshBall.changeXDirection(RESET_X_DIRECTION);
-				    freshBall.changeYDirection(RESET_Y_DIRECTION);
-				    screen.getRoot().getChildren().add(freshBall.getBall());
-					balls.add(freshBall);
-					sliderList = screen.getSlider();
+					resetLevel();
 				}
 				else {
 					gameOverLogic();
@@ -237,12 +233,12 @@ public class GameLoop {
 	public void resetBall() {
 		movingBall = false;
 		lives -= 1;
-		freshBall = new Ball(10, levelMaker.getBallX(), levelMaker.getBallY());
+		freshBall = new Ball(10, LEVEL_MAKER.getBallX(), LEVEL_MAKER.getBallY());
 	    freshBall.changeSpeed(RESET_BALL_SPEED);
 	    freshBall.changeXDirection(RESET_X_DIRECTION);
 	    freshBall.changeYDirection(RESET_Y_DIRECTION);
 	    screen.getRoot().getChildren().add(freshBall.getBall());
-		balls.add(freshBall);
+		BALLS.add(freshBall);
 	}
 	
 	public void gameOverLogic()  {
@@ -271,8 +267,27 @@ public class GameLoop {
 	    }
 	}
 	
-	
+	public void resetLevel() {
+		movingBall = false;
+		for (Ball ball: BALLS) {
+			screen.getRoot().getChildren().remove(ball.getBall());
+		}
+		BALLS.clear();
+		for (PowerUp pu: powerUpList) {
+			screen.getRoot().getChildren().remove(pu.getNode());
+		}
+		powerUpList.clear();
+		screen.loadLevel(level);
+		freshBall = new Ball(10, LEVEL_MAKER.getBallX(), LEVEL_MAKER.getBallY());
+		freshBall.changeSpeed(RESET_BALL_SPEED);
+		freshBall.changeXDirection(RESET_X_DIRECTION);
+		freshBall.changeYDirection(RESET_Y_DIRECTION);
+		screen.getRoot().getChildren().add(freshBall.getBall());
+		BALLS.add(freshBall);
+		sliderList = screen.getSlider();
+	}
 
 
 }
         
+

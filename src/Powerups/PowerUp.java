@@ -69,14 +69,14 @@ public class PowerUp {
 	}
 	
 	// your team calls this when THEY detect a pickup
-    public void onPickup(Slider slider) {
+    public void onPickup(ArrayList<Slider> sliders) {
         if (activated) return;
         activated = true;
-        startEffect(slider);   // <-- base declares this so subclasses can override
+        startEffect(sliders);   // <-- base declares this so subclasses can override
     }
     
 	// declare these so subclasses can override ======
-    void startEffect(Slider slider) {
+    void startEffect(ArrayList<Slider> sliders) {
         // base no-op; BiggerSlider overrides
     }
 

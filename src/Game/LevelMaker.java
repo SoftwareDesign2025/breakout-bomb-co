@@ -1,6 +1,7 @@
 // Author: Gavin Collins
 package Game;
 
+import Powerups.PowerUp;
 import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.paint.Color;
@@ -241,6 +242,40 @@ public class LevelMaker {
                     ROOT.getChildren().add(brick.getBrick());
                 }
             }
+        }
+        double fuseX = startX + centerCol * brickWidth - brickWidth / 2;
+        double fuseY = startY + (centerRow - radius - 1) * brickHeight;
+
+        for (int i = 0; i < 4; i++) {
+            PowerUp powerUp= null;
+            double y = fuseY - i * brickHeight;
+
+            Color color;
+            if (i == 0){
+                color = Color.YELLOW;
+                powerUp = new PiercePowerUp(fuseX, y);
+            }
+            else if (i == 1){
+                color = Color.ORANGE;
+                powerUp = new BallPowerUp(fuseX, y);
+            }
+            else {
+                color = Color.RED;
+                powerUp = new BiggerSlider(fuseX, y);
+            }
+
+
+            Brick fuseBrick = new Brick(
+                    brickWidth - 2,
+                    brickHeight - 2,
+                    fuseX,
+                    y,
+                    5,
+                    color,
+                    powerUp
+            );
+            BRICKS.add(fuseBrick);
+            ROOT.getChildren().add(fuseBrick.getBrick());
         }
     }
 }

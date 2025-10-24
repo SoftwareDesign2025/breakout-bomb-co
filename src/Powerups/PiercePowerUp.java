@@ -1,6 +1,9 @@
 package Powerups;
 import Objects.Ball;
 import Objects.Slider;
+import javafx.scene.paint.Color;
+
+import java.util.ArrayList;
 
 public class PiercePowerUp extends PowerUp {
     private static int charges = 0;          // how many uses the player has
@@ -9,10 +12,13 @@ public class PiercePowerUp extends PowerUp {
     private Ball ball;
     private boolean finished = false;
 
-    public PiercePowerUp(double x, double y) { super(x, y); }
+    public PiercePowerUp(double x, double y) {
+        super(x, y);
+        getNode().setFill(Color.ORANGERED);
+    }
 
     @Override
-    void startEffect(Slider slider) {
+    void startEffect(ArrayList<Slider> sliders) {
         charges++;          // pickup grants a charge
         finished = true;    // this falling object can be removed
         super.stopPowerUp();
@@ -32,7 +38,7 @@ public class PiercePowerUp extends PowerUp {
     }
 
     // Brick uses this to decide whether to skip the bounce
-    static boolean isActive() {
+    public static boolean isActive() {
         return framesLeft > 0;
     }
 

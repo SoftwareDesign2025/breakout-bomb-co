@@ -1,13 +1,20 @@
+
 package Objects;
 import Game.Screen;
 import Powerups.PowerUp;
+import javafx.scene.paint.Color;
+
+import java.util.ArrayList;
 
 public class BallPowerUp extends PowerUp {
     private Screen screen;
     private java.util.List<Ball> balls;
     private boolean finished = false;
 
-    public BallPowerUp(double x, double y) { super(x, y); }
+    public BallPowerUp(double x, double y) {
+        super(x, y);
+        getNode().setFill(Color.BLUEVIOLET);
+    }
 
     // set right after spawning (so it knows where to put the new ball)
     public void setBallPosition(Screen screen, java.util.List<Ball> balls) {
@@ -15,7 +22,7 @@ public class BallPowerUp extends PowerUp {
         this.balls = balls;
     }
 
-    void startEffect(Slider slider) {
+    void startEffect(ArrayList<Slider> sliders) {
         if (screen == null || balls == null || balls.isEmpty()) {
             finished = true;
             return;
@@ -31,7 +38,9 @@ public class BallPowerUp extends PowerUp {
         addedBall.changeYDirection(randomDirection());
 
         screen.getRoot().getChildren().add(addedBall.getBall());
-        balls.add(addedBall);
+        if (screen != null) {
+            screen.queueNewBall(addedBall);
+        }
 
         finished = true; 
         super.stopPowerUp();
@@ -51,4 +60,10 @@ public class BallPowerUp extends PowerUp {
     	}
     
     public boolean isPowerUpOver() { return finished; }
+
+    @Override
+    public void onPickup(ArrayList<Slider> sliders) {
+        startEffect(sliders);
+    }
+
 }

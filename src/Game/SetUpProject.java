@@ -7,10 +7,7 @@ import javafx.scene.Scene;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import javafx.util.Duration;
-import java.util.ArrayList;
-
 import Objects.Ball;
-import Powerups.PowerUp;
 
 public class SetUpProject extends Application {
 
@@ -18,17 +15,16 @@ public class SetUpProject extends Application {
     private static final int GAME_HEIGHT = 600;
     private static final int FRAMES_PER_SECOND = 60;
     public static final int MILLISECOND_DELAY = 1000 / FRAMES_PER_SECOND;
-    private static final double SECOND_DELAY = 1.0 / FRAMES_PER_SECOND;
     public static final String TITLE = "Breakout";
     
-    private Scene myScene;
+
     private GameLoop gameLoop;
 
     @Override
     public void start(Stage stage) {
+        Scene myScene;
     	Ball ball = new Ball(10, 400, 400);
         Screen screen = new Screen(ball);
-        ArrayList<PowerUp> powerUpList = new ArrayList<>();
         gameLoop = new GameLoop(screen);
         Group root = screen.getRoot();
         myScene = new Scene(root, GAME_WIDTH, GAME_HEIGHT, Color.AZURE);
@@ -39,7 +35,7 @@ public class SetUpProject extends Application {
         stage.setScene(myScene);
 		stage.setTitle(TITLE);
 		stage.show();
-		KeyFrame frame = new KeyFrame(Duration.millis(MILLISECOND_DELAY), e -> gameLoop.step(SECOND_DELAY));
+		KeyFrame frame = new KeyFrame(Duration.millis(MILLISECOND_DELAY), e -> gameLoop.step());
 		Timeline animation = new Timeline();
 		animation.setCycleCount(Timeline.INDEFINITE);
 		animation.getKeyFrames().add(frame);

@@ -75,10 +75,12 @@ public class Brick {
         double minOverlap = Math.min(Math.min(overlapLeft, overlapRight), Math.min(overlapTop, overlapBottom));
 
         // if hits the side of a brick
-        if (minOverlap == overlapLeft || minOverlap == overlapRight) {
-            ball.reverseXDirection();
-        } else {
-            ball.reverseYDirection();
+        if (!Powerups.PiercePowerUp.isActive()) {
+            if (minOverlap == overlapLeft || minOverlap == overlapRight) {
+                ball.reverseXDirection();
+            } else {
+                ball.reverseYDirection();
+            }
         }
 
         if (powerUp != null){
