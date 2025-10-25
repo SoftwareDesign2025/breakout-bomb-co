@@ -223,6 +223,6 @@ public class GameLoop {
 		}
 		screen.getRoot().getChildren().add(pu.getNode());
 		powerUpList.add(pu);
-		System.out.println("[TEST] Spawned " + pu.getClass().getSimpleName());
+		System.out.println("[TEST] Spawned. " + pu.getClass().getSimpleName());
 	}
 }
