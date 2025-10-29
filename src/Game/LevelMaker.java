@@ -2,7 +2,6 @@
 package Game;
 
 import Game.Levels.Level;
-import Powerups.PowerUp;
 import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.paint.Color;
@@ -15,7 +14,7 @@ import Objects.Brick;
 import Objects.Slider;
 import Powerups.BiggerSlider;
 import Powerups.PiercePowerUp;
-import Objects.BallPowerUp;
+import Powerups.BallPowerUp;
 
 public class LevelMaker {
 

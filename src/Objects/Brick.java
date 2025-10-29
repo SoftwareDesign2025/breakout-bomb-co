@@ -5,19 +5,14 @@ import Powerups.PowerUp;
 import javafx.scene.paint.Color;
 
 //This class contains the Brick class
-public class Brick {
-    private boolean active;
+public class Brick extends  HittableObject{
     private Rectangle brick;
-    private int pointValue;
-    private PowerUp powerUp;
     private boolean unbreakable = false;
 
     public Brick(double width, double height, double startX, double startY, int pointValue, Color color, PowerUp powerUp){
-        active = true;
-        this.pointValue = pointValue;
+        super(startX, startY, pointValue, powerUp);
         brick = new Rectangle(startX, startY, width, height);
         brick.setFill(color);
-        this.powerUp = powerUp;
     }
 
     public Rectangle getBrick() {
@@ -30,18 +25,6 @@ public class Brick {
 
     public boolean isUnbreakable() {
         return unbreakable;
-    }
-
-    public boolean isBrickActive(){
-        return active;
-    }
-
-    public PowerUp getPowerUp(){
-        return powerUp;
-    }
-
-    public void setPowerUp(PowerUp powerUp){
-        this.powerUp= powerUp;
     }
 
     public void deactivateBrick(){

@@ -1,8 +1,7 @@
 package Game.Levels;
 
 import Game.LevelMaker;
-import Game.Levels.Level;
-import Objects.BallPowerUp;
+import Powerups.BallPowerUp;
 import javafx.scene.paint.Color;
 import Objects.Brick;
 import Powerups.BiggerSlider;
