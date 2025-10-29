@@ -15,7 +15,7 @@ public class Bricks {
     public int checkBrickCollisions(Ball ball){
         int pointsUpdate = 0;
         for (Brick brick : bricks) {
-            if(brick.isBrickActive()) {
+            if(brick.isActive()) {
                 pointsUpdate+= brick.detectCollisionWithBall(ball);
                 if (pointsUpdate > 0){
                     return pointsUpdate;

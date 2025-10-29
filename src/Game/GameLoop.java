@@ -66,7 +66,7 @@ public class GameLoop {
 
 	private void spawnPowerUpsFromBricks() {
 		for (Brick b : new ArrayList<>(bricks.getBricks())) {
-			if (b.isBrickActive()) continue;
+			if (b.isActive()) continue;
 			PowerUp p = b.getPowerUp();
 			if (p == null) continue;
 			PowerUp newPowerUp = p.spawnAt(
@@ -129,7 +129,7 @@ public class GameLoop {
 			return;
 		}
 		boolean hasActiveBricks = bricks.getBricks().stream()
-				.anyMatch(b -> b.isBrickActive() && !b.isUnbreakable());
+				.anyMatch(b -> b.isActive() && !b.isUnbreakable());
 		if (!hasActiveBricks) {
 			level++;
 			if (level <= 3) resetLevel();
