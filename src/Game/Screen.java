@@ -4,6 +4,9 @@ package Game;
 import java.util.ArrayList;
 import java.util.List;
 
+import Game.Levels.LevelOne;
+import Game.Levels.LevelThree;
+import Game.Levels.LevelTwo;
 import Objects.Ball;
 import Objects.Brick;
 import Objects.Bricks;
@@ -105,23 +108,23 @@ public class Screen {
        lvlClear.setFont(new Font(36));
        root.getChildren().add(lvlClear);
    }
-   
-   public void loadLevel(int levelNumber) {
-		levelMaker.resetLevel();
-		
-		if (levelNumber == 1) {
-			levelMaker.makeLevelOne();
-		}
-		else if (levelNumber == 2) {
-			levelMaker.makeLevelTwo();
-		}
-		else if (levelNumber == 3) {
-			levelMaker.makeLevelThree();
-		}
-		
-	}
 
-   public LevelMaker getLevelMaker() {
+    public void loadLevel(int levelNumber) {
+        levelMaker.resetLevel();
+
+        if (levelNumber == 1) {
+            levelMaker.loadLevel(new LevelOne());
+        }
+        else if (levelNumber == 2) {
+            levelMaker.loadLevel(new LevelTwo());
+        }
+        else if (levelNumber == 3) {
+            levelMaker.loadLevel(new LevelThree());
+        }
+    }
+
+
+    public LevelMaker getLevelMaker() {
 	    return levelMaker;
 	}
 }
