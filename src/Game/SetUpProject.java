@@ -91,8 +91,8 @@ public class SetUpProject extends Application {
         gameLoop = new GalagaLoop(galagaScreen);
         Scene gameScene = new Scene(galagaScreen.getRoot(), GAME_WIDTH, GAME_HEIGHT);
         //GalagaScreen gameScene = new GalagaScreen(galagaScreen.getRoot(), GAME_WIDTH, GAME_HEIGHT);
-//        gameScene.setOnKeyPressed(e -> gameLoop.handleKeyInput(e.getCode()));
-//        gameScene.setOnMouseClicked(e -> gameLoop.startMoving());
+        gameScene.setOnKeyPressed(e -> gameLoop.handleKeyInput(e.getCode()));
+        gameScene.setOnMouseClicked(e -> gameLoop.startMoving());
         stage.setScene(gameScene);
         KeyFrame frame = new KeyFrame(Duration.millis(MILLISECOND_DELAY), e -> gameLoop.step());
         Timeline animation = new Timeline();
