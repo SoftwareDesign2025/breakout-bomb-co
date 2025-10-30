@@ -1,8 +1,10 @@
 package Objects;
 
 import Powerups.PowerUp;
+import javafx.scene.Node;
 
 public abstract class HittableObject {
+    protected Node hittableObject;
     protected boolean active;
     protected int pointValue;
     protected PowerUp powerUp;
@@ -11,6 +13,10 @@ public abstract class HittableObject {
             active = true;
             this.pointValue = pointValue;
             this.powerUp = powerUp;
+    }
+
+    public Node getHittableObject(){
+        return hittableObject;
     }
 
     public boolean isActive(){
