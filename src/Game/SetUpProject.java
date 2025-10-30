@@ -74,7 +74,7 @@ public class SetUpProject extends Application {
     private void startBreakout() {
         Ball ball = new Ball(10, 400, 400);
         Screen screen = new Screen(ball);
-        gameLoop = new GameLoop(screen);
+        gameLoop = new BreakoutLoop(screen);
         Scene gameScene = new Scene(screen.getRoot(), GAME_WIDTH, GAME_HEIGHT);
         gameScene.setOnKeyPressed(e -> gameLoop.handleKeyInput(e.getCode()));
         gameScene.setOnMouseClicked(e -> gameLoop.startMoving());
@@ -87,6 +87,18 @@ public class SetUpProject extends Application {
     }
 
     private void startGalaga() {
+        Ball ball = new Ball(10, 400, 400);
+        Screen screen = new Screen(ball);
+        gameLoop = new GalagaLoop(screen);
+        Scene gameScene = new Scene(screen.getRoot(), GAME_WIDTH, GAME_HEIGHT);
+        gameScene.setOnKeyPressed(e -> gameLoop.handleKeyInput(e.getCode()));
+        gameScene.setOnMouseClicked(e -> gameLoop.startMoving());
+        stage.setScene(gameScene);
+        KeyFrame frame = new KeyFrame(Duration.millis(MILLISECOND_DELAY), e -> gameLoop.step());
+        Timeline animation = new Timeline();
+        animation.setCycleCount(Timeline.INDEFINITE);
+        animation.getKeyFrames().add(frame);
+        animation.play();
     }
 
     public static void runGame() {
