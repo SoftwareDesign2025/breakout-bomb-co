@@ -11,8 +11,8 @@ public class GalagaLevel {
 
         double startX = 100;
         double startY = 80;
-        double enemyWidth = 50;
-        double enemyHeight = 40;
+        double enemyWidth = 75;
+        double enemyHeight = 75;
         double gapX = 15;
         double gapY = 20;
         int rows = 4;
@@ -23,7 +23,7 @@ public class GalagaLevel {
                 double x = startX + col * (enemyWidth + gapX);
                 double y = startY + row * (enemyHeight + gapY);
 
-                GalagaEnemy enemy = new GalagaEnemy("mlennemann.png", x, y, 100, null);
+                GalagaEnemy enemy = new GalagaEnemy(enemyWidth,enemyHeight,"mlennemann.png", x, y, 1, null);
                 System.out.println(x  + "  and  "  + y);
                 maker.addEnemy(enemy);
             }

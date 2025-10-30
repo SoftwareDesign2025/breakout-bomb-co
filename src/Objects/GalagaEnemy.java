@@ -10,7 +10,7 @@ public class GalagaEnemy extends HittableObject{
     private ImageView imageView;
 
 
-    public GalagaEnemy(String imagePath, double startX, double startY, int pointValue, PowerUp powerUp){
+    public GalagaEnemy(double width, double height, String imagePath, double startX, double startY, int pointValue, PowerUp powerUp){
 
         super(startX, startY, pointValue, powerUp);
 
@@ -19,8 +19,8 @@ public class GalagaEnemy extends HittableObject{
         hittableObject = imageView;
         imageView.setLayoutX(startX);
         imageView.setLayoutY(startY);
-        imageView.setFitWidth(75);
-        imageView.setFitHeight(75);
+        imageView.setFitWidth(width);
+        imageView.setFitHeight(height);
 
     }
 
