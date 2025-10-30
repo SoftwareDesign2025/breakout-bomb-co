@@ -52,8 +52,8 @@ public class GalagaScreen extends Screen {
     }
 
     private void initShip() {
-        ship = new Ship(SCREEN_WIDTH / 2, SCREEN_HEIGHT - 100);
-        getRoot().getChildren().add(ship.getNode());
+        ship = new Ship("ship.png",SCREEN_WIDTH / 2, SCREEN_HEIGHT - 100);
+        getRoot().getChildren().add(ship.getShip());
     }
 
     public Ship getShip() {

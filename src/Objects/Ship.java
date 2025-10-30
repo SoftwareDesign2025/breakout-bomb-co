@@ -1,5 +1,7 @@
 package Objects;
 
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Polygon;
@@ -7,20 +9,16 @@ import javafx.scene.shape.Polygon;
 public class Ship extends SideMover {
 
     public static final double HEIGHT = 40;
-    private final Polygon ship;
+    private ImageView shipImage;
 
-    public Ship(double startX, double startY) {
+    public Ship(String imagePath, double startX, double startY) {
         super(startX, startY, 40, 20);
-        ship = new Polygon();
-        ship.getPoints().addAll(
-                xLocation, yLocation - HEIGHT / 2,
-                xLocation - width / 2, yLocation + HEIGHT / 2,
-                xLocation + width / 2, yLocation + HEIGHT / 2
-        );
-        ship.setFill(Color.DEEPSKYBLUE);
-        ship.setStroke(Color.WHITE);
-        ship.setStrokeWidth(2);
-    }
+        Image image = new Image(getClass().getResource(imagePath).toExternalForm());
+        shipImage = new ImageView(image);
+        shipImage.setFitWidth(100);
+        shipImage.setFitHeight(100);
+        shipImage.setLayoutX(startX);
+        shipImage.setLayoutY(startY);    }
 
     @Override
     protected void stopAtEdges() {
@@ -30,12 +28,12 @@ public class Ship extends SideMover {
 
     @Override
     protected void updateNode() {
-        double offsetX = xLocation - ship.getLayoutBounds().getCenterX();
-        ship.setTranslateX(offsetX);
+        double offsetX = xLocation - shipImage.getLayoutBounds().getCenterX();
+        shipImage.setTranslateX(offsetX);
     }
 
-    public Polygon getNode() {
-        return ship;
+    public ImageView getShip() {
+        return shipImage;
     }
 
     public void shootLaser(KeyCode code) {
