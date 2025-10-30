@@ -25,7 +25,7 @@ public class Ship extends SideMover {
     @Override
     protected void stopAtEdges() {
         if (xLocation < width / 2) xLocation = width / 2;
-        else if (xLocation + width / 2 > 400) xLocation = 400 - width / 2;
+        else if (xLocation + width / 2 > 800) xLocation = 800 - width / 2;
     }
 
     @Override
