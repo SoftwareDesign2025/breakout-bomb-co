@@ -2,12 +2,14 @@ package Game;
 
 import Game.Levels.GalagaLevel;
 import Objects.Ball;
+import Objects.GalagaEnemies;
 import Objects.Slider;
 import javafx.scene.input.KeyCode;
 import java.util.ArrayList;
 
 public class GalagaLoop extends GameLoop {
      final GalagaLevelMaker galagaLevelMaker;
+     private final GalagaEnemies enemies;
 
 
 
@@ -16,21 +18,25 @@ public class GalagaLoop extends GameLoop {
         super(galagaScreen);
         this.galagaLevelMaker = galagaScreen.getGalagaLevelMaker();
         galagaScreen.loadLevel();
+        this.enemies = galagaScreen.getEnemies();
+
     }
 
     @Override
     public void step() {
         screen.displayScoreBoard(highScore, points, lives);
-        if (!movingBall || gameOver) return;
-        ArrayList<Ball> toRemove = new ArrayList<>();
-        for (Ball ball : BALLS) {
-            updateBall(ball);
-            handleSliderCollisions(ball);
-            screen.checkBallToWall(ball);
-            points += bricks.checkBrickCollisions(ball);
-            if (screen.ballOutOfBounds(ball)) toRemove.add(ball);
-        }
-        handleBallRemovals(toRemove);
+//        if (!movingBall || gameOver) return;
+//        ArrayList<Ball> toRemove = new ArrayList<>();
+//        for (Ball ball : BALLS) {
+//            updateBall(ball);
+//            handleSliderCollisions(ball);
+//            screen.checkBallToWall(ball);
+//            points += bricks.checkBrickCollisions(ball);
+//            if (screen.ballOutOfBounds(ball)) toRemove.add(ball);
+//        }
+//        handleBallRemovals(toRemove);
+        enemies.moveEnemies();
+
         checkLevelAndLives();
     }
 

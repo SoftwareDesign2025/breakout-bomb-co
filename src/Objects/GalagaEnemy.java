@@ -8,6 +8,7 @@ import javafx.scene.image.ImageView;
 
 public class GalagaEnemy extends HittableObject{
     private ImageView imageView;
+    private double speed = 0.1;
 
 
     public GalagaEnemy(double width, double height, String imagePath, double startX, double startY, int pointValue, PowerUp powerUp){
@@ -27,4 +28,10 @@ public class GalagaEnemy extends HittableObject{
     public ImageView getEnemy(){
         return imageView;
     }
+
+    public void moveDown(){
+        imageView.setLayoutY(getEnemy().getLayoutY() + speed);
+    }
+
+
 }

@@ -1,29 +1,30 @@
 package Game;
 
 import Game.Levels.GalagaLevel;
-import Game.Levels.Level;
 import Objects.GalagaEnemy;
 import Objects.Slider;
 import javafx.scene.Group;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 
 public class GalagaLevelMaker {
 
     private final Group ROOT;
-    private final ArrayList<GalagaEnemy> ENEMIES = new ArrayList<>();
+    private final List<GalagaEnemy> ENEMIES;
     private final ArrayList<Slider> SLIDER_LIST = new ArrayList<>();
     private final ArrayList<Rectangle> OUT_OF_BOUNDS_LIST = new ArrayList<>();
     private final ArrayList<javafx.scene.Node> NODE_LIST = new ArrayList<>();
     private final Random RAND = new Random();
 
-    public GalagaLevelMaker(Group root) {
+    public GalagaLevelMaker(Group root, List<GalagaEnemy> enemiesList) {
         this.ROOT = root;
+        this.ENEMIES = enemiesList;
     }
 
-    public ArrayList<GalagaEnemy> getEnemies() {
+    public List<GalagaEnemy> getEnemies() {
         return ENEMIES;
     }
 

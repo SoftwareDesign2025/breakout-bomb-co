@@ -1,10 +1,16 @@
 package Game;
 
 import Game.Levels.GalagaLevel;
+import Objects.Bricks;
+import Objects.GalagaEnemies;
+import Objects.GalagaEnemy;
 import Objects.Ship;
 import javafx.scene.Group;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class GalagaScreen extends Screen {
     private final Group root = new Group();
@@ -15,15 +21,23 @@ public class GalagaScreen extends Screen {
     private static final double SCREEN_HEIGHT = 600;
 
     private GalagaLevelMaker galagaLevelMaker;
+    private List<GalagaEnemy> enemiesList;
+    private GalagaEnemies enemies;
+
 
     public GalagaScreen() {
-        super(null); // ✅ Give the parent Screen a proper Group root
+        super(null);
 
         initBackground();
         initShip();
 
-        galagaLevelMaker = new GalagaLevelMaker(root);
-        loadLevel(); // optional
+        enemiesList = new ArrayList<>();
+        galagaLevelMaker = new GalagaLevelMaker(root, enemiesList);
+        enemies = new GalagaEnemies(enemiesList);
+
+        loadLevel();
+
+
     }
 
 
@@ -48,6 +62,10 @@ public class GalagaScreen extends Screen {
 
     public void loadLevel(){
         galagaLevelMaker.loadLevel(new GalagaLevel());
+    }
+
+    public GalagaEnemies getEnemies(){
+        return enemies;
     }
     @Override
     public Group getRoot() {
