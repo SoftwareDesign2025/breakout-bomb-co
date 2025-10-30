@@ -4,52 +4,44 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Polygon;
 
-public class Ship {
-    public static final double SPEED = 20.0;
-    public static final double WIDTH = 40;
-    public static final double HEIGHT = 40;
+public class Ship extends SideMover {
 
-    private double xLocation;
-    private double yLocation;
-    private Polygon ship;
+    public static final double HEIGHT = 40;
+    private final Polygon ship;
 
     public Ship(double startX, double startY) {
-        this.xLocation = startX;
-        this.yLocation = startY;
+        super(startX, startY, 40, 20);
         ship = new Polygon();
+        ship.getPoints().addAll(
+                xLocation, yLocation - HEIGHT / 2,
+                xLocation - width / 2, yLocation + HEIGHT / 2,
+                xLocation + width / 2, yLocation + HEIGHT / 2
+        );
         ship.setFill(Color.DEEPSKYBLUE);
         ship.setStroke(Color.WHITE);
         ship.setStrokeWidth(2);
     }
 
-    public void handleMovement(KeyCode code) {
-        if (code == KeyCode.LEFT || code == KeyCode.A) {
-            moveSideToSide(true);
-        } else if (code == KeyCode.RIGHT || code == KeyCode.D) {
-            moveSideToSide(false);
-        }
+    @Override
+    protected void stopAtEdges() {
+        if (xLocation < width / 2) xLocation = width / 2;
+        else if (xLocation + width / 2 > 400) xLocation = 400 - width / 2;
     }
 
-    public void moveSideToSide(boolean goLeft) {
-        if (goLeft) {
-            xLocation -= SPEED;
-        } else {
-            xLocation += SPEED;
-        }
-        stopAtEdges(400);
-    }
-
-    private void stopAtEdges(double screenWidth) {
-        if (xLocation < WIDTH / 2) {
-            xLocation = WIDTH / 2;
-        } else if (xLocation + WIDTH / 2 > screenWidth) {
-            xLocation = screenWidth - WIDTH / 2;
-        }
+    @Override
+    protected void updateNode() {
         double offsetX = xLocation - ship.getLayoutBounds().getCenterX();
         ship.setTranslateX(offsetX);
     }
 
     public Polygon getNode() {
         return ship;
+    }
+
+    public void shootLaser(KeyCode code) {
+        if (code == KeyCode.SPACE) {
+
+            System.out.println("Shoot laser!");
+        }
     }
 }
