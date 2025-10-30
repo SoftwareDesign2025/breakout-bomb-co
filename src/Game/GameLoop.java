@@ -12,7 +12,7 @@ import java.util.Scanner;
 
 public abstract class GameLoop {
 
-    protected Ball freshBall;
+
     protected final ArrayList<Ball> BALLS;
     protected final Screen screen;
     protected ArrayList<Slider> sliderList;
@@ -36,29 +36,10 @@ public abstract class GameLoop {
         this.sliderList = screen.getSlider();
         this.BALLS = new ArrayList<>();
         this.bricks = screen.getBricks();
-        initBall();
     }
 
     public abstract void step();
 
-    private void updateBall(Ball ball) {
-        ball.updateBallLocation();
-    }
-
-    private void handleSliderCollisions(Ball ball) {
-        for (Slider slider : sliderList) {
-            slider.checkSliderCollision(ball);
-        }
-    }
-
-    private void handleBallRemovals(ArrayList<Ball> toRemove) {
-        BALLS.addAll(screen.consumeQueuedBalls());
-        for (Ball ball : toRemove) {
-            screen.getRoot().getChildren().remove(ball.getBall());
-            BALLS.remove(ball);
-        }
-        if (BALLS.isEmpty()) resetBall();
-    }
 
     public void checkLevelAndLives() {
         if (lives == 0) {
@@ -78,31 +59,15 @@ public abstract class GameLoop {
         }
     }
 
-    private void initBall() {
-        freshBall = new Ball(10, LEVEL_MAKER.getBallX(), LEVEL_MAKER.getBallY());
-        BALLS.add(freshBall);
-        screen.getRoot().getChildren().add(freshBall.getBall());
-        freshBall.changeSpeed(RESET_BALL_SPEED);
-        freshBall.changeXDirection(RESET_X_DIRECTION);
-        freshBall.changeYDirection(RESET_Y_DIRECTION);
-    }
 
-    public void startMoving() {
-        movingBall = true;
-    }
 
-    public void resetBall() {
-        movingBall = false;
-        lives -= 1;
-        initBall();
-    }
+
 
     public void resetLevel() {
         movingBall = false;
         BALLS.forEach(ball -> screen.getRoot().getChildren().remove(ball.getBall()));
         BALLS.clear();
         screen.loadLevel(level);
-        initBall();
         sliderList = screen.getSlider();
     }
 
@@ -135,5 +100,9 @@ public abstract class GameLoop {
             screen.getRoot().getChildren().remove(hittable.getHittableObject());
         }
         bricks.getBricks().clear();
+    }
+
+    public void startMoving() {
+        movingBall = true;
     }
 }
