@@ -87,10 +87,9 @@ public class SetUpProject extends Application {
     }
 
     private void startGalaga() {
-        Ball ball = new Ball(10, 400, 400);
-        Screen screen = new Screen(ball);
-        gameLoop = new GalagaLoop(screen);
-        Scene gameScene = new Scene(screen.getRoot(), GAME_WIDTH, GAME_HEIGHT);
+        GalagaScreen galagaScreen = new GalagaScreen();
+        gameLoop = new GalagaLoop(galagaScreen);
+        Scene gameScene = new Scene(galagaScreen.getRoot(), GAME_WIDTH, GAME_HEIGHT);
         gameScene.setOnKeyPressed(e -> gameLoop.handleKeyInput(e.getCode()));
         gameScene.setOnMouseClicked(e -> gameLoop.startMoving());
         stage.setScene(gameScene);
@@ -99,7 +98,8 @@ public class SetUpProject extends Application {
         animation.setCycleCount(Timeline.INDEFINITE);
         animation.getKeyFrames().add(frame);
         animation.play();
-    }
+        }
+
 
     public static void runGame() {
         launch();
