@@ -1,14 +1,21 @@
 package Game;
 
+import Game.Levels.GalagaLevel;
 import Objects.Ball;
 import Objects.Slider;
 import javafx.scene.input.KeyCode;
 import java.util.ArrayList;
 
 public class GalagaLoop extends GameLoop {
+     final GalagaLevelMaker galagaLevelMaker;
 
-    public GalagaLoop(Screen screen) {
-        super(screen);
+
+
+
+    public GalagaLoop(GalagaScreen galagaScreen) {
+        super(galagaScreen);
+        this.galagaLevelMaker = galagaScreen.getGalagaLevelMaker();
+        galagaScreen.loadLevel();
     }
 
     @Override
