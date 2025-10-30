@@ -6,10 +6,12 @@ import Powerups.*;
 
 public class BreakoutLoop extends GameLoop {
 	private ArrayList<PowerUp> powerUpList;
+	private Ball freshBall;
 
 	public BreakoutLoop(Screen screen) {
 		super(screen);
 		this.powerUpList = new ArrayList<>();
+		initBall();
 	}
 
 	@Override
