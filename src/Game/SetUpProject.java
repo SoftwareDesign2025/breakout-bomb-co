@@ -30,14 +30,23 @@ public class SetUpProject extends Application {
         stage.setTitle("BOMB CO Arcade");
         stage.show();
     }
-
+    // Starting at the method allows you to see the menu and has the buttons that allow the game to start, with the methods
+    // below. You can add more buttons or change anything in this method as long as you start from this method
     private void showMainMenu() {
         Group menuRoot = new Group();
 
+
+        // Background for the breakout and galaga button, can change color and size here
         Rectangle breakoutBackground = new Rectangle(300, 60, Color.BLUE);
         breakoutBackground.setX(GAME_WIDTH / 2.0 - 150);
         breakoutBackground.setY(300);
 
+        Rectangle galagaBackground = new Rectangle(300, 60, Color.BLUE);
+        galagaBackground.setX(GAME_WIDTH / 2.0 - 150);
+        galagaBackground.setY(400);
+
+
+        // Adds the top text and centers and lets you change font, size and color
         Text title = new Text("BOMB CO ARCADE");
         title.setFill(Color.BLUE);
         title.setFont(Font.font("Impact", 96));
@@ -45,6 +54,8 @@ public class SetUpProject extends Application {
         title.setY(150);
         menuRoot.getChildren().add(title);
 
+
+        // Actual text for the button, adds the on mouse clicked which sends to the methods below to start the games
         Text breakoutText = new Text("PLAY BREAKOUT");
         breakoutText.setFont(Font.font("Impact", 36));
         breakoutText.setFill(Color.BLACK);
@@ -53,10 +64,6 @@ public class SetUpProject extends Application {
         breakoutBackground.setOnMouseClicked(e -> startBreakout());
         breakoutText.setOnMouseClicked(e -> startBreakout());
         menuRoot.getChildren().addAll(breakoutBackground, breakoutText);
-
-        Rectangle galagaBackground = new Rectangle(300, 60, Color.BLUE);
-        galagaBackground.setX(GAME_WIDTH / 2.0 - 150);
-        galagaBackground.setY(400);
 
         Text galagaText = new Text("PLAY GALAGA");
         galagaText.setFont(Font.font("Impact", 36));
