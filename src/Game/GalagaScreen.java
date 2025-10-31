@@ -1,10 +1,7 @@
 package Game;
 
 import Game.Levels.GalagaLevel;
-import Objects.Bricks;
-import Objects.GalagaEnemies;
-import Objects.GalagaEnemy;
-import Objects.Ship;
+import Objects.*;
 import javafx.scene.Group;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
@@ -23,6 +20,7 @@ public class GalagaScreen extends Screen {
     private GalagaLevelMaker galagaLevelMaker;
     private List<GalagaEnemy> enemiesList;
     private GalagaEnemies enemies;
+    private SideMover sideMover;
 
 
     public GalagaScreen() {
@@ -56,8 +54,8 @@ public class GalagaScreen extends Screen {
         getRoot().getChildren().add(ship.getShip());
     }
 
-    public Ship getShip() {
-        return ship;
+    public SideMover getSideMover() {
+        return sideMover;
     }
 
     public void loadLevel(){
