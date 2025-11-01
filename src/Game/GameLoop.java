@@ -15,7 +15,7 @@ public abstract class GameLoop {
 
     protected final ArrayList<Ball> BALLS;
     protected final Screen screen;
-    protected ArrayList<Slider> sliderList;
+    protected ArrayList<SideMover> sideMoverList;
     protected int lives = 5;
     protected int points = 0;
     protected int highScore;
@@ -33,7 +33,7 @@ public abstract class GameLoop {
         this.highScore = getHighScore();
         this.LEVEL_MAKER = screen.getLevelMaker();
         screen.loadLevel(level);
-        this.sliderList = screen.getSlider();
+        this.sideMoverList = screen.getSideMoverList();
         this.BALLS = new ArrayList<>();
         this.bricks = screen.getBricks();
     }
@@ -64,7 +64,7 @@ public abstract class GameLoop {
         BALLS.forEach(ball -> screen.getRoot().getChildren().remove(ball.getBall()));
         BALLS.clear();
         screen.loadLevel(level);
-        sliderList = screen.getSlider();
+        sideMoverList = screen.getSideMoverList();
     }
 
     public void gameOverLogic() {

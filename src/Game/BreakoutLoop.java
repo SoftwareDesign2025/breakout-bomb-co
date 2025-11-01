@@ -38,7 +38,8 @@ public class BreakoutLoop extends GameLoop {
 	}
 
 	private void handleSliderCollisions(Ball ball) {
-		for (Slider slider : sliderList) {
+		for (SideMover sideMover : sideMoverList) {
+			Slider slider = (Slider) sideMover;
 			slider.checkSliderCollision(ball);
 		}
 	}
@@ -63,11 +64,15 @@ public class BreakoutLoop extends GameLoop {
 	}
 
 	private void handlePowerUpPickups() {
-		for (Slider s : sliderList) {
+		ArrayList<Slider> sliders = new ArrayList<>();
+		for (SideMover sm : sideMoverList) {
+			sliders.add((Slider) sm);
+		}
+		for (Slider s : sliders) {
 			for (int i = powerUpList.size() - 1; i >= 0; i--) {
 				PowerUp pu = powerUpList.get(i);
 				if (pu.getNode().getBoundsInParent().intersects(s.getNode().getBoundsInParent())) {
-					pu.onPickup(sliderList);
+					pu.onPickup(sliders);
 					screen.getRoot().getChildren().remove(pu.getNode());
 				}
 			}
@@ -126,13 +131,14 @@ public class BreakoutLoop extends GameLoop {
 		powerUpList.clear();
 		screen.loadLevel(level);
 		initBall();
-		sliderList = screen.getSlider();
+		sideMoverList = screen.getSideMoverList();
 	}
 
 	@Override
 	public void handleKeyInput(KeyCode code) {
 		if (!gameOver) {
-			for (Slider slider : sliderList) {
+			for (SideMover sideMover : sideMoverList) {
+				Slider slider = (Slider) sideMover;
 				slider.handleMovement(code);
 			}
 		}
