@@ -38,6 +38,10 @@ public class GalagaScreen extends Screen {
 
     }
 
+    public Ship getShip() {
+        return ship;
+    }
+
 
     public GalagaLevelMaker getGalagaLevelMaker(){
         return galagaLevelMaker;

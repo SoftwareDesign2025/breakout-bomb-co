@@ -10,7 +10,7 @@ import Game.Levels.LevelTwo;
 import Objects.Ball;
 import Objects.Brick;
 import Objects.Bricks;
-import Objects.Slider;
+import Objects.SideMover;
 import javafx.scene.Group;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
@@ -47,7 +47,7 @@ public class Screen {
    // Everything else remains exactly the same...
    public Bricks getBricks() { return bricks; }
    public Group getRoot() { return root; }
-   public ArrayList<Slider> getSlider() { return levelMaker.getSliderList(); }
+   public ArrayList<SideMover> getSideMoverList() { return levelMaker.getSideMoverList(); }
    public Brick getBrick() { return brick; }
    public ArrayList<Rectangle> getOutOfBounds() { return levelMaker.getOutOfBounds(); }
     private List<Ball> queuedBalls = new ArrayList<>();

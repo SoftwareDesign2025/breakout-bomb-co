@@ -23,14 +23,14 @@ public class BreakoutLoop extends GameLoop {
 			updateBall(ball);
 			handleSliderCollisions(ball);
 			screen.checkBallToWall(ball);
-			points += bricks.checkBrickCollisions(ball);
+			points += bricks.resolveCollisions(ball);
 			spawnPowerUpsFromBricks();
 			handlePowerUpPickups();
 			updatePowerUps();
 			if (screen.ballOutOfBounds(ball)) toRemove.add(ball);
 		}
 		handleBallRemovals(toRemove);
-		checkLevelAndLives();
+		checkLives();
 	}
 
 	private void updateBall(Ball ball) {
@@ -38,15 +38,17 @@ public class BreakoutLoop extends GameLoop {
 	}
 
 	private void handleSliderCollisions(Ball ball) {
-		for (Slider slider : sliderList) {
+		for (SideMover sideMover : sideMoverList) {
+			Slider slider = (Slider) sideMover;
 			slider.checkSliderCollision(ball);
 		}
 	}
 
 	private void spawnPowerUpsFromBricks() {
-		for (Brick b : new ArrayList<>(bricks.getBricks())) {
+		for (HittableObject h : new ArrayList<>(bricks.getHittableObjects())) {
+			if (!(h instanceof Brick b)) continue;
 			if (b.isActive()) continue;
-			PowerUp p = b.getPowerUp();
+			PowerUp p = h.getPowerUp();
 			if (p == null) continue;
 			PowerUp newPowerUp = p.spawnAt(
 					b.getBrick().getX() + b.getBrick().getWidth() / 2.0,
@@ -62,11 +64,15 @@ public class BreakoutLoop extends GameLoop {
 	}
 
 	private void handlePowerUpPickups() {
-		for (Slider s : sliderList) {
+		ArrayList<Slider> sliders = new ArrayList<>();
+		for (SideMover sm : sideMoverList) {
+			sliders.add((Slider) sm);
+		}
+		for (Slider s : sliders) {
 			for (int i = powerUpList.size() - 1; i >= 0; i--) {
 				PowerUp pu = powerUpList.get(i);
 				if (pu.getNode().getBoundsInParent().intersects(s.getNode().getBoundsInParent())) {
-					pu.onPickup(sliderList);
+					pu.onPickup(sliders);
 					screen.getRoot().getChildren().remove(pu.getNode());
 				}
 			}
@@ -125,26 +131,20 @@ public class BreakoutLoop extends GameLoop {
 		powerUpList.clear();
 		screen.loadLevel(level);
 		initBall();
-		sliderList = screen.getSlider();
+		sideMoverList = screen.getSideMoverList();
 	}
 
 	@Override
 	public void handleKeyInput(KeyCode code) {
 		if (!gameOver) {
-			for (Slider slider : sliderList) {
+			for (SideMover sideMover : sideMoverList) {
+				Slider slider = (Slider) sideMover;
 				slider.handleMovement(code);
 			}
 		}
-		if (code == KeyCode.B) clearBricks();
+		if (code == KeyCode.B) bricks.clearObjects(screen);
 		if (code == KeyCode.SPACE) PiercePowerUp.tryActivate();
 		handleTestPowerUps(code);
-	}
-
-	private void clearBricks() {
-		for (Brick brick : bricks.getBricks()) {
-			screen.getRoot().getChildren().remove(brick.getBrick());
-		}
-		bricks.getBricks().clear();
 	}
 
 	private void handleTestPowerUps(KeyCode code) {
@@ -161,5 +161,11 @@ public class BreakoutLoop extends GameLoop {
 		screen.getRoot().getChildren().add(pu.getNode());
 		powerUpList.add(pu);
 		System.out.println("[TEST] Spawned. " + pu.getClass().getSimpleName());
+	}
+
+	@Override
+	public boolean levelOver() {
+		return bricks.getHittableObjects().stream()
+				.anyMatch(b -> b.isActive() && !b.isUnbreakable());
 	}
 }

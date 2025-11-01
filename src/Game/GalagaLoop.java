@@ -23,8 +23,8 @@ public class GalagaLoop extends GameLoop {
     @Override
     public void step() {
         screen.displayScoreBoard(highScore, points, lives);
-        enemies.moveEnemies();
-        checkLevelAndLives();
+        enemies.drop();
+        checkLives();
     }
 
     @Override
@@ -39,5 +39,10 @@ public class GalagaLoop extends GameLoop {
         if (code == KeyCode.B) {
             clearHittableObjects();
         }
+    }
+
+    @Override
+    public boolean levelOver() {
+        return (enemies.isCleared());
     }
 }
