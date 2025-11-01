@@ -9,6 +9,7 @@ public abstract class HittableObject {
     protected int pointValue;
     protected PowerUp powerUp;
 
+
     public HittableObject(double startX, double startY, int pointValue, PowerUp powerUp){
             active = true;
             this.pointValue = pointValue;
@@ -29,6 +30,10 @@ public abstract class HittableObject {
 
     public void setPowerUp(PowerUp powerUp){
         this.powerUp= powerUp;
+    }
+
+    public boolean isUnbreakable(){
+        return false;
     }
 
 

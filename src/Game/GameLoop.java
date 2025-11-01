@@ -40,16 +40,14 @@ public abstract class GameLoop {
 
     public abstract void step();
 
-
-    public void checkLevelAndLives() {
+    public void checkLives() {
         if (lives == 0) {
             gameOverLogic();
             screen.gameOverScreen();
-            return;
         }
-        boolean hasActiveBricks = bricks.getBricks().stream()
-                .anyMatch(b -> b.isActive() && !b.isUnbreakable());
-        if (!hasActiveBricks) {
+    }
+    public void checkLevel() {
+        if (!levelOver()) {
             level++;
             if (level <= 3) resetLevel();
             else {
@@ -59,9 +57,7 @@ public abstract class GameLoop {
         }
     }
 
-
-
-
+    public abstract boolean levelOver();
 
     public void resetLevel() {
         movingBall = false;
@@ -96,10 +92,10 @@ public abstract class GameLoop {
     public abstract void handleKeyInput(KeyCode code);
 
     public void clearHittableObjects() {
-        for (HittableObject hittable : bricks.getBricks()) {
+        for (HittableObject hittable : bricks.getHittableObjects()) {
             screen.getRoot().getChildren().remove(hittable.getHittableObject());
         }
-        bricks.getBricks().clear();
+        bricks.getHittableObjects().clear();
     }
 
     public void startMoving() {
