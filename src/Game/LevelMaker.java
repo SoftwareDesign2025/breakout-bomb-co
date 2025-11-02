@@ -12,6 +12,7 @@ import java.util.ArrayList;
 
 import Objects.Brick;
 import Objects.Slider;
+import Objects.SideMover;
 import Powerups.BiggerSlider;
 import Powerups.PiercePowerUp;
 import Powerups.BallPowerUp;
@@ -22,7 +23,7 @@ public class LevelMaker {
     private double ballY;
     private final Group ROOT;
     private final List<Brick> BRICKS;
-    private final ArrayList<Slider> SLIDER_LIST = new ArrayList<>();
+    private final ArrayList<SideMover> SIDE_MOVER_LIST = new ArrayList<>();
     private final ArrayList<Rectangle> OUT_OF_BOUNDS_LIST = new ArrayList<>();
     private final ArrayList<Node> NODE_LIST = new ArrayList<>();
     private final Random RAND = new Random();
@@ -32,8 +33,8 @@ public class LevelMaker {
         this.BRICKS = bricks;
     }
 
-    public ArrayList<Slider> getSliderList() {
-        return SLIDER_LIST;
+    public ArrayList<SideMover> getSideMoverList() {
+        return SIDE_MOVER_LIST;
     }
 
     public ArrayList<Rectangle> getOutOfBounds() {
@@ -51,15 +52,16 @@ public class LevelMaker {
             }
             BRICKS.clear();
         }
-        SLIDER_LIST.clear();
+        SIDE_MOVER_LIST.clear();
         OUT_OF_BOUNDS_LIST.clear();
         ballX  = 0;
         ballY = 0;
     }
 
+
     public void addSlider(double startX, double startY) {
         Slider s = new Slider(startX, startY);
-        SLIDER_LIST.add(s);
+        SIDE_MOVER_LIST.add(s);
         ROOT.getChildren().add(s.getNode());
         NODE_LIST.add(s.getNode());
     }
