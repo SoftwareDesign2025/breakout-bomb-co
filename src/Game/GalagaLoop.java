@@ -13,7 +13,7 @@ public class GalagaLoop extends GameLoop {
     public GalagaLoop(GalagaScreen galagaScreen) {
         super(galagaScreen);
         this.galagaLevelMaker = galagaScreen.getGalagaLevelMaker();
-        galagaScreen.loadLevel();
+        galagaScreen.loadLevel(0);
         this.enemies = galagaScreen.getEnemies();
         this.ship = galagaScreen.getShip();
     }

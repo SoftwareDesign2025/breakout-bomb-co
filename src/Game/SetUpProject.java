@@ -80,7 +80,7 @@ public class SetUpProject extends Application {
 
     private void startBreakout() {
         Ball ball = new Ball(10, 400, 400);
-        Screen screen = new Screen(ball);
+        BreakoutScreen screen = new BreakoutScreen(ball);
         gameLoop = new BreakoutLoop(screen);
         Scene gameScene = new Scene(screen.getRoot(), GAME_WIDTH, GAME_HEIGHT);
         gameScene.setOnKeyPressed(e -> gameLoop.handleKeyInput(e.getCode()));

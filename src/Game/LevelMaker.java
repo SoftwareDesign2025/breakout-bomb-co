@@ -58,6 +58,7 @@ public class LevelMaker {
         ballY = 0;
     }
 
+
     public void addSlider(double startX, double startY) {
         Slider s = new Slider(startX, startY);
         SIDE_MOVER_LIST.add(s);

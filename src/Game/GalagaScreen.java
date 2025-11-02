@@ -1,76 +1,67 @@
 package Game;
 
-import Game.Levels.GalagaLevel;
-import Objects.*;
-import javafx.scene.Group;
+import Objects.Ship;
+import Objects.GalagaEnemies;
+import Objects.GalagaEnemy;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
+import javafx.scene.text.Font;
+import javafx.scene.text.Text;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class GalagaScreen extends Screen {
-    private final Group root = new Group();
-
     private Ship ship;
-    private Rectangle background;
-    private static final double SCREEN_WIDTH = 800;
-    private static final double SCREEN_HEIGHT = 600;
-
     private GalagaLevelMaker galagaLevelMaker;
-    private List<GalagaEnemy> enemiesList;
+    private List<GalagaEnemy> enemyList;
     private GalagaEnemies enemies;
-    private SideMover sideMover;
-
 
     public GalagaScreen() {
-        super(null);
+        super();
+        Rectangle bg = new Rectangle(0, 0, 800, 600);
+        bg.setFill(Color.BLACK);
+        root.getChildren().add(0, bg);
 
-        initBackground();
-        initShip();
+        ship = new Ship("ship.png", 400, 500);
+        root.getChildren().add(ship.getShip());
 
-        enemiesList = new ArrayList<>();
-        galagaLevelMaker = new GalagaLevelMaker(root, enemiesList);
-        enemies = new GalagaEnemies(enemiesList);
+        enemyList = new ArrayList<>();
+        galagaLevelMaker = new GalagaLevelMaker(root, enemyList);
+        enemies = new GalagaEnemies(enemyList);
 
-        loadLevel();
+        loadLevel(1);
+    }
 
-
+    @Override
+    public void loadLevel(int level) {
+        galagaLevelMaker.loadLevel(new Game.Levels.GalagaLevel());
     }
 
     public Ship getShip() {
         return ship;
     }
 
-
-    public GalagaLevelMaker getGalagaLevelMaker(){
-        return galagaLevelMaker;
-    }
-
-    private void initBackground() {
-        background = new Rectangle(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT);
-        background.setFill(Color.BLACK);
-        getRoot().getChildren().add(background);
-    }
-
-    private void initShip() {
-        ship = new Ship("ship.png",SCREEN_WIDTH / 2, SCREEN_HEIGHT - 100);
-        getRoot().getChildren().add(ship.getShip());
-    }
-
-    public SideMover getSideMover() {
-        return sideMover;
-    }
-
-    public void loadLevel(){
-        galagaLevelMaker.loadLevel(new GalagaLevel());
-    }
-
-    public GalagaEnemies getEnemies(){
+    public GalagaEnemies getEnemies() {
         return enemies;
     }
+
+    public GalagaLevelMaker getGalagaLevelMaker() {
+        return galagaLevelMaker;
+    }
     @Override
-    public Group getRoot() {
-        return root;
+    public void gameOverScreen() {
+        Text over = new Text(300, 300, "GAME OVER");
+        over.setFill(Color.RED);
+        over.setFont(Font.font("Impact", 40));
+        root.getChildren().add(over);
+    }
+
+    @Override
+    public void gameWinScreen() {
+        Text win = new Text(300, 300, "YOU WIN!");
+        win.setFill(Color.GREEN);
+        win.setFont(Font.font("Impact", 40));
+        root.getChildren().add(win);
     }
 }
