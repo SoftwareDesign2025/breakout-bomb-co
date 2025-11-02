@@ -36,5 +36,10 @@ public abstract class HittableObject {
         return false;
     }
 
+    public void deactivate(){
+        active = false;
+        hittableObject.setVisible(false);
+    }
+
 
 }
