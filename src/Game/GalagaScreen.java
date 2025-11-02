@@ -3,6 +3,7 @@ package Game;
 import Objects.Ship;
 import Objects.GalagaEnemies;
 import Objects.GalagaEnemy;
+import Objects.SideMover;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
@@ -22,16 +23,14 @@ public class GalagaScreen extends Screen {
         Rectangle bg = new Rectangle(0, 0, 800, 600);
         bg.setFill(Color.BLACK);
         root.getChildren().add(0, bg);
-
-        ship = new Ship("ship.png", 400, 500);
-        root.getChildren().add(ship.getShip());
-
         enemyList = new ArrayList<>();
         galagaLevelMaker = new GalagaLevelMaker(root, enemyList);
         enemies = new GalagaEnemies(enemyList);
 
         loadLevel(1);
     }
+
+    public ArrayList<SideMover> getSideMoverList() { return galagaLevelMaker.getSideMoverList(); }
 
     @Override
     public void loadLevel(int level) {

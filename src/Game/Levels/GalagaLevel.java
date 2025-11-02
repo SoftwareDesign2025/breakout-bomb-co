@@ -2,13 +2,14 @@ package Game.Levels;
 
 import Game.GalagaLevelMaker;
 import Objects.GalagaEnemy;
+import Objects.Ship;
 import javafx.scene.paint.Color;
 
 public class GalagaLevel {
 
     public void build(GalagaLevelMaker maker) {
-        maker.addSlider(350, 550);
 
+        maker.addShip("ship.png", 400, 500);
         double startX = 100;
         double startY = 80;
         double enemyWidth = 75;

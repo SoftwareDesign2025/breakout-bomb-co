@@ -2,9 +2,12 @@ package Game;
 
 import Objects.Ball;
 import Objects.Bricks;
+import Objects.SideMover;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
+
+import java.util.ArrayList;
 
 public class BreakoutScreen extends Screen {
     public BreakoutScreen(Ball ball) {
@@ -20,6 +23,8 @@ public class BreakoutScreen extends Screen {
         else if (level == 3) levelMaker.loadLevel(new Game.Levels.LevelThree());
 
     }
+
+    public ArrayList<SideMover> getSideMoverList() { return levelMaker.getSideMoverList(); }
 
     @Override
     public void gameOverScreen() {

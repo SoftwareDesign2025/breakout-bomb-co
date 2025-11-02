@@ -2,7 +2,8 @@ package Game;
 
 import Game.Levels.GalagaLevel;
 import Objects.GalagaEnemy;
-import Objects.Slider;
+import Objects.Ship;
+import Objects.SideMover;
 import javafx.scene.Group;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
@@ -14,7 +15,7 @@ public class GalagaLevelMaker {
 
     private final Group ROOT;
     private final List<GalagaEnemy> ENEMIES;
-    private final ArrayList<Slider> SLIDER_LIST = new ArrayList<>();
+    private final ArrayList<SideMover> SHIP_LIST = new ArrayList<>();
     private final ArrayList<Rectangle> OUT_OF_BOUNDS_LIST = new ArrayList<>();
     private final ArrayList<javafx.scene.Node> NODE_LIST = new ArrayList<>();
     private final Random RAND = new Random();
@@ -28,9 +29,10 @@ public class GalagaLevelMaker {
         return ENEMIES;
     }
 
-    public ArrayList<Slider> getSliderList() {
-        return SLIDER_LIST;
+    public ArrayList<SideMover> getSideMoverList() {
+        return SHIP_LIST;
     }
+
 
     public ArrayList<Rectangle> getOutOfBounds() {
         return OUT_OF_BOUNDS_LIST;
@@ -42,15 +44,15 @@ public class GalagaLevelMaker {
             NODE_LIST.clear();
         }
         ENEMIES.clear();
-        SLIDER_LIST.clear();
+        SHIP_LIST.clear();
         OUT_OF_BOUNDS_LIST.clear();
     }
 
-    public void addSlider(double startX, double startY) {
-        Slider s = new Slider(startX, startY);
-        SLIDER_LIST.add(s);
-        ROOT.getChildren().add(s.getNode());
-        NODE_LIST.add(s.getNode());
+    public void addShip(String imagePath, double startX, double startY) {
+        Ship ship = new Ship(imagePath, startX, startY);
+        SHIP_LIST.add(ship);
+        ROOT.getChildren().add(ship.getShip());
+        NODE_LIST.add(ship.getShip());
     }
 
     public void addOutOfBounds(double x, double y, double width, double height, Color color) {
