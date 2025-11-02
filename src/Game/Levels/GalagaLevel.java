@@ -5,7 +5,7 @@ import Objects.GalagaEnemy;
 import Objects.Ship;
 import javafx.scene.paint.Color;
 
-public class GalagaLevel {
+public class GalagaLevel implements Level<GalagaLevelMaker> {
 
     public void build(GalagaLevelMaker maker) {
 
@@ -18,18 +18,15 @@ public class GalagaLevel {
         double gapY = 20;
         int rows = 2;
         int cols = 6;
-
         for (int row = 0; row < rows; row++) {
             for (int col = 0; col < cols; col++) {
                 double x = startX + col * (enemyWidth + gapX);
                 double y = startY + row * (enemyHeight + gapY);
 
-                GalagaEnemy enemy = new GalagaEnemy(enemyWidth,enemyHeight,"mlennemann.png", x, y, 1, null);
+                GalagaEnemy enemy = new GalagaEnemy(enemyWidth,enemyHeight,"mlennemann.png", x, y, 1, null, 0.1);
                 maker.addEnemy(enemy);
             }
         }
 
-        maker.addOutOfBounds(0, 0, 10, 600, Color.TRANSPARENT);
-        maker.addOutOfBounds(790, 0, 10, 600, Color.TRANSPARENT);
     }
 }

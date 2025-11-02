@@ -23,6 +23,7 @@ public class GalagaLoop extends GameLoop {
     public void step() {
         screen.displayScoreBoard(highScore, points, lives);
         enemies.drop();
+        lives -= enemies.enemiesReachedBottom();
         checkLives();
     }
 

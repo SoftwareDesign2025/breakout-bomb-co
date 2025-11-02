@@ -1,25 +1,16 @@
 // Author: Gavin Collins
 package Game;
 
-import Game.Levels.Level;
 import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
-import java.util.List;
 import java.util.Random;
 import java.util.ArrayList;
-
-import Objects.Brick;
-import Objects.Slider;
 import Objects.SideMover;
-import Powerups.BiggerSlider;
-import Powerups.PiercePowerUp;
-import Powerups.BallPowerUp;
+
 
 public abstract class LevelMaker {
-
-
     protected final Group ROOT;
     protected final ArrayList<SideMover> SIDE_MOVER_LIST = new ArrayList<>();
     protected final ArrayList<Rectangle> OUT_OF_BOUNDS_LIST = new ArrayList<>();
@@ -40,6 +31,15 @@ public abstract class LevelMaker {
 
     public abstract void resetLevel();
 
+    protected void clearGameObjects() {
+        if (!NODE_LIST.isEmpty()) {
+            ROOT.getChildren().removeAll(NODE_LIST);
+            NODE_LIST.clear();
+        }
+        SIDE_MOVER_LIST.clear();
+        OUT_OF_BOUNDS_LIST.clear();
+    }
+
 
     public void addOutOfBounds(double x, double y, double width, double height, Color color) {
         Rectangle r = new Rectangle(x, y, width, height);
@@ -48,8 +48,4 @@ public abstract class LevelMaker {
         ROOT.getChildren().add(r);
         NODE_LIST.add(r);
     }
-
-
-
-
 }

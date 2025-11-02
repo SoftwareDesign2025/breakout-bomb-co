@@ -27,13 +27,8 @@ public class GalagaLevelMaker extends LevelMaker{
 
 
     public void resetLevel() {
-        if (!NODE_LIST.isEmpty()) {
-            ROOT.getChildren().removeAll(NODE_LIST);
-            NODE_LIST.clear();
-        }
+        clearGameObjects();
         ENEMIES.clear();
-        SIDE_MOVER_LIST.clear();
-        OUT_OF_BOUNDS_LIST.clear();
     }
 
     public void addShip(String imagePath, double startX, double startY) {

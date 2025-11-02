@@ -23,18 +23,11 @@ public class BreakoutLevelMaker extends LevelMaker{
     }
 
     public void resetLevel() {
-        if (!NODE_LIST.isEmpty()) {
-            ROOT.getChildren().removeAll(NODE_LIST);
-            NODE_LIST.clear();
+        clearGameObjects();
+        for (Brick b : new ArrayList<>(BRICKS)) {
+            ROOT.getChildren().remove(b.getBrick());
         }
-        if (!BRICKS.isEmpty()) {
-            for (Brick b : new ArrayList<>(BRICKS)) {
-                ROOT.getChildren().remove(b.getBrick());
-            }
-            BRICKS.clear();
-        }
-        SIDE_MOVER_LIST.clear();
-        OUT_OF_BOUNDS_LIST.clear();
+        BRICKS.clear();
         ballX  = 0;
         ballY = 0;
     }
@@ -77,7 +70,7 @@ public class BreakoutLevelMaker extends LevelMaker{
         if (val == 4) brick.setPowerUp(new BallPowerUp(x, y));
     }
 
-    public void printLevel(int[][] pattern, double startX, double startY, double brickWidth, double brickHeight, double brickGap, int pointValue, Color color, boolean colorChange) {
+    public void buildBricks(int[][] pattern, double startX, double startY, double brickWidth, double brickHeight, double brickGap, int pointValue, Color color, boolean colorChange) {
         for (int row = 0; row < pattern.length; row++) {
             for (int col = 0; col < pattern[row].length; col++) {
                 int val = randomizeBrick(pattern[row][col]);
