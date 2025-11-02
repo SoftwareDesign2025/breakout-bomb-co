@@ -11,17 +11,12 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-public class GalagaLevelMaker {
+public class GalagaLevelMaker extends LevelMaker{
 
-    private final Group ROOT;
     private final List<GalagaEnemy> ENEMIES;
-    private final ArrayList<SideMover> SHIP_LIST = new ArrayList<>();
-    private final ArrayList<Rectangle> OUT_OF_BOUNDS_LIST = new ArrayList<>();
-    private final ArrayList<javafx.scene.Node> NODE_LIST = new ArrayList<>();
-    private final Random RAND = new Random();
 
     public GalagaLevelMaker(Group root, List<GalagaEnemy> enemiesList) {
-        this.ROOT = root;
+        super(root);
         this.ENEMIES = enemiesList;
     }
 
@@ -29,14 +24,7 @@ public class GalagaLevelMaker {
         return ENEMIES;
     }
 
-    public ArrayList<SideMover> getSideMoverList() {
-        return SHIP_LIST;
-    }
 
-
-    public ArrayList<Rectangle> getOutOfBounds() {
-        return OUT_OF_BOUNDS_LIST;
-    }
 
     public void resetLevel() {
         if (!NODE_LIST.isEmpty()) {
@@ -44,13 +32,13 @@ public class GalagaLevelMaker {
             NODE_LIST.clear();
         }
         ENEMIES.clear();
-        SHIP_LIST.clear();
+        SIDE_MOVER_LIST.clear();
         OUT_OF_BOUNDS_LIST.clear();
     }
 
     public void addShip(String imagePath, double startX, double startY) {
         Ship ship = new Ship(imagePath, startX, startY);
-        SHIP_LIST.add(ship);
+        SIDE_MOVER_LIST.add(ship);
         ROOT.getChildren().add(ship.getShip());
         NODE_LIST.add(ship.getShip());
     }

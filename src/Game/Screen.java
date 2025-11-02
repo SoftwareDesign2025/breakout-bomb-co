@@ -14,7 +14,6 @@ public abstract class Screen {
     protected Group root;
     protected Text scoreboard;
     protected Bricks bricks;
-    protected LevelMaker levelMaker;
     protected List<Ball> queuedBalls = new ArrayList<>();
 
     public Screen() {
@@ -24,14 +23,12 @@ public abstract class Screen {
         scoreboard.setFont(new Font(23));
         root.getChildren().add(scoreboard);
         bricks = new Bricks(new ArrayList<>());
-        levelMaker = new LevelMaker(root, bricks.getBricksList());
     }
 
     public abstract void loadLevel(int level);
 
     public Group getRoot() { return root; }
     public Bricks getBricks() { return bricks; }
-    public LevelMaker getLevelMaker() { return levelMaker; }
     public abstract ArrayList<SideMover> getSideMoverList();
 
     public void queueNewBall(Ball b) { queuedBalls.add(b); }
@@ -56,6 +53,7 @@ public abstract class Screen {
     public void checkBallToWall(Ball ball) {
 
     }
+
 
 
 }
