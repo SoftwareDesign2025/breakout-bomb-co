@@ -24,12 +24,9 @@ public class GalagaLevel {
                 double y = startY + row * (enemyHeight + gapY);
 
                 GalagaEnemy enemy = new GalagaEnemy(enemyWidth,enemyHeight,"mlennemann.png", x, y, 1, null);
-                System.out.println(x  + "  and  "  + y);
                 maker.addEnemy(enemy);
             }
         }
-
-
 
         maker.addOutOfBounds(0, 0, 10, 600, Color.TRANSPARENT);
         maker.addOutOfBounds(790, 0, 10, 600, Color.TRANSPARENT);

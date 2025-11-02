@@ -29,6 +29,7 @@ public class BreakoutLoop extends GameLoop {
 			updatePowerUps();
 			if (screen.ballOutOfBounds(ball)) toRemove.add(ball);
 		}
+		checkLevel();
 		handleBallRemovals(toRemove);
 		checkLives();
 	}
