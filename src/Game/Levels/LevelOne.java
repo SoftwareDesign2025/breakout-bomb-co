@@ -1,12 +1,13 @@
 package Game.Levels;
 
+import Game.BreakoutLevelMaker;
 import Game.LevelMaker;
 import javafx.scene.paint.Color;
 import Objects.Brick;
 
 public class LevelOne implements Level {
     @Override
-    public void build(LevelMaker maker) {
+    public void build(BreakoutLevelMaker maker) {
         maker.addSlider(360, 500);
         maker.addOutOfBounds(0, 580, 800, 20, Color.RED);
 

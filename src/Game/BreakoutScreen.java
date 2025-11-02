@@ -10,21 +10,24 @@ import javafx.scene.text.Text;
 import java.util.ArrayList;
 
 public class BreakoutScreen extends Screen {
+    private BreakoutLevelMaker breakoutLevelMaker;
     public BreakoutScreen(Ball ball) {
         super();
         loadLevel(1);
+        breakoutLevelMaker = new BreakoutLevelMaker(root, bricks.getBricksList());
+
     }
 
     @Override
     public void loadLevel(int level) {
-        levelMaker.resetLevel();
-        if (level == 1) levelMaker.loadLevel(new Game.Levels.LevelOne());
-        else if (level == 2) levelMaker.loadLevel(new Game.Levels.LevelTwo());
-        else if (level == 3) levelMaker.loadLevel(new Game.Levels.LevelThree());
+        breakoutLevelMaker.resetLevel();
+        if (level == 1) breakoutLevelMaker.loadLevel(new Game.Levels.LevelOne());
+        else if (level == 2) breakoutLevelMaker.loadLevel(new Game.Levels.LevelTwo());
+        else if (level == 3) breakoutLevelMaker.loadLevel(new Game.Levels.LevelThree());
 
     }
 
-    public ArrayList<SideMover> getSideMoverList() { return levelMaker.getSideMoverList(); }
+    public ArrayList<SideMover> getSideMoverList() { return breakoutLevelMaker.getSideMoverList(); }
 
     @Override
     public void gameOverScreen() {
@@ -51,12 +54,16 @@ public class BreakoutScreen extends Screen {
     }
 
     public boolean ballOutOfBounds(Ball ball) {
-        for (javafx.scene.shape.Rectangle bounds : levelMaker.getOutOfBounds()) {
+        for (javafx.scene.shape.Rectangle bounds : breakoutLevelMaker.getOutOfBounds()) {
             if (ball.getBall().getBoundsInParent().intersects(bounds.getBoundsInParent())) {
                 return true;
             }
         }
         return false;
+    }
+
+    public BreakoutLevelMaker getBreakoutLevelMaker(){
+        return breakoutLevelMaker;
     }
 
 }

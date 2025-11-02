@@ -8,9 +8,12 @@ public class BreakoutLoop extends GameLoop {
 	private ArrayList<PowerUp> powerUpList;
 	private Ball freshBall;
 
-	public BreakoutLoop(Screen screen) {
-		super(screen);
+	private final BreakoutLevelMaker LEVEL_MAKER;
+
+	public BreakoutLoop(BreakoutScreen breakoutScreen) {
+		super(breakoutScreen);
 		this.powerUpList = new ArrayList<>();
+		this.LEVEL_MAKER = breakoutScreen.getBreakoutLevelMaker();
 		initBall();
 	}
 

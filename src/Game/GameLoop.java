@@ -25,13 +25,11 @@ public abstract class GameLoop {
     protected final double RESET_X_DIRECTION = 0.2;
     protected final double RESET_Y_DIRECTION = 2;
     protected boolean gameOver = false;
-    protected final LevelMaker LEVEL_MAKER;
     protected final Bricks bricks;
 
     public GameLoop(Screen screen) {
         this.screen = screen;
         this.highScore = getHighScore();
-        this.LEVEL_MAKER = screen.getLevelMaker();
         screen.loadLevel(level);
         this.sideMoverList = screen.getSideMoverList();
         this.BALLS = new ArrayList<>();
