@@ -9,7 +9,7 @@ import Powerups.BiggerSlider;
 import Powerups.PiercePowerUp;
 import Powerups.PowerUp;
 
-public class LevelThree implements Level {
+public class LevelThree implements Level<BreakoutLevelMaker> {
     @Override
     public void build(BreakoutLevelMaker maker) {
         maker.addOutOfBounds(0, 580, 800, 20, Color.RED);
