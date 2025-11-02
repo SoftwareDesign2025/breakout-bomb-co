@@ -13,9 +13,8 @@ public class BreakoutScreen extends Screen {
     private BreakoutLevelMaker breakoutLevelMaker;
     public BreakoutScreen(Ball ball) {
         super();
+        this.breakoutLevelMaker = new BreakoutLevelMaker(root, bricks.getBricksList());
         loadLevel(1);
-        breakoutLevelMaker = new BreakoutLevelMaker(root, bricks.getBricksList());
-
     }
 
     @Override
