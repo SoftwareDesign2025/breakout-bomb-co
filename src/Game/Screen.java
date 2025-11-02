@@ -32,7 +32,7 @@ public abstract class Screen {
     public Group getRoot() { return root; }
     public Bricks getBricks() { return bricks; }
     public LevelMaker getLevelMaker() { return levelMaker; }
-    public ArrayList<SideMover> getSideMoverList() { return levelMaker.getSideMoverList(); }
+    public abstract ArrayList<SideMover> getSideMoverList();
 
     public void queueNewBall(Ball b) { queuedBalls.add(b); }
     public List<Ball> consumeQueuedBalls() {
