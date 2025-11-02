@@ -4,7 +4,7 @@ import javafx.scene.input.KeyCode;
 
 public abstract class SideMover {
     protected double xLocation;
-    protected final double yLocation;
+    protected double yLocation;
     protected final double width;
     protected final double speed;
 

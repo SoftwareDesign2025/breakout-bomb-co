@@ -18,19 +18,31 @@ public class Ship extends SideMover {
         shipImage.setFitWidth(100);
         shipImage.setFitHeight(100);
         shipImage.setLayoutX(startX);
-        shipImage.setLayoutY(startY);    }
+        shipImage.setLayoutY(startY);
+        xLocation = startX;
+        yLocation = startY;
+        updateNode();}
 
     @Override
     protected void stopAtEdges() {
-        if (xLocation < width / 2) xLocation = width / 2;
-        else if (xLocation + width / 2 > 800) xLocation = 800 - width / 2;
+        double halfWidth = shipImage.getFitWidth() / 2;
+        if (xLocation < halfWidth) xLocation = halfWidth;
+        else if (xLocation > 800 - halfWidth) xLocation = 800 - halfWidth;
+
+        double halfHeight = shipImage.getFitHeight() / 2;
+        if (yLocation < halfHeight) yLocation = halfHeight;
+        else if (yLocation > 600 - halfHeight) yLocation = 600 - halfHeight;
     }
+
 
     @Override
     protected void updateNode() {
-        double offsetX = xLocation - shipImage.getLayoutBounds().getCenterX();
-        shipImage.setTranslateX(offsetX);
+        shipImage.setLayoutX(xLocation - shipImage.getFitWidth() / 2);
+        shipImage.setLayoutY(yLocation - shipImage.getFitHeight() / 2);
     }
+
+
+
 
     public ImageView getShip() {
         return shipImage;
