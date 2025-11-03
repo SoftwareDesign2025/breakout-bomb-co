@@ -1,8 +1,7 @@
 
 package Powerups;
 
-import Objects.Slider;
-import javafx.scene.Node;
+import Objects.Breakout.Slider;
 import javafx.scene.paint.Color;
 
 import java.util.ArrayList;

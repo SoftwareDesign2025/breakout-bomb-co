@@ -1,10 +1,9 @@
-package Objects;
+package Objects.Galaga;
 
+import Objects.SideMover;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
-import javafx.scene.paint.Color;
-import javafx.scene.shape.Polygon;
 
 public class Ship extends SideMover {
 

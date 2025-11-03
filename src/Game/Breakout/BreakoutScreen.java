@@ -1,7 +1,7 @@
-package Game;
+package Game.Breakout;
 
-import Objects.Ball;
-import Objects.Bricks;
+import Game.Screen;
+import Objects.Breakout.Ball;
 import Objects.SideMover;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
@@ -11,7 +11,7 @@ import java.util.ArrayList;
 
 public class BreakoutScreen extends Screen {
     private BreakoutLevelMaker breakoutLevelMaker;
-    public BreakoutScreen(Ball ball) {
+    public BreakoutScreen() {
         super();
         this.breakoutLevelMaker = new BreakoutLevelMaker(root, bricks.getBricksList());
         loadLevel(1);

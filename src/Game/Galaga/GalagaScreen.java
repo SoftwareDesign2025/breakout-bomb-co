@@ -1,8 +1,9 @@
-package Game;
+package Game.Galaga;
 
-import Objects.Ship;
-import Objects.GalagaEnemies;
-import Objects.GalagaEnemy;
+import Game.Screen;
+import Objects.Galaga.Ship;
+import Objects.Galaga.GalagaEnemies;
+import Objects.Galaga.GalagaEnemy;
 import Objects.SideMover;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
@@ -50,7 +51,7 @@ public class GalagaScreen extends Screen {
     }
     @Override
     public void gameOverScreen() {
-        Text over = new Text(300, 300, "GAME OVER");
+        Text over = new Text(300, 300, "GAME OVER LOSER");
         over.setFill(Color.RED);
         over.setFont(Font.font("Impact", 40));
         root.getChildren().add(over);

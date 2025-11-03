@@ -1,6 +1,8 @@
 package Game;
 
 import Objects.*;
+import Objects.Breakout.Ball;
+import Objects.Breakout.Bricks;
 import javafx.scene.input.KeyCode;
 
 import java.io.File;
@@ -20,7 +22,6 @@ public abstract class GameLoop {
     protected int points = 0;
     protected int highScore;
     protected int level = 1;
-    protected boolean movingBall = false;
     protected boolean gameOver = false;
     protected final Bricks bricks;
     protected final String fileName;
@@ -60,18 +61,13 @@ public abstract class GameLoop {
 
     public abstract boolean levelOver();
 
-    public void resetLevel() {
-        movingBall = false;
-        BALLS.forEach(ball -> screen.getRoot().getChildren().remove(ball.getBall()));
-        BALLS.clear();
-        screen.loadLevel(level);
-        sideMoverList = screen.getSideMoverList();
-    }
+    public abstract void resetLevel();
 
     public void gameOverLogic() {
         gameOver = true;
-        movingBall = false;
-        if (points > highScore) setHighScore();
+        if (points > highScore) {
+            setHighScore();
+        }
     }
 
     private int getHighScore() {
@@ -101,7 +97,7 @@ public abstract class GameLoop {
         bricks.getHittableObjects().clear();
     }
 
-    public void startMoving() {
-        movingBall = true;
-    }
+    public abstract void startMoving();
+
+    public abstract boolean gameOn();
 }

@@ -1,9 +1,8 @@
-// Author: Oscar Kardon
-
 package Game.Levels;
 
-import Game.GalagaLevelMaker;
-import Objects.GalagaEnemy;
+import Game.Galaga.GalagaLevelMaker;
+import Objects.Galaga.GalagaEnemy;
+
 public class GalagaLevel implements Level<GalagaLevelMaker> {
 
     public void build(GalagaLevelMaker maker) {
@@ -16,7 +15,7 @@ public class GalagaLevel implements Level<GalagaLevelMaker> {
         double gapX = 15;
         double gapY = 20;
         int rows = 2;
-        int cols = 7;
+        int cols = 6;
         for (int row = 0; row < rows; row++) {
             for (int col = 0; col < cols; col++) {
                 double x = startX + col * (enemyWidth + gapX);

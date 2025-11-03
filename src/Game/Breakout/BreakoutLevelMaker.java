@@ -1,10 +1,9 @@
-// Author: Oscar Kardon
+package Game.Breakout;
 
-package Game;
-
+import Game.LevelMaker;
 import Game.Levels.Level;
-import Objects.Brick;
-import Objects.Slider;
+import Objects.Breakout.Brick;
+import Objects.Breakout.Slider;
 import Powerups.BallPowerUp;
 import Powerups.BiggerSlider;
 import Powerups.PiercePowerUp;
@@ -14,9 +13,7 @@ import javafx.scene.paint.Color;
 import java.util.ArrayList;
 import java.util.List;
 
-
-
-public class BreakoutLevelMaker extends LevelMaker{
+public class BreakoutLevelMaker extends LevelMaker {
     private double ballX;
     private double ballY;
     private final List<Brick> BRICKS;

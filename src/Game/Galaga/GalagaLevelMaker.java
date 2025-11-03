@@ -1,18 +1,16 @@
-// Author: Oscar Kardon
+package Game.Galaga;
 
-package Game;
+import Game.LevelMaker;
 import Game.Levels.GalagaLevel;
-import Objects.GalagaEnemy;
-import Objects.Ship;
-import Objects.SideMover;
+import Objects.Galaga.GalagaEnemy;
+import Objects.Galaga.Ship;
 import javafx.scene.Group;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
 
-public class GalagaLevelMaker extends LevelMaker{
+import java.util.List;
+
+public class GalagaLevelMaker extends LevelMaker {
 
     private final List<GalagaEnemy> ENEMIES;
 

@@ -1,13 +1,12 @@
-// Author: Oscar Kardon
+package Objects.Galaga;
 
-package Objects;
-
+import Objects.HittableObject;
 import Powerups.PowerUp;
 
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
-public class GalagaEnemy extends HittableObject{
+public class GalagaEnemy extends HittableObject {
     private ImageView imageView;
     private double speed = 0.1;
 

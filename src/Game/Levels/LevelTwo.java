@@ -1,7 +1,6 @@
 package Game.Levels;
 
-import Game.BreakoutLevelMaker;
-import Game.LevelMaker;
+import Game.Breakout.BreakoutLevelMaker;
 import javafx.scene.paint.Color;
 
 public class LevelTwo implements Level<BreakoutLevelMaker> {

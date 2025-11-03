@@ -1,6 +1,10 @@
 // Author: Murph Lennemann
 
-package Game;
+package Game.Breakout;
+import Game.GameLoop;
+import Objects.Breakout.Ball;
+import Objects.Breakout.Brick;
+import Objects.Breakout.Slider;
 import javafx.scene.input.KeyCode;
 import java.util.*;
 import Objects.*;
@@ -8,8 +12,9 @@ import Powerups.*;
 
 public class BreakoutLoop extends GameLoop {
 	private ArrayList<PowerUp> powerUpList;
-
 	private final BreakoutLevelMaker LEVEL_MAKER;
+	private boolean movingBall = false;
+
 
 	public BreakoutLoop(BreakoutScreen breakoutScreen) {
 		super(breakoutScreen);
@@ -22,13 +27,13 @@ public class BreakoutLoop extends GameLoop {
 	public void step() {
 		showScreen();
 		if (gameOn()) { return;}
-		ArrayList<Ball> toRemove = updateScreen();
+		updateScreen();
 		checkLevel();
-		handleBallRemovals(toRemove);
+
 		checkLives();
 	}
 
-	private ArrayList<Ball> updateScreen() {
+	private void updateScreen() {
 		ArrayList<Ball> toRemove = new ArrayList<>();
 		for (Ball ball : BALLS) {
 			updateBall(ball);
@@ -43,10 +48,11 @@ public class BreakoutLoop extends GameLoop {
 
 		}
 		updatePowerUps();
-		return toRemove;
+		handleBallRemovals(toRemove);
 	}
 
-	private boolean gameOn() {
+	@Override
+	public boolean gameOn() {
 		return (!movingBall || gameOver);
 	}
 
@@ -193,5 +199,16 @@ public class BreakoutLoop extends GameLoop {
 	@Override
 	public String getFileName() {
 		return "BreakoutHighScore.txt";
+	}
+
+	@Override
+	public void gameOverLogic() {
+		super.gameOverLogic();
+		movingBall = false;
+	}
+
+	@Override
+	public void startMoving() {
+		movingBall = true;
 	}
 }

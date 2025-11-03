@@ -6,8 +6,8 @@ import javafx.scene.text.Font;
 import javafx.scene.paint.Color;
 import java.util.ArrayList;
 import java.util.List;
-import Objects.Ball;
-import Objects.Bricks;
+import Objects.Breakout.Ball;
+import Objects.Breakout.Bricks;
 import Objects.SideMover;
 
 public abstract class Screen {
@@ -18,7 +18,7 @@ public abstract class Screen {
 
     public Screen() {
         root = new Group();
-        scoreboard = new Text(10, 20, "High Score: 0 Score: 0 Lives: 3");
+        scoreboard = new Text(10, 20, "High Score: 0 Score: 0 Lives: 5");
         scoreboard.setFill(Color.GREEN);
         scoreboard.setFont(new Font(23));
         root.getChildren().add(scoreboard);

@@ -1,8 +1,9 @@
-package Game;
+package Game.Galaga;
 
 
-import Objects.Ship;
-import Objects.GalagaEnemies;
+import Game.GameLoop;
+import Objects.Galaga.Ship;
+import Objects.Galaga.GalagaEnemies;
 import Objects.SideMover;
 import javafx.scene.input.KeyCode;
 
@@ -48,5 +49,16 @@ public class GalagaLoop extends GameLoop {
 
     public String getFileName() {
         return "GalagaHighScore.txt";
+    }
+
+    @Override
+    public void resetLevel(){}
+
+    @Override
+    public void startMoving(){}
+
+    @Override
+    public boolean gameOn() {
+        return true;
     }
 }

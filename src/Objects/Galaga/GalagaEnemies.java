@@ -1,10 +1,13 @@
-package Objects;
+package Objects.Galaga;
 
 import java.util.List;
 import java.util.ArrayList;
 import Game.Screen;
+import Objects.Breakout.Ball;
+import Objects.HittableObject;
+import Objects.HittableObjects;
 
-public class GalagaEnemies implements HittableObjects{
+public class GalagaEnemies implements HittableObjects {
     private List<GalagaEnemy> enemies;
     private static final double ENEMY_BOTTOM_THRESHOLD = 550;
 

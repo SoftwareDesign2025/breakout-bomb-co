@@ -1,8 +1,8 @@
 
 package Powerups;
 import Game.Screen;
-import Objects.Ball;
-import Objects.Slider;
+import Objects.Breakout.Ball;
+import Objects.Breakout.Slider;
 import javafx.scene.paint.Color;
 
 import java.util.ArrayList;
