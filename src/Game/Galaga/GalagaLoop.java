@@ -19,7 +19,9 @@ public class GalagaLoop extends GameLoop {
     @Override
     public void step() {
         showScreen();
-        runGame();
+        if (moving) {
+            runGame();
+        }
         checkLives();
     }
 
@@ -55,10 +57,14 @@ public class GalagaLoop extends GameLoop {
     public void resetLevel(){}
 
     @Override
-    public void startMoving(){}
+    public void startMoving(){
+        super.startMoving();
+        enemies.drop();
+    }
 
     @Override
     public boolean gameOn() {
-        return true;
+        moving = true;
+        return moving;
     }
 }

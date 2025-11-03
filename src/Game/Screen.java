@@ -27,32 +27,37 @@ public abstract class Screen {
 
     public abstract void loadLevel(int level);
 
-    public Group getRoot() { return root; }
-    public Bricks getBricks() { return bricks; }
+    public Group getRoot() {
+        return root;
+    }
+    public Bricks getBricks() {
+        return bricks;
+    }
     public abstract ArrayList<SideMover> getSideMoverList();
 
-    public void queueNewBall(Ball b) { queuedBalls.add(b); }
+    public void queueNewBall(Ball b) {
+        queuedBalls.add(b);
+
+    }
     public List<Ball> consumeQueuedBalls() {
         List<Ball> list = new ArrayList<>(queuedBalls);
         queuedBalls.clear();
         return list;
     }
+
     public abstract void gameOverScreen();
+
     public abstract void gameWinScreen();
 
     public boolean ballOutOfBounds(Ball ball) {
-
         return false;
     }
-
 
     public void displayScoreBoard(int highScore, int score, int lives) {
         scoreboard.setText("High Score: " + highScore + " Score: " + score + " Lives: " + lives);
     }
 
-    public void checkBallToWall(Ball ball) {
-
-    }
+    public void checkBallToWall(Ball ball) {}
 
 
 
