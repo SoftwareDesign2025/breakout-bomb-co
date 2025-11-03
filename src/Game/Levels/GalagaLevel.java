@@ -21,7 +21,7 @@ public class GalagaLevel implements Level<GalagaLevelMaker> {
                 double x = startX + col * (enemyWidth + gapX);
                 double y = startY + row * (enemyHeight + gapY);
 
-                GalagaEnemy enemy = new GalagaEnemy(enemyWidth,enemyHeight,"/images/gcollins.png", x, y, 1, null, 0.1);
+                GalagaEnemy enemy = new GalagaEnemy(enemyWidth,enemyHeight,"/images/bfarmer.png", x, y, 1, null, 0.1);
                 maker.addEnemy(enemy);
             }
         }

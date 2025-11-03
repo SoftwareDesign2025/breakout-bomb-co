@@ -67,4 +67,9 @@ public class BallPowerUp extends PowerUp {
         startEffect(sliders);
     }
 
+    @Override
+    public void onSpawn(Screen myScreen, ArrayList<Ball> myBalls) {
+        setBallPosition(myScreen, myBalls);
+    }
+
 }

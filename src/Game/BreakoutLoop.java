@@ -1,3 +1,5 @@
+// Author: Murph Lennemann
+
 package Game;
 import javafx.scene.input.KeyCode;
 import java.util.*;
@@ -35,11 +37,12 @@ public class BreakoutLoop extends GameLoop {
 			points += bricks.resolveCollisions(ball);
 			spawnPowerUpsFromBricks();
 			handlePowerUpPickups();
-			updatePowerUps();
 			if (screen.ballOutOfBounds(ball)) {
 				toRemove.add(ball);
 			}
+
 		}
+		updatePowerUps();
 		return toRemove;
 	}
 
@@ -62,20 +65,20 @@ public class BreakoutLoop extends GameLoop {
 
 	private void spawnPowerUpsFromBricks() {
 		for (HittableObject h : new ArrayList<>(bricks.getHittableObjects())) {
-			if (!(h instanceof Brick b)) continue;
-			if (b.isActive()) continue;
-			PowerUp p = h.getPowerUp();
-			if (p == null) continue;
-			PowerUp newPowerUp = p.spawnAt(
-					b.getBrick().getX() + b.getBrick().getWidth() / 2.0,
-					b.getBrick().getY() + b.getBrick().getHeight() / 2.0
-			);
-			if (newPowerUp instanceof BallPowerUp) {
-				((BallPowerUp) newPowerUp).setBallPosition(screen, BALLS);
+			Brick b = (Brick) h;
+			if (!b.isActive()) {
+				PowerUp p = b.getPowerUp();
+				if (p != null) {
+					PowerUp newPowerUp = p.spawnAt(
+							b.getBrick().getX() + b.getBrick().getWidth() / 2.0,
+							b.getBrick().getY() + b.getBrick().getHeight() / 2.0
+					);
+					newPowerUp.onSpawn(screen, BALLS);
+					screen.getRoot().getChildren().add(newPowerUp.getNode());
+					powerUpList.add(newPowerUp);
+					b.setPowerUp(null);
+					}
 			}
-			screen.getRoot().getChildren().add(newPowerUp.getNode());
-			powerUpList.add(newPowerUp);
-			b.setPowerUp(null);
 		}
 	}
 
@@ -103,12 +106,9 @@ public class BreakoutLoop extends GameLoop {
 			if (!pu.isactivated() && pu.getNode().getBoundsInParent().getMinY() > 600) {
 				screen.getRoot().getChildren().remove(pu.getNode());
 				powerUpList.remove(i);
-				continue;
 			}
-			if (pu instanceof BiggerSlider bs) {
-				bs.tick();
-				if (bs.isPowerUpOver()) powerUpList.remove(i);
-			} else if (pu.isPowerUpOver()) {
+			pu.tick();
+			if (pu.isPowerUpOver()) {
 				powerUpList.remove(i);
 			}
 		}
@@ -124,13 +124,16 @@ public class BreakoutLoop extends GameLoop {
 	}
 
 	private void initBall() {
+		double resetBallSpeed = 1;
+		double resetXDirection = 0.2;
+		double resetYDirection = 2;
 		Ball freshBall;
 		freshBall = new Ball(10, LEVEL_MAKER.getBallX(), LEVEL_MAKER.getBallY());
 		BALLS.add(freshBall);
 		screen.getRoot().getChildren().add(freshBall.getBall());
-		freshBall.changeSpeed(RESET_BALL_SPEED);
-		freshBall.changeXDirection(RESET_X_DIRECTION);
-		freshBall.changeYDirection(RESET_Y_DIRECTION);
+		freshBall.changeSpeed(resetBallSpeed);
+		freshBall.changeXDirection(resetXDirection);
+		freshBall.changeYDirection(resetYDirection);
 	}
 
 	public void resetBall() {
@@ -172,18 +175,19 @@ public class BreakoutLoop extends GameLoop {
 	}
 
 	private void addPowerUp(PowerUp pu) {
-		if (pu instanceof BallPowerUp bpu) {
-			bpu.setBallPosition(screen, BALLS);
-		}
+		pu.onSpawn(screen, BALLS);
 		screen.getRoot().getChildren().add(pu.getNode());
 		powerUpList.add(pu);
-		System.out.println("[TEST] Spawned. " + pu.getClass().getSimpleName());
 	}
 
 	@Override
 	public boolean levelOver() {
-		return bricks.getHittableObjects().stream()
-				.anyMatch(b -> b.isActive() && !b.isUnbreakable());
+		for (Brick brick: bricks.getBricksList()) {
+			if (brick.isActive() && !brick.isUnbreakable()) {
+				return true;
+			}
+		}
+		return false;
 	}
 
 	@Override
