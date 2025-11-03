@@ -66,6 +66,7 @@ public abstract class GameLoop {
 
     public void gameOverLogic() {
         gameOver = true;
+        moving = false;
         if (points > highScore) {
             setHighScore();
         }
