@@ -20,10 +20,6 @@ public class GalagaLevelMaker extends LevelMaker {
         this.ENEMIES = enemiesList;
     }
 
-    public List<GalagaEnemy> getEnemies() {
-        return ENEMIES;
-    }
-
     public void resetLevel() {
         clearGameObjects();
         ENEMIES.clear();
