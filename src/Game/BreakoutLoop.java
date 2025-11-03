@@ -6,7 +6,6 @@ import Powerups.*;
 
 public class BreakoutLoop extends GameLoop {
 	private ArrayList<PowerUp> powerUpList;
-	private Ball freshBall;
 
 	private final BreakoutLevelMaker LEVEL_MAKER;
 
@@ -19,8 +18,15 @@ public class BreakoutLoop extends GameLoop {
 
 	@Override
 	public void step() {
-		screen.displayScoreBoard(highScore, points, lives);
-		if (!movingBall || gameOver) return;
+		showScreen();
+		if (gameOn()) { return;}
+		ArrayList<Ball> toRemove = updateScreen();
+		checkLevel();
+		handleBallRemovals(toRemove);
+		checkLives();
+	}
+
+	private ArrayList<Ball> updateScreen() {
 		ArrayList<Ball> toRemove = new ArrayList<>();
 		for (Ball ball : BALLS) {
 			updateBall(ball);
@@ -30,12 +36,18 @@ public class BreakoutLoop extends GameLoop {
 			spawnPowerUpsFromBricks();
 			handlePowerUpPickups();
 			updatePowerUps();
-			if (screen.ballOutOfBounds(ball)) toRemove.add(ball);
+			if (screen.ballOutOfBounds(ball)) {
+				toRemove.add(ball);
+			}
 		}
-		checkLevel();
-		handleBallRemovals(toRemove);
-		checkLives();
+		return toRemove;
 	}
+
+	private boolean gameOn() {
+		return (!movingBall || gameOver);
+	}
+
+
 
 	private void updateBall(Ball ball) {
 		ball.updateBallLocation();
@@ -112,6 +124,7 @@ public class BreakoutLoop extends GameLoop {
 	}
 
 	private void initBall() {
+		Ball freshBall;
 		freshBall = new Ball(10, LEVEL_MAKER.getBallX(), LEVEL_MAKER.getBallY());
 		BALLS.add(freshBall);
 		screen.getRoot().getChildren().add(freshBall.getBall());
@@ -171,5 +184,10 @@ public class BreakoutLoop extends GameLoop {
 	public boolean levelOver() {
 		return bricks.getHittableObjects().stream()
 				.anyMatch(b -> b.isActive() && !b.isUnbreakable());
+	}
+
+	@Override
+	public String getFileName() {
+		return "BreakoutHighScore.txt";
 	}
 }
