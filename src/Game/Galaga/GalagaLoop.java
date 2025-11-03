@@ -9,6 +9,8 @@ import javafx.scene.input.KeyCode;
 
 public class GalagaLoop extends GameLoop {
     private final GalagaEnemies enemies;
+    private long lastShotTime = 0;
+    private final long LASER_COOLDOWN = 300;
 
     public GalagaLoop(GalagaScreen galagaScreen) {
         super(galagaScreen);
@@ -21,22 +23,9 @@ public class GalagaLoop extends GameLoop {
         showScreen();
         if (moving) {
             runGame();
+            handleKeyInput();
         }
         checkLives();
-    }
-
-    @Override
-    public void handleKeyInput(KeyCode code) {
-        if (gameOver) return;
-        for (SideMover sideMover : sideMoverList) {
-            Ship ship = (Ship) sideMover;
-            ship.handleMovement(code);
-            ship.shootLaser(code);
-
-        }
-        if (code == KeyCode.B) {
-            clearHittableObjects();
-        }
     }
 
     @Override
@@ -66,5 +55,29 @@ public class GalagaLoop extends GameLoop {
     public boolean gameOn() {
         moving = true;
         return moving;
+    }
+
+    @Override
+    public void handleKeyInput() {
+        for (SideMover sideMover : sideMoverList) {
+            Ship ship = (Ship) sideMover;
+            if (pressedKeys.contains(KeyCode.LEFT) || pressedKeys.contains(KeyCode.A)) {
+                ship.moveLeft();
+            }
+            if (pressedKeys.contains(KeyCode.RIGHT) || pressedKeys.contains(KeyCode.D)) {
+                ship.moveRight();
+            }
+            if (pressedKeys.contains(KeyCode.SPACE)) {
+                lastShot(ship);
+            }
+        }
+    }
+
+    public void lastShot(Ship ship) {
+        now =  System.currentTimeMillis();
+        if (now - lastShotTime >= LASER_COOLDOWN) {
+            ship.shootLaser();
+            lastShotTime = now;
+        }
     }
 }

@@ -9,11 +9,12 @@ import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.Scanner;
+import java.util.Set;
 
 
 public abstract class GameLoop {
-
 
     protected final ArrayList<Ball> BALLS;
     protected final Screen screen;
@@ -26,6 +27,8 @@ public abstract class GameLoop {
     protected final Bricks bricks;
     protected final String fileName;
     protected boolean moving = false;
+    protected final Set<KeyCode> pressedKeys = new HashSet<>();
+    protected long now;
 
     public GameLoop(Screen screen) {
         this.screen = screen;
@@ -90,7 +93,7 @@ public abstract class GameLoop {
 
     public abstract String getFileName();
 
-    public abstract void handleKeyInput(KeyCode code);
+    public abstract void handleKeyInput();
 
     public void clearHittableObjects() {
         for (HittableObject hittable : bricks.getHittableObjects()) {
@@ -104,4 +107,12 @@ public abstract class GameLoop {
     }
 
     public abstract boolean gameOn();
+
+    public void keyPressed(KeyCode code) {
+        pressedKeys.add(code);
+    }
+
+    public void keyReleased(KeyCode code) {
+        pressedKeys.remove(code);
+    }
 }

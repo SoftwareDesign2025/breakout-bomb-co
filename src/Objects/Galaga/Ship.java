@@ -11,7 +11,7 @@ public class Ship extends SideMover {
     private ImageView shipImage;
 
     public Ship(String imagePath, double startX, double startY) {
-        super(startX, startY, 40, 20);
+        super(startX, startY, 40, 5);
         Image image = new Image(getClass().getResource(imagePath).toExternalForm());
         shipImage = new ImageView(image);
         shipImage.setFitWidth(100);
@@ -48,10 +48,7 @@ public class Ship extends SideMover {
         return shipImage;
     }
 
-    public void shootLaser(KeyCode code) {
-        if (code == KeyCode.SPACE) {
-
-            System.out.println("Shoot laser!");
-        }
+    public void shootLaser() {
+        System.out.println("Shoot laser!");
     }
 }

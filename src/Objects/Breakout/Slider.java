@@ -10,7 +10,7 @@ public class Slider extends SideMover {
     public static final double HEIGHT = 20;
 
     public Slider(double startX, double startY) {
-        super(startX, startY, 80, 20);
+        super(startX, startY, 80, 5);
         slider = new Rectangle(xLocation, yLocation, width, HEIGHT);
         slider.setFill(Color.BLACK);
     }

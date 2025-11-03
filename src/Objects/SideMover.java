@@ -15,9 +15,12 @@ public abstract class SideMover {
         this.speed = speed;
     }
 
-    public void handleMovement(KeyCode code) {
-        if (code == KeyCode.LEFT || code == KeyCode.A) moveSideToSide(true);
-        else if (code == KeyCode.RIGHT || code == KeyCode.D) moveSideToSide(false);
+    public void moveLeft() {
+        moveSideToSide(true);
+    }
+
+    public void moveRight() {
+        moveSideToSide(false);
     }
 
     public void moveSideToSide(boolean goLeft) {
