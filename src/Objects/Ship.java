@@ -21,7 +21,8 @@ public class Ship extends SideMover {
         shipImage.setLayoutY(startY);
         xLocation = startX;
         yLocation = startY;
-        updateNode();}
+        updateNode();
+    }
 
     @Override
     protected void stopAtEdges() {
