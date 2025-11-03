@@ -98,4 +98,6 @@ public abstract class GameLoop {
     }
 
     public abstract void startMoving();
+
+    public abstract boolean gameOn();
 }

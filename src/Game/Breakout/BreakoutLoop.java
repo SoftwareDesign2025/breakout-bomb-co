@@ -51,7 +51,8 @@ public class BreakoutLoop extends GameLoop {
 		handleBallRemovals(toRemove);
 	}
 
-	private boolean gameOn() {
+	@Override
+	public boolean gameOn() {
 		return (!movingBall || gameOver);
 	}
 

@@ -56,4 +56,9 @@ public class GalagaLoop extends GameLoop {
 
     @Override
     public void startMoving(){}
+
+    @Override
+    public boolean gameOn() {
+        return true;
+    }
 }
