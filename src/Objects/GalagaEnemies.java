@@ -34,9 +34,11 @@ public class GalagaEnemies implements HittableObjects{
     public int enemiesReachedBottom() {
         int livesLost = 0;
         for (GalagaEnemy enemy : enemies) {
-            if (enemy.getEnemy().getLayoutY() + enemy.getEnemy().getTranslateY() + enemy.getEnemy().getFitHeight() >= ENEMY_BOTTOM_THRESHOLD) {
-                livesLost++;
-                enemy.deactivate();
+            if (enemy.getEnemy().getLayoutY() + enemy.getEnemy().getTranslateY() + enemy.getEnemy().getFitHeight() >= ENEMY_BOTTOM_THRESHOLD ) {
+                if(enemy.isActive()){
+                    livesLost++;
+                    enemy.deactivate();
+                }
             }
         }
         return livesLost;

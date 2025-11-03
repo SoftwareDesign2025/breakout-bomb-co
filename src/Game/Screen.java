@@ -19,7 +19,7 @@ public abstract class Screen {
     public Screen() {
         root = new Group();
         scoreboard = new Text(10, 20, "High Score: 0 Score: 0 Lives: 3");
-        scoreboard.setFill(Color.BLACK);
+        scoreboard.setFill(Color.GREEN);
         scoreboard.setFont(new Font(23));
         root.getChildren().add(scoreboard);
         bricks = new Bricks(new ArrayList<>());
