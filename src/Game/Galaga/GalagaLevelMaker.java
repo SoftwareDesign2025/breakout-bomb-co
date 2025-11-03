@@ -2,6 +2,7 @@ package Game.Galaga;
 
 import Game.LevelMaker;
 import Game.Levels.GalagaLevel;
+import Game.Levels.Level;
 import Objects.Galaga.GalagaEnemy;
 import Objects.Galaga.Ship;
 import javafx.scene.Group;
@@ -23,8 +24,6 @@ public class GalagaLevelMaker extends LevelMaker {
         return ENEMIES;
     }
 
-
-
     public void resetLevel() {
         clearGameObjects();
         ENEMIES.clear();
@@ -37,22 +36,9 @@ public class GalagaLevelMaker extends LevelMaker {
         NODE_LIST.add(ship.getShip());
     }
 
-    public void addOutOfBounds(double x, double y, double width, double height, Color color) {
-        Rectangle r = new Rectangle(x, y, width, height);
-        r.setFill(color);
-        OUT_OF_BOUNDS_LIST.add(r);
-        ROOT.getChildren().add(r);
-        NODE_LIST.add(r);
-    }
-
     public void addEnemy(GalagaEnemy enemy) {
         ENEMIES.add(enemy);
         ROOT.getChildren().add(enemy.getEnemy());
         NODE_LIST.add(enemy.getEnemy());
-    }
-
-    public void loadLevel(GalagaLevel level) {
-        resetLevel();
-        level.build(this);
     }
 }

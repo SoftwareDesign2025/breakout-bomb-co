@@ -1,4 +1,4 @@
-//Oscar Kardon
+// Author: Oscar Kardon
 package Game.Levels;
 
 import Game.LevelMaker;
