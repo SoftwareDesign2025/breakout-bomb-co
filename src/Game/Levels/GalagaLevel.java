@@ -15,7 +15,7 @@ public class GalagaLevel implements Level<GalagaLevelMaker> {
         double gapX = 15;
         double gapY = 20;
         int rows = 2;
-        int cols = 6;
+        int cols = 7;
         for (int row = 0; row < rows; row++) {
             for (int col = 0; col < cols; col++) {
                 double x = startX + col * (enemyWidth + gapX);
