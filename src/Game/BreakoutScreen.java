@@ -11,7 +11,7 @@ import java.util.ArrayList;
 
 public class BreakoutScreen extends Screen {
     private BreakoutLevelMaker breakoutLevelMaker;
-    public BreakoutScreen(Ball ball) {
+    public BreakoutScreen() {
         super();
         this.breakoutLevelMaker = new BreakoutLevelMaker(root, bricks.getBricksList());
         loadLevel(1);

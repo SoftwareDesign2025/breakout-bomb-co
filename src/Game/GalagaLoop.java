@@ -49,4 +49,10 @@ public class GalagaLoop extends GameLoop {
     public String getFileName() {
         return "GalagaHighScore.txt";
     }
+
+    @Override
+    public void resetLevel(){}
+
+    @Override
+    public void startMoving(){}
 }

@@ -11,7 +11,6 @@ import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.util.Duration;
-import Objects.Ball;
 
 public class SetUpProject extends Application {
 
@@ -79,34 +78,27 @@ public class SetUpProject extends Application {
     }
 
     private void startBreakout() {
-        Ball ball = new Ball(10, 400, 400);
-        BreakoutScreen screen = new BreakoutScreen(ball);
-        gameLoop = new BreakoutLoop(screen);
-        Scene gameScene = new Scene(screen.getRoot(), GAME_WIDTH, GAME_HEIGHT);
-        gameScene.setOnKeyPressed(e -> gameLoop.handleKeyInput(e.getCode()));
-        gameScene.setOnMouseClicked(e -> gameLoop.startMoving());
-        stage.setScene(gameScene);
-        KeyFrame frame = new KeyFrame(Duration.millis(MILLISECOND_DELAY), e -> gameLoop.step());
-        Timeline animation = new Timeline();
-        animation.setCycleCount(Timeline.INDEFINITE);
-        animation.getKeyFrames().add(frame);
-        animation.play();
+        BreakoutScreen breakoutScreen = new BreakoutScreen();
+        gameLoop = new BreakoutLoop(breakoutScreen);
+        startGame(breakoutScreen);
     }
 
     private void startGalaga() {
         GalagaScreen galagaScreen = new GalagaScreen();
         gameLoop = new GalagaLoop(galagaScreen);
-        Scene gameScene = new Scene(galagaScreen.getRoot(), GAME_WIDTH, GAME_HEIGHT);
-        //GalagaScreen gameScene = new GalagaScreen(galagaScreen.getRoot(), GAME_WIDTH, GAME_HEIGHT);
-        gameScene.setOnKeyPressed(e -> gameLoop.handleKeyInput(e.getCode()));
-        gameScene.setOnMouseClicked(e -> gameLoop.startMoving());
-        stage.setScene(gameScene);
-        KeyFrame frame = new KeyFrame(Duration.millis(MILLISECOND_DELAY), e -> gameLoop.step());
-        Timeline animation = new Timeline();
-        animation.setCycleCount(Timeline.INDEFINITE);
-        animation.getKeyFrames().add(frame);
-        animation.play();
+        startGame(galagaScreen);
+        }
 
+        public void startGame(Screen screen) {
+            Scene gameScene = new Scene(screen.getRoot(), GAME_WIDTH, GAME_HEIGHT);
+            gameScene.setOnKeyPressed(e -> gameLoop.handleKeyInput(e.getCode()));
+            gameScene.setOnMouseClicked(e -> gameLoop.startMoving());
+            stage.setScene(gameScene);
+            KeyFrame frame = new KeyFrame(Duration.millis(MILLISECOND_DELAY), e -> gameLoop.step());
+            Timeline animation = new Timeline();
+            animation.setCycleCount(Timeline.INDEFINITE);
+            animation.getKeyFrames().add(frame);
+            animation.play();
         }
 
 
