@@ -40,7 +40,6 @@ public class BreakoutLevelMaker extends LevelMaker {
         NODE_LIST.add(s.getNode());
     }
 
-
     public double getBallX() {
         return ballX;
     }
@@ -98,9 +97,5 @@ public class BreakoutLevelMaker extends LevelMaker {
     public void addBrick(Brick brick) {
         BRICKS.add(brick);
         ROOT.getChildren().add(brick.getBrick());
-    }
-    public void loadLevel(Level level) {
-        resetLevel();
-        level.build(this);
     }
 }

@@ -6,7 +6,6 @@ import Objects.Galaga.GalagaEnemy;
 public class GalagaLevel implements Level<GalagaLevelMaker> {
 
     public void build(GalagaLevelMaker maker) {
-
         maker.addShip("ship.png", 400, 500);
         double startX = 100;
         double startY = 80;
@@ -25,6 +24,5 @@ public class GalagaLevel implements Level<GalagaLevelMaker> {
                 maker.addEnemy(enemy);
             }
         }
-
     }
 }
