@@ -26,14 +26,16 @@ public abstract class GameLoop {
     protected final double RESET_Y_DIRECTION = 2;
     protected boolean gameOver = false;
     protected final Bricks bricks;
+    protected final String fileName;
 
     public GameLoop(Screen screen) {
         this.screen = screen;
-        this.highScore = getHighScore();
         screen.loadLevel(level);
         this.sideMoverList = screen.getSideMoverList();
         this.BALLS = new ArrayList<>();
         this.bricks = screen.getBricks();
+        this.fileName = getFileName();
+        this.highScore = getHighScore();
     }
 
     public abstract void step();
@@ -55,6 +57,10 @@ public abstract class GameLoop {
         }
     }
 
+    protected void showScreen() {
+        screen.displayScoreBoard(highScore, points, lives);
+    }
+
     public abstract boolean levelOver();
 
     public void resetLevel() {
@@ -72,7 +78,7 @@ public abstract class GameLoop {
     }
 
     private int getHighScore() {
-        try (Scanner in = new Scanner(new File("HighScore.txt"))) {
+        try (Scanner in = new Scanner(new File(fileName))) {
             return in.nextInt();
         } catch (IOException e) {
             return 0;
@@ -80,12 +86,14 @@ public abstract class GameLoop {
     }
 
     private void setHighScore() {
-        try (PrintWriter out = new PrintWriter("HighScore.txt")) {
+        try (PrintWriter out = new PrintWriter(fileName)) {
             out.println(points);
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
+
+    public abstract String getFileName();
 
     public abstract void handleKeyInput(KeyCode code);
 
