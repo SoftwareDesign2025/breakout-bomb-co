@@ -36,13 +36,9 @@ public class SetUpProject extends Application {
 
 
         // Background for the breakout and galaga button, can change color and size here
-        Rectangle breakoutBackground = new Rectangle(300, 60, Color.BLUE);
-        breakoutBackground.setX(GAME_WIDTH / 2.0 - 150);
-        breakoutBackground.setY(300);
+        Rectangle breakoutBackground = createBackground(300);
 
-        Rectangle galagaBackground = new Rectangle(300, 60, Color.BLUE);
-        galagaBackground.setX(GAME_WIDTH / 2.0 - 150);
-        galagaBackground.setY(400);
+        Rectangle galagaBackground = createBackground(400);
 
 
         // Adds the top text and centers and lets you change font, size and color
@@ -56,25 +52,33 @@ public class SetUpProject extends Application {
 
         // Actual text for the button, adds the on mouse clicked which sends to the methods below to start the games
         Text breakoutText = new Text("PLAY BREAKOUT");
-        breakoutText.setFont(Font.font("Impact", 36));
-        breakoutText.setFill(Color.BLACK);
-        breakoutText.setX(GAME_WIDTH / 2.0 - breakoutText.getLayoutBounds().getWidth() / 2);
-        breakoutText.setY(300 + 45);
+        handleText(breakoutText, 300);
         breakoutBackground.setOnMouseClicked(e -> startBreakout());
         breakoutText.setOnMouseClicked(e -> startBreakout());
         menuRoot.getChildren().addAll(breakoutBackground, breakoutText);
 
         Text galagaText = new Text("PLAY GALAGA");
-        galagaText.setFont(Font.font("Impact", 36));
-        galagaText.setFill(Color.BLACK);
-        galagaText.setX(GAME_WIDTH / 2.0 - galagaText.getLayoutBounds().getWidth() / 2);
-        galagaText.setY(400 + 45);
+        handleText(galagaText, 400);
         galagaBackground.setOnMouseClicked(e -> startGalaga());
         galagaText.setOnMouseClicked(e -> startGalaga());
         menuRoot.getChildren().addAll(galagaBackground, galagaText);
 
         Scene menuScene = new Scene(menuRoot, GAME_WIDTH, GAME_HEIGHT, Color.BLACK);
         stage.setScene(menuScene);
+    }
+
+    public void handleText(Text text, int yNum) {
+        text.setFont(Font.font("Impact", 36));
+        text.setFill(Color.BLACK);
+        text.setX(GAME_WIDTH / 2.0 - text.getLayoutBounds().getWidth() / 2);
+        text.setY(yNum + 45);
+    }
+
+    public Rectangle createBackground(int yInt) {
+        Rectangle background = new Rectangle(300, 60, Color.BLUE);
+        background.setX(GAME_WIDTH / 2.0 - 150);
+        background.setY(yInt);
+        return background;
     }
 
     private void startBreakout() {
