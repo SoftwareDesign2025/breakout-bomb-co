@@ -1,7 +1,7 @@
-package Game;
+package Game.Breakout;
 
-import Objects.Ball;
-import Objects.Bricks;
+import Game.Screen;
+import Objects.Breakout.Ball;
 import Objects.SideMover;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;

@@ -6,8 +6,8 @@ import javafx.scene.text.Font;
 import javafx.scene.paint.Color;
 import java.util.ArrayList;
 import java.util.List;
-import Objects.Ball;
-import Objects.Bricks;
+import Objects.Breakout.Ball;
+import Objects.Breakout.Bricks;
 import Objects.SideMover;
 
 public abstract class Screen {

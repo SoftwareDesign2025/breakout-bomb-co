@@ -1,9 +1,8 @@
-package Objects;
+package Objects.Breakout;
 
-import Game.Screen;
+import Objects.SideMover;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
-import javafx.scene.input.KeyCode;
 
 public class Slider extends SideMover {
 

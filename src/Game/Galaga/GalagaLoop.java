@@ -1,8 +1,9 @@
-package Game;
+package Game.Galaga;
 
 
-import Objects.Ship;
-import Objects.GalagaEnemies;
+import Game.GameLoop;
+import Objects.Galaga.Ship;
+import Objects.Galaga.GalagaEnemies;
 import Objects.SideMover;
 import javafx.scene.input.KeyCode;
 

@@ -1,9 +1,8 @@
 package Game.Levels;
 
-import Game.BreakoutLevelMaker;
-import Game.LevelMaker;
+import Game.Breakout.BreakoutLevelMaker;
 import javafx.scene.paint.Color;
-import Objects.Brick;
+import Objects.Breakout.Brick;
 
 public class LevelOne implements Level<BreakoutLevelMaker> {
     @Override

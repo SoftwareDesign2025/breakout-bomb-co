@@ -1,5 +1,9 @@
 package Game;
 
+import Game.Breakout.BreakoutLoop;
+import Game.Breakout.BreakoutScreen;
+import Game.Galaga.GalagaLoop;
+import Game.Galaga.GalagaScreen;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.application.Application;

@@ -1,6 +1,8 @@
 package Game;
 
 import Objects.*;
+import Objects.Breakout.Ball;
+import Objects.Breakout.Bricks;
 import javafx.scene.input.KeyCode;
 
 import java.io.File;

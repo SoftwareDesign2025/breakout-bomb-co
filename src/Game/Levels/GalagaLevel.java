@@ -1,7 +1,7 @@
 package Game.Levels;
 
-import Game.GalagaLevelMaker;
-import Objects.GalagaEnemy;
+import Game.Galaga.GalagaLevelMaker;
+import Objects.Galaga.GalagaEnemy;
 
 public class GalagaLevel implements Level<GalagaLevelMaker> {
 

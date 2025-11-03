@@ -1,6 +1,10 @@
 // Author: Murph Lennemann
 
-package Game;
+package Game.Breakout;
+import Game.GameLoop;
+import Objects.Breakout.Ball;
+import Objects.Breakout.Brick;
+import Objects.Breakout.Slider;
 import javafx.scene.input.KeyCode;
 import java.util.*;
 import Objects.*;

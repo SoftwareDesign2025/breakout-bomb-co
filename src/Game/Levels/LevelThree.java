@@ -1,10 +1,9 @@
 package Game.Levels;
 
-import Game.BreakoutLevelMaker;
-import Game.LevelMaker;
+import Game.Breakout.BreakoutLevelMaker;
 import Powerups.BallPowerUp;
 import javafx.scene.paint.Color;
-import Objects.Brick;
+import Objects.Breakout.Brick;
 import Powerups.BiggerSlider;
 import Powerups.PiercePowerUp;
 import Powerups.PowerUp;

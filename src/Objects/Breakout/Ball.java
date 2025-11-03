@@ -1,4 +1,4 @@
-package Objects;
+package Objects.Breakout;
 import javafx.scene.shape.Circle;
 import javafx.scene.paint.Color;
 

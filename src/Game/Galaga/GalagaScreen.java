@@ -1,8 +1,9 @@
-package Game;
+package Game.Galaga;
 
-import Objects.Ship;
-import Objects.GalagaEnemies;
-import Objects.GalagaEnemy;
+import Game.Screen;
+import Objects.Galaga.Ship;
+import Objects.Galaga.GalagaEnemies;
+import Objects.Galaga.GalagaEnemy;
 import Objects.SideMover;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;

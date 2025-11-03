@@ -1,8 +1,10 @@
-package Objects;
+package Objects.Breakout;
 
 import java.util.ArrayList;
 import java.util.List;
 import Game.Screen;
+import Objects.HittableObject;
+import Objects.HittableObjects;
 
 public class Bricks implements HittableObjects {
     private List<Brick> bricks;

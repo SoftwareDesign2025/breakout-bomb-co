@@ -1,11 +1,12 @@
-package Objects;
+package Objects.Breakout;
 
+import Objects.HittableObject;
 import javafx.scene.shape.Rectangle;
 import Powerups.PowerUp;
 import javafx.scene.paint.Color;
 
 //This class contains the Brick class
-public class Brick extends  HittableObject{
+public class Brick extends HittableObject {
     private Rectangle brick;
     private boolean unbreakable = false;
 

@@ -2,17 +2,12 @@
 package Powerups;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import Game.Screen;
-import Objects.Ball;
-import Objects.Slider;
-import javafx.scene.Group;
+import Objects.Breakout.Ball;
+import Objects.Breakout.Slider;
 import javafx.scene.paint.Color;
-import javafx.scene.text.Font;
-import javafx.scene.text.Text;
 import javafx.scene.shape.Circle;
-import javafx.scene.shape.Rectangle;
 
 
 /*this class is to implement power ups*/
