@@ -1,3 +1,5 @@
+// Author: Oscar Kardon
+
 package Game;
 
 import Game.Levels.Level;
@@ -11,6 +13,8 @@ import javafx.scene.paint.Color;
 
 import java.util.ArrayList;
 import java.util.List;
+
+
 
 public class BreakoutLevelMaker extends LevelMaker{
     private double ballX;

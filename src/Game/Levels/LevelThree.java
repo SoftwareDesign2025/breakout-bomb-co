@@ -1,5 +1,6 @@
-package Game.Levels;
+// Author: Oscar Kardon
 
+package Game.Levels;
 import Game.BreakoutLevelMaker;
 import Game.LevelMaker;
 import Powerups.BallPowerUp;
@@ -8,7 +9,6 @@ import Objects.Brick;
 import Powerups.BiggerSlider;
 import Powerups.PiercePowerUp;
 import Powerups.PowerUp;
-
 public class LevelThree implements Level<BreakoutLevelMaker> {
     @Override
     public void build(BreakoutLevelMaker maker) {

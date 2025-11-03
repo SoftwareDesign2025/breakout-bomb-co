@@ -1,8 +1,9 @@
+// Author: Oscar Kardon
+
 package Game.Levels;
 
 import Game.GalagaLevelMaker;
 import Objects.GalagaEnemy;
-
 public class GalagaLevel implements Level<GalagaLevelMaker> {
 
     public void build(GalagaLevelMaker maker) {

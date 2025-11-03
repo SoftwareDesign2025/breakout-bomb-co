@@ -1,6 +1,7 @@
+// Author: Oscar Kardon
+
 package Objects;
 
-import Game.GalagaScreen;
 import Powerups.PowerUp;
 
 import javafx.scene.image.Image;

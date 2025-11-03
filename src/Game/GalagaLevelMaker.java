@@ -1,5 +1,6 @@
-package Game;
+// Author: Oscar Kardon
 
+package Game;
 import Game.Levels.GalagaLevel;
 import Objects.GalagaEnemy;
 import Objects.Ship;

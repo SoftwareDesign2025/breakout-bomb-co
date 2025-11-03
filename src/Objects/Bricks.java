@@ -1,3 +1,5 @@
+// Author: Oscar Kardon
+
 package Objects;
 
 import java.util.ArrayList;
