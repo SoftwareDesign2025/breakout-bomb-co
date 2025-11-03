@@ -40,6 +40,7 @@ public class BiggerSlider extends PowerUp {
         over = false;
     }
 
+    @Override
     public void tick() {
         if (!active) return;
         if (framesLeft > 0) {

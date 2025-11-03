@@ -21,9 +21,6 @@ public abstract class GameLoop {
     protected int highScore;
     protected int level = 1;
     protected boolean movingBall = false;
-    protected final double RESET_BALL_SPEED = 1;
-    protected final double RESET_X_DIRECTION = 0.2;
-    protected final double RESET_Y_DIRECTION = 2;
     protected boolean gameOver = false;
     protected final Bricks bricks;
     protected final String fileName;

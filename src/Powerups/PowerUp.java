@@ -4,6 +4,8 @@ package Powerups;
 import java.util.ArrayList;
 import java.util.List;
 
+import Game.Screen;
+import Objects.Ball;
 import Objects.Slider;
 import javafx.scene.Group;
 import javafx.scene.paint.Color;
@@ -108,6 +110,11 @@ public class PowerUp {
 		 
 		return new PowerUp(x,y);
 	}
+
+	public void onSpawn(Screen screen, ArrayList<Ball> balls) {}
+
+	public void tick() {}
+
 }
 	
 
