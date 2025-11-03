@@ -1,5 +1,6 @@
 package Game.Levels;
 
+import Game.BreakoutLevelMaker;
 import Game.LevelMaker;
 import Powerups.BallPowerUp;
 import javafx.scene.paint.Color;
@@ -8,9 +9,9 @@ import Powerups.BiggerSlider;
 import Powerups.PiercePowerUp;
 import Powerups.PowerUp;
 
-public class LevelThree implements Level {
+public class LevelThree implements Level<BreakoutLevelMaker> {
     @Override
-    public void build(LevelMaker maker) {
+    public void build(BreakoutLevelMaker maker) {
         maker.addOutOfBounds(0, 580, 800, 20, Color.RED);
         maker.addSlider(360, 500);
         maker.setBallPosition(400, 450);

@@ -13,6 +13,7 @@ public class Brick extends  HittableObject{
         super(startX, startY, pointValue, powerUp);
         brick = new Rectangle(startX, startY, width, height);
         brick.setFill(color);
+        this.hittableObject = brick;
     }
 
     public Rectangle getBrick() {
@@ -23,14 +24,15 @@ public class Brick extends  HittableObject{
         unbreakable = value;
     }
 
+    @Override
     public boolean isUnbreakable() {
         return unbreakable;
     }
 
-    public void deactivateBrick(){
-        if (unbreakable) return; 
-        active = false;
-        brick.setVisible(false);
+    @Override
+    public void deactivate(){
+        if (unbreakable) return;
+        super.deactivate();
     }
 
     public int detectCollisionWithBall(Ball ball) {
@@ -72,7 +74,7 @@ public class Brick extends  HittableObject{
 
         
         if (!unbreakable) {
-            deactivateBrick();
+            deactivate();
         }
     }
 }

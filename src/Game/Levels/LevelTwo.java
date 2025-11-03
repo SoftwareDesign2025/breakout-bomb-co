@@ -1,11 +1,12 @@
 package Game.Levels;
 
+import Game.BreakoutLevelMaker;
 import Game.LevelMaker;
 import javafx.scene.paint.Color;
 
-public class LevelTwo implements Level {
+public class LevelTwo implements Level<BreakoutLevelMaker> {
     @Override
-    public void build(LevelMaker maker) {
+    public void build(BreakoutLevelMaker maker) {
         maker.addOutOfBounds(0, 580, 800, 20, Color.RED);
         maker.addOutOfBounds(0, 40, 800, 20, Color.RED);
 
@@ -36,7 +37,7 @@ public class LevelTwo implements Level {
                 {1,1,1,1,1},
         };
 
-        maker.printLevel(
+        maker.buildBricks(
                 ePattern,
                 startX,
                 startY,
