@@ -2,8 +2,6 @@ package Game.Levels;
 
 import Game.GalagaLevelMaker;
 import Objects.GalagaEnemy;
-import Objects.Ship;
-import javafx.scene.paint.Color;
 
 public class GalagaLevel implements Level<GalagaLevelMaker> {
 
@@ -23,7 +21,7 @@ public class GalagaLevel implements Level<GalagaLevelMaker> {
                 double x = startX + col * (enemyWidth + gapX);
                 double y = startY + row * (enemyHeight + gapY);
 
-                GalagaEnemy enemy = new GalagaEnemy(enemyWidth,enemyHeight,"mlennemann.png", x, y, 1, null, 0.1);
+                GalagaEnemy enemy = new GalagaEnemy(enemyWidth,enemyHeight,"/images/gcollins.png", x, y, 1, null, 0.1);
                 maker.addEnemy(enemy);
             }
         }
