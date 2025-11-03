@@ -13,6 +13,8 @@ import Powerups.*;
 public class BreakoutLoop extends GameLoop {
 	private ArrayList<PowerUp> powerUpList;
 	private final BreakoutLevelMaker LEVEL_MAKER;
+	private long lastEasterEgg = 0;
+	private final long EASTER_EGG_COOLDOWN = 1000;
 
 
 
@@ -26,6 +28,7 @@ public class BreakoutLoop extends GameLoop {
 	@Override
 	public void step() {
 		showScreen();
+		handleKeyInput();
 		if (gameOn()) { return;}
 		updateScreen();
 		checkLevel();
@@ -161,23 +164,39 @@ public class BreakoutLoop extends GameLoop {
 	}
 
 	@Override
-	public void handleKeyInput(KeyCode code) {
+	public void handleKeyInput() {
 		if (!gameOver) {
 			for (SideMover sideMover : sideMoverList) {
 				Slider slider = (Slider) sideMover;
-				slider.handleMovement(code);
+				if (pressedKeys.contains(KeyCode.LEFT) || pressedKeys.contains(KeyCode.A)) {
+					slider.moveLeft();
+				}
+				if (pressedKeys.contains(KeyCode.RIGHT)  || pressedKeys.contains(KeyCode.D)) {
+					slider.moveRight();
+				}
 			}
+			if (pressedKeys.contains(KeyCode.SPACE)) {
+				PiercePowerUp.tryActivate();
+			}
+			if (pressedKeys.contains(KeyCode.B)) {
+				tryLevelSkip();
+			}
+			handleTestPowerUps();
 		}
-		if (code == KeyCode.B) bricks.clearObjects(screen);
-		if (code == KeyCode.SPACE) PiercePowerUp.tryActivate();
-		handleTestPowerUps(code);
 	}
 
-	private void handleTestPowerUps(KeyCode code) {
-		double bx = 400, by = 200;
-		if (code == KeyCode.Z) addPowerUp(new BiggerSlider(bx, by));
-		else if (code == KeyCode.X) addPowerUp(new BallPowerUp(bx, by));
-		else if (code == KeyCode.C) addPowerUp(new PiercePowerUp(bx, by));
+	private void handleTestPowerUps() {
+		double bx = 400;
+		double by = 200;
+		if (pressedKeys.contains(KeyCode.Z)) {
+			tryActivatePowerUp(new BiggerSlider(bx, by));
+		}
+		if (pressedKeys.contains(KeyCode.X)) {
+			tryActivatePowerUp(new BallPowerUp(bx, by));
+		}
+		if  (pressedKeys.contains(KeyCode.C)) {
+			tryActivatePowerUp(new PiercePowerUp(bx, by));
+		}
 	}
 
 	private void addPowerUp(PowerUp pu) {
@@ -205,6 +224,22 @@ public class BreakoutLoop extends GameLoop {
 	public void gameOverLogic() {
 		super.gameOverLogic();
 		moving = false;
+	}
+
+	public void tryActivatePowerUp(PowerUp pu) {
+		now = System.currentTimeMillis();
+		if (now - lastEasterEgg >= EASTER_EGG_COOLDOWN) {
+			addPowerUp(pu);
+			lastEasterEgg = now;
+		}
+	}
+
+	public void tryLevelSkip() {
+		now = System.currentTimeMillis();
+		if (now - lastEasterEgg >= EASTER_EGG_COOLDOWN) {
+			bricks.clearObjects(screen);
+			lastEasterEgg = now;
+		}
 	}
 
 }

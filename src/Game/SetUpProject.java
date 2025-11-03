@@ -99,7 +99,8 @@ public class SetUpProject extends Application {
 
         public void startGame(Screen screen) {
             Scene gameScene = new Scene(screen.getRoot(), GAME_WIDTH, GAME_HEIGHT);
-            gameScene.setOnKeyPressed(e -> gameLoop.handleKeyInput(e.getCode()));
+            gameScene.setOnKeyPressed(e -> gameLoop.keyPressed(e.getCode()));
+            gameScene.setOnKeyReleased(e -> gameLoop.keyReleased(e.getCode()));
             gameScene.setOnMouseClicked(e -> gameLoop.startMoving());
             stage.setScene(gameScene);
             KeyFrame frame = new KeyFrame(Duration.millis(MILLISECOND_DELAY), e -> gameLoop.step());
