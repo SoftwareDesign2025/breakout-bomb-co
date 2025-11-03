@@ -13,7 +13,7 @@ import Powerups.*;
 public class BreakoutLoop extends GameLoop {
 	private ArrayList<PowerUp> powerUpList;
 	private final BreakoutLevelMaker LEVEL_MAKER;
-	private boolean movingBall = false;
+
 
 
 	public BreakoutLoop(BreakoutScreen breakoutScreen) {
@@ -53,7 +53,7 @@ public class BreakoutLoop extends GameLoop {
 
 	@Override
 	public boolean gameOn() {
-		return (!movingBall || gameOver);
+		return (!moving || gameOver);
 	}
 
 
@@ -143,14 +143,14 @@ public class BreakoutLoop extends GameLoop {
 	}
 
 	public void resetBall() {
-		movingBall = false;
+		moving = false;
 		lives -= 1;
 		initBall();
 	}
 
 	@Override
 	public void resetLevel() {
-		movingBall = false;
+		moving = false;
 		BALLS.forEach(ball -> screen.getRoot().getChildren().remove(ball.getBall()));
 		BALLS.clear();
 		powerUpList.forEach(pu -> screen.getRoot().getChildren().remove(pu.getNode()));
@@ -204,11 +204,7 @@ public class BreakoutLoop extends GameLoop {
 	@Override
 	public void gameOverLogic() {
 		super.gameOverLogic();
-		movingBall = false;
+		moving = false;
 	}
 
-	@Override
-	public void startMoving() {
-		movingBall = true;
-	}
 }

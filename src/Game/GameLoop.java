@@ -25,6 +25,7 @@ public abstract class GameLoop {
     protected boolean gameOver = false;
     protected final Bricks bricks;
     protected final String fileName;
+    protected boolean moving = false;
 
     public GameLoop(Screen screen) {
         this.screen = screen;
@@ -97,7 +98,9 @@ public abstract class GameLoop {
         bricks.getHittableObjects().clear();
     }
 
-    public abstract void startMoving();
+    public void startMoving() {
+        moving = true;
+    }
 
     public abstract boolean gameOn();
 }
