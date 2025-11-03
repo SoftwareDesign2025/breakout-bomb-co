@@ -38,7 +38,7 @@ public abstract class GameLoop {
     public abstract void step();
 
     public void checkLives() {
-        if (lives == 0) {
+        if (lives <= 0) {
             gameOverLogic();
             screen.gameOverScreen();
         }
