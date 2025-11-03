@@ -41,6 +41,15 @@ public abstract class LevelMaker {
         OUT_OF_BOUNDS_LIST.clear();
     }
 
+
+    public void addOutOfBounds(double x, double y, double width, double height, Color color) {
+        Rectangle r = new Rectangle(x, y, width, height);
+        r.setFill(color);
+        OUT_OF_BOUNDS_LIST.add(r);
+        ROOT.getChildren().add(r);
+        NODE_LIST.add(r);
+    }
+
     public void loadLevel(Level level) {
         resetLevel();
         level.build(this);
