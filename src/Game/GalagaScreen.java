@@ -50,7 +50,7 @@ public class GalagaScreen extends Screen {
     }
     @Override
     public void gameOverScreen() {
-        Text over = new Text(300, 300, "GAME OVER");
+        Text over = new Text(300, 300, "GAME OVER LOSER");
         over.setFill(Color.RED);
         over.setFont(Font.font("Impact", 40));
         root.getChildren().add(over);
