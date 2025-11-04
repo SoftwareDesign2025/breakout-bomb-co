@@ -15,7 +15,8 @@ import javafx.scene.input.KeyCode;
 public class GalagaLoop extends GameLoop {
     private final GalagaEnemies enemies;
     private long lastShotTime = 0;
-    private final Ship ship;
+    private Ship ship;
+    private final GalagaScreen galagaScreen;
 
     /**
      * Authors: Murph
@@ -23,8 +24,9 @@ public class GalagaLoop extends GameLoop {
      * @param galagaScreen is a new screen
      */
     public GalagaLoop(GalagaScreen galagaScreen) {
-        super(galagaScreen);
-        galagaScreen.loadLevel(2);
+        super(galagaScreen, galagaScreen.getEnemies());
+        this.galagaScreen = galagaScreen;
+        galagaScreen.loadLevel(level);
         this.enemies = galagaScreen.getEnemies();
         this.ship = galagaScreen.getShip();
     }
@@ -40,6 +42,7 @@ public class GalagaLoop extends GameLoop {
             runGame();
             handleKeyInput();
         }
+        checkLevel();
         checkLives();
     }
 
@@ -58,7 +61,14 @@ public class GalagaLoop extends GameLoop {
      */
     private void runGame() {
         enemies.drop();
-        lives -= enemies.enemiesReachedBottom();
+        int enemiesReached = enemies.enemiesReachedBottom();
+        if (enemiesReached >= lives) {
+            lives = 0;
+        }
+        else {
+            lives -= enemies.enemiesReachedBottom();
+        }
+
     }
 
     /**
@@ -74,7 +84,10 @@ public class GalagaLoop extends GameLoop {
      * resets the level when level is cleared
      */
     @Override
-    public void resetLevel(){}
+    public void resetLevel(){
+        moving = false;
+        ship = galagaScreen.getShip();
+    }
 
     /**
      * Authors: Murph
@@ -103,6 +116,9 @@ public class GalagaLoop extends GameLoop {
         moveLeftAndRight(ship);
         if (pressedKeys.contains(KeyCode.SPACE)) {
             lastShot(ship);
+        }
+        if (pressedKeys.contains(KeyCode.B)) {
+            tryLevelSkip();
         }
     }
 
