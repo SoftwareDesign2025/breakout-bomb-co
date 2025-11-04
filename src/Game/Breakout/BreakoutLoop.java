@@ -62,11 +62,11 @@ public class BreakoutLoop extends GameLoop {
 		for (Ball ball : BALLS) {
 			updateBall(ball);
 			handleSliderCollisions(ball);
-			screen.checkBallToWall(ball);
+			breakoutScreen.checkBallToWall(ball);
 			points += bricks.resolveCollisions(ball);
 			spawnPowerUpsFromBricks();
 			handlePowerUpPickups();
-			if (screen.ballOutOfBounds(ball)) {
+			if (breakoutScreen.ballOutOfBounds(ball)) {
 				toRemove.add(ball);
 			}
 
@@ -107,19 +107,18 @@ public class BreakoutLoop extends GameLoop {
 	 * Authors: Murph
 	 */
 	private void spawnPowerUpsFromBricks() {
-		for (HittableObject h : new ArrayList<>(bricks.getHittableObjects())) {
-			Brick b = (Brick) h;
-			if (!b.isActive()) {
-				PowerUp p = b.getPowerUp();
-				if (p != null) {
-					PowerUp newPowerUp = p.spawnAt(
-							b.getBrick().getX() + b.getBrick().getWidth() / 2.0,
-							b.getBrick().getY() + b.getBrick().getHeight() / 2.0
+		for (Brick brick: bricks.getBricksList()) {
+			if (!brick.isActive()) {
+				PowerUp powerUp = brick.getPowerUp();
+				if (powerUp != null) {
+					PowerUp newPowerUp = powerUp.spawnAt(
+							brick.getBrick().getX() + brick.getBrick().getWidth() / 2.0,
+							brick.getBrick().getY() + brick.getBrick().getHeight() / 2.0
 					);
 					newPowerUp.onSpawn(breakoutScreen, BALLS);
-					screen.getRoot().getChildren().add(newPowerUp.getNode());
+					breakoutScreen.getRoot().getChildren().add(newPowerUp.getNode());
 					powerUpList.add(newPowerUp);
-					b.setPowerUp(null);
+					brick.setPowerUp(null);
 					}
 			}
 		}
@@ -131,10 +130,10 @@ public class BreakoutLoop extends GameLoop {
 	private void handlePowerUpPickups() {
 		for (Slider slider : sliderList) {
 			for (int i = powerUpList.size() - 1; i >= 0; i--) {
-				PowerUp pu = powerUpList.get(i);
-				if (pu.getNode().getBoundsInParent().intersects(slider.getNode().getBoundsInParent())) {
-					pu.onPickup(sliderList);
-					screen.getRoot().getChildren().remove(pu.getNode());
+				PowerUp powerUp = powerUpList.get(i);
+				if (powerUp.getNode().getBoundsInParent().intersects(slider.getNode().getBoundsInParent())) {
+					powerUp.onPickup(sliderList);
+					breakoutScreen.getRoot().getChildren().remove(powerUp.getNode());
 				}
 			}
 		}
@@ -149,7 +148,7 @@ public class BreakoutLoop extends GameLoop {
 			PowerUp pu = powerUpList.get(i);
 			pu.update_position();
 			if (!pu.isactivated() && pu.getNode().getBoundsInParent().getMinY() > 600) {
-				screen.getRoot().getChildren().remove(pu.getNode());
+				breakoutScreen.getRoot().getChildren().remove(pu.getNode());
 				powerUpList.remove(i);
 			}
 			pu.tick();
@@ -166,7 +165,7 @@ public class BreakoutLoop extends GameLoop {
 	private void handleBallRemovals(ArrayList<Ball> toRemove) {
 		BALLS.addAll(breakoutScreen.consumeQueuedBalls());
 		for (Ball ball : toRemove) {
-			screen.getRoot().getChildren().remove(ball.getBall());
+			breakoutScreen.getRoot().getChildren().remove(ball.getBall());
 			BALLS.remove(ball);
 		}
 		if (BALLS.isEmpty()) handleLifeLost();
@@ -182,7 +181,7 @@ public class BreakoutLoop extends GameLoop {
 		Ball freshBall;
 		freshBall = new Ball(10, LEVEL_MAKER.getBallX(), LEVEL_MAKER.getBallY());
 		BALLS.add(freshBall);
-		screen.getRoot().getChildren().add(freshBall.getBall());
+		breakoutScreen.getRoot().getChildren().add(freshBall.getBall());
 		freshBall.changeSpeed(resetBallSpeed);
 		freshBall.changeXDirection(resetXDirection);
 		freshBall.changeYDirection(resetYDirection);
@@ -200,7 +199,7 @@ public class BreakoutLoop extends GameLoop {
 		}
 		for (PowerUp powerUp: powerUpList) {
 			powerUp.stopPowerUp();
-			screen.getRoot().getChildren().remove(powerUp.getNode());
+			breakoutScreen.getRoot().getChildren().remove(powerUp.getNode());
 		}
 		powerUpList.clear();
 
@@ -211,17 +210,16 @@ public class BreakoutLoop extends GameLoop {
 	 */
 	@Override
 	public void resetLevel() {
-		BreakoutScreen breakoutScreen = (BreakoutScreen) screen;
 		moving = false;
 		for (Ball ball: BALLS) {
-			screen.getRoot().getChildren().remove(ball.getBall());
+			breakoutScreen.getRoot().getChildren().remove(ball.getBall());
 		}
 		BALLS.clear();
 		for (PowerUp powerUp: powerUpList) {
-			screen.getRoot().getChildren().remove(powerUp.getNode());
+			breakoutScreen.getRoot().getChildren().remove(powerUp.getNode());
 		}
 		powerUpList.clear();
-		screen.loadLevel(level);
+		breakoutScreen.loadLevel(level);
 		sliderList = breakoutScreen.getSliderList();
 		initBall();
 	}
@@ -268,7 +266,7 @@ public class BreakoutLoop extends GameLoop {
 	 */
 	private void addPowerUp(PowerUp pu) {
 		pu.onSpawn(breakoutScreen, BALLS);
-		screen.getRoot().getChildren().add(pu.getNode());
+		breakoutScreen.getRoot().getChildren().add(pu.getNode());
 		powerUpList.add(pu);
 	}
 
@@ -313,7 +311,7 @@ public class BreakoutLoop extends GameLoop {
 	public void tryLevelSkip() {
 		now = System.currentTimeMillis();
 		if (now - lastEasterEgg >= EASTER_EGG_COOLDOWN) {
-			bricks.clearObjects(screen);
+			bricks.clearObjects(breakoutScreen);
 			lastEasterEgg = now;
 		}
 	}

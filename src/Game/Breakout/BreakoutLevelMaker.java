@@ -37,7 +37,8 @@ public class BreakoutLevelMaker extends LevelMaker {
 
     /**
      * Authors: Murph
-     * @return
+     * Getter
+     * @return returns the sliders created in the level
      */
     public ArrayList<Slider> getSliderList(){
         return SLIDER_LIST;
@@ -45,15 +46,17 @@ public class BreakoutLevelMaker extends LevelMaker {
 
     /**
      * Authors: Murph, Oscar
+     * Resets all of the gameObjects and removes them from the screen
+     * Used
      */
     public void resetLevel() {
         clearGameObjects();
-        for (Brick b : new ArrayList<>(BRICKS)) {
-            ROOT.getChildren().remove(b.getBrick());
+        for (Brick brick : new ArrayList<>(BRICKS)) {
+            ROOT.getChildren().remove(brick.getBrick());
         }
         BRICKS.clear();
-        for (Slider s : new ArrayList<>(SLIDER_LIST)) {
-            ROOT.getChildren().remove(s.getNode());
+        for (Slider slider : new ArrayList<>(SLIDER_LIST)) {
+            ROOT.getChildren().remove(slider.getNode());
         }
         SLIDER_LIST.clear();
         ballX  = 0;
@@ -142,16 +145,16 @@ public class BreakoutLevelMaker extends LevelMaker {
      */
     public void buildBricks(int[][] pattern, double startX, double startY, double brickWidth, double brickHeight, double brickGap, int pointValue, Color color, boolean colorChange) {
         for (int row = 0; row < pattern.length; row++) {
-            for (int col = 0; col < pattern[row].length; col++) {
-                int val = randomizeBrick(pattern[row][col]);
-                if (val != 0) {
-                    double x = startX + col * (brickWidth + brickGap);
+            for (int column = 0; column < pattern[row].length; column++) {
+                int value = randomizeBrick(pattern[row][column]);
+                if (value != 0) {
+                    double x = startX + column * (brickWidth + brickGap);
                     double y = startY + row * (brickHeight + brickGap);
                     Brick brick = new Brick(brickWidth, brickHeight, x, y, pointValue, color, null);
                     if (colorChange) {
-                        brick.getBrick().setFill(getBrickColor(val, color));
+                        brick.getBrick().setFill(getBrickColor(value, color));
                     }
-                    assignPowerUp(brick, val, x, y);
+                    assignPowerUp(brick, value, x, y);
                     BRICKS.add(brick);
                     ROOT.getChildren().add(brick.getBrick());
                 }

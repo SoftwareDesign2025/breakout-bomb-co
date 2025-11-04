@@ -33,6 +33,7 @@ public abstract class GameLoop {
      * @param screen
      */
     public GameLoop(Screen screen) {
+        this.screen = screen;
         screen.loadLevel(level);
         this.fileName = getFileName();
         this.highScore = getHighScore();
