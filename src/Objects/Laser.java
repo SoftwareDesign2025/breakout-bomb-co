@@ -1,3 +1,9 @@
+/*
+Authors:
+Ben Farmer
+
+ */
+
 package Objects;
 
 import javafx.scene.paint.Color;

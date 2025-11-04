@@ -6,11 +6,7 @@ Authors:
 package Game.Levels;
 
 import Game.Galaga.GalagaLevelMaker;
-
-import Objects.GalagaEnemy;
-
 import Objects.Galaga.GalagaEnemy;
-
 
 public class GalagaLevelOne implements Level<GalagaLevelMaker> {
 

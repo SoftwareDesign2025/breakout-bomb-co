@@ -1,22 +1,17 @@
 
 package Game.Galaga;
 
-import Objects.Ship;
-import Objects.GalagaEnemies;
-import Objects.GalagaEnemy;
-import Objects.SideMover;
+import Game.Levels.*;
+import Objects.Galaga.Ship;
+import Objects.Galaga.GalagaEnemies;
+import Objects.Galaga.GalagaEnemy;
 import Objects.Lasers;
-import Objects.Bricks;
 /*
 Authors:
 Murph Lennemann
 
  */
 
-package Game.Galaga;
-
-import Game.Levels.GalagaLevelOne;
-import Game.Levels.GalagaLevelTwo;
 import Game.Screen;
 import Objects.Galaga.Ship;
 import Objects.Galaga.GalagaEnemies;
@@ -46,22 +41,12 @@ public class GalagaScreen extends Screen {
     private GalagaLevelMaker galagaLevelMaker;
     private List<GalagaEnemy> enemyList;
     private GalagaEnemies enemies;
-
     // Canvas and variables for star background
     private Canvas starCanvas;
     private List<Star> stars = new ArrayList<>();
     private Random rand = new Random();
+    private Lasers lasers = new Lasers(root);
 
-    private Lasers lasers;
-
-    
-
-    public ArrayList<SideMover> getSideMoverList() { return galagaLevelMaker.getSideMoverList(); }
-
-    @Override
-    public void loadLevel(int level) {
-        galagaLevelMaker.loadLevel(new Game.Levels.GalagaLevel());
-    }
 
 
 
@@ -89,8 +74,10 @@ public class GalagaScreen extends Screen {
         enemyList = new ArrayList<>();
         galagaLevelMaker = new GalagaLevelMaker(root, enemyList);
         enemies = new GalagaEnemies(enemyList);
-        loadLevel(2);
+        loadLevel(1);
     }
+
+
 
     /**
      * Authors:
@@ -168,14 +155,14 @@ public class GalagaScreen extends Screen {
      */
     @Override
     public void loadLevel(int level) {
-        if(level == 1) {galagaLevelMaker.loadLevel(new GalagaLevelOne());}
-        else if(level == 2){galagaLevelMaker.loadLevel(new GalagaLevelTwo());}
+        int levelIndex = level - 1;
+        galagaLevelMaker.loadLevel(levels.get(levelIndex));
         ship = galagaLevelMaker.getShip();
     }
 
     /**
      * Authors: Murph
-     * @return
+     * @return returns the ship used in this game
      */
 
     public Ship getShip() {
@@ -185,10 +172,7 @@ public class GalagaScreen extends Screen {
     public GalagaEnemies getEnemies() {
         return enemies;
     }
-    @Override
-    public Bricks getBricks() {
-        return null;      }
-    
+
     public Lasers getLasers() {
     	return lasers;
     }
@@ -204,6 +188,16 @@ public class GalagaScreen extends Screen {
         over.setFill(Color.RED);
         over.setFont(Font.font("Impact", 40));
         root.getChildren().add(over);
+    }
+
+    /**
+     * Authors: Murph
+     * creates a list of levels to be moved through
+     */
+    public void createLevelList() {
+        levels = new ArrayList<>();
+        levels.add(new GalagaLevelOne());
+        levels.add(new GalagaLevelTwo());
     }
 
 

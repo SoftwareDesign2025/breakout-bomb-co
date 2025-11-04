@@ -13,7 +13,7 @@ public abstract class SideMover {
     protected final double speed;
 
     /**
-     * Authors:
+     * Authors: Gavin
      * @param startX
      * @param startY
      * @param width
@@ -27,21 +27,21 @@ public abstract class SideMover {
     }
 
     /**
-     * Authors:
+     * Authors: Gavin
      */
     public void moveLeft() {
         moveSideToSide(true);
     }
 
     /**
-     * Authors:
+     * Authors: Gavin
      */
     public void moveRight() {
         moveSideToSide(false);
     }
 
     /**
-     * Authors:
+     * Authors: Gavin
      * @param goLeft
      */
     public void moveSideToSide(boolean goLeft) {

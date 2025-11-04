@@ -6,6 +6,7 @@ Murph Lennemann
 
 package Game;
 
+import Objects.HittableObjects;
 import Objects.SideMover;
 import javafx.scene.input.KeyCode;
 import java.io.File;
@@ -27,19 +28,25 @@ public abstract class GameLoop {
     protected boolean moving = false;
     protected final Set<KeyCode> pressedKeys = new HashSet<>();
     protected long now;
+    protected long lastSkip = 0;
+    protected final int SKIP_COOLDOWN = 1000;
+    protected HittableObjects hittableObjects;
 
     /**
      * Authors: Murph
-     * @param screen
+     * The game Loop object wich has shared functionality
+     * @param screen the screen that the game time is showing
      */
-    public GameLoop(Screen screen) {
+    public GameLoop(Screen screen, HittableObjects hittableObjects) {
         this.screen = screen;
         this.fileName = getFileName();
         this.highScore = getHighScore();
+        this.hittableObjects = hittableObjects;
     }
 
     /**
      * Authors: Murph
+     * Checks if the player still has lives left and acts accordingly
      */
     public void checkLives() {
         if (lives <= 0) {
@@ -50,9 +57,10 @@ public abstract class GameLoop {
 
     /**
      * Authors: Murph
+     * updates the level if necessary
      */
     public void checkLevel() {
-        if (!levelOver()) {
+        if (levelOver()) {
             level++;
             if (level <= 3){
                 resetLevel();
@@ -66,6 +74,7 @@ public abstract class GameLoop {
 
     /**
      * Authors: Murph
+     * Displays the screen
      */
     protected void showScreen() {
         screen.displayScoreBoard(highScore, points, lives);
@@ -73,6 +82,7 @@ public abstract class GameLoop {
 
     /**
      * Authors: Murph
+     * Handles the game ending including setting the high score
      */
     public void gameOverLogic() {
         gameOver = true;
@@ -84,7 +94,7 @@ public abstract class GameLoop {
 
     /**
      * Authors: Murph
-     * @return
+     * @return this gets the high score from the file
      */
     private int getHighScore() {
         try (Scanner in = new Scanner(new File(fileName))) {
@@ -96,6 +106,7 @@ public abstract class GameLoop {
 
     /**
      * Authors: Murph
+     * This writes the high score into the file
      */
     private void setHighScore() {
         try (PrintWriter out = new PrintWriter(fileName)) {
@@ -107,7 +118,8 @@ public abstract class GameLoop {
 
     /**
      * Authors: Murph
-     * @param sideMover
+     * This manages moving the side mover left or right
+     * @param sideMover The slider or ship to be moved
      */
     protected void moveLeftAndRight(SideMover sideMover) {
         if (pressedKeys.contains(KeyCode.LEFT) || pressedKeys.contains(KeyCode.A)) {
@@ -120,6 +132,7 @@ public abstract class GameLoop {
 
     /**
      * Authors: Murph
+     * Used at the beginning to make game move on click
      */
     public void startMoving() {
         moving = true;
@@ -127,7 +140,8 @@ public abstract class GameLoop {
 
     /**
      * Authors: Murph
-     * @param code
+     * Adds all keys that are being pressed into the active keys set
+     * @param code the key that is pressed
      */
     public void keyPressed(KeyCode code) {
         pressedKeys.add(code);
@@ -135,10 +149,23 @@ public abstract class GameLoop {
 
     /**
      * Authors: Murph
-     * @param code
+     * removes released keys from the active key set
+     * @param code the key that is released
      */
     public void keyReleased(KeyCode code) {
         pressedKeys.remove(code);
+    }
+
+    /**
+     * Authors: Murph
+     * creates a timer for clearing all the bricks and skipping a level
+     */
+    public void tryLevelSkip() {
+        now = System.currentTimeMillis();
+        if (now - lastSkip >= SKIP_COOLDOWN) {
+            hittableObjects.clearObjects(screen);
+            lastSkip = now;
+        }
     }
 
     public abstract void step();

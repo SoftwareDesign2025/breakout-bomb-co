@@ -29,6 +29,7 @@ public abstract class Screen {
         scoreboard.setFill(Color.GREEN);
         scoreboard.setFont(new Font(23));
         root.getChildren().add(scoreboard);
+        createLevelList();
     }
 
     /**
@@ -42,7 +43,8 @@ public abstract class Screen {
 
     /**
      * Authors: Murph
-     * @return
+     * Getter
+     * @return returns the root that runs the scene
      */
     public Group getRoot() {
         return root;
@@ -63,7 +65,7 @@ public abstract class Screen {
      * @param ball
      */
     public void checkBallToWall(Ball ball) {}
-
+    public abstract void createLevelList();
     public abstract void gameOverScreen();
     public abstract void loadLevel(int level);
     public abstract void gameWinScreen();

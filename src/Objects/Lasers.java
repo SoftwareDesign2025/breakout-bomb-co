@@ -1,3 +1,8 @@
+/*
+Authors:
+
+ */
+
 package Objects;
 
 import javafx.scene.Group;

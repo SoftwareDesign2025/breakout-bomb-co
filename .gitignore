@@ -7,9 +7,22 @@
 # BlueJ files
 *.ctxt
 
-#Eclipse files
+# Eclipse files
 .classpath
 .project
+
+# IntelliJ IDEA project files
+.idea/
+*.iml
+
+# VSCode settings (just in case)
+.vscode/
+
+# Build / output directories
+/bin/
+/out/
+/target/
+build/
 
 # Mobile Tools for Java (J2ME)
 .mtj.tmp/
@@ -23,6 +36,5 @@
 *.tar.gz
 *.rar
 
-# virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
+# Virtual machine crash logs
 hs_err_pid*
-/bin/

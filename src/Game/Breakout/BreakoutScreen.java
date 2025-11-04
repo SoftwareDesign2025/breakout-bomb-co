@@ -35,7 +35,6 @@ public class BreakoutScreen extends Screen {
         super();
         bricks = new Bricks(new ArrayList<>());
         this.breakoutLevelMaker = new BreakoutLevelMaker(root, bricks.getBricksList());
-        createLevelList();
         loadLevel(1);
     }
 
@@ -57,6 +56,11 @@ public class BreakoutScreen extends Screen {
         return list;
     }
 
+    /**
+     * Authors: Murph
+     * creates the list of levels to be played
+     */
+    @Override
     public void createLevelList() {
         levels = new ArrayList<>();
         levels.add(new LevelOne());

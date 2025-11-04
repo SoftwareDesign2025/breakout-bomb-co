@@ -5,6 +5,7 @@ Murph Lennemann
  */
 
 package Game.Breakout;
+
 import Game.GameLoop;
 import Objects.Breakout.Ball;
 import Objects.Breakout.Brick;
@@ -29,7 +30,7 @@ public class BreakoutLoop extends GameLoop {
 	 * @param breakoutScreen Is the screen object for this game
 	 */
 	public BreakoutLoop(BreakoutScreen breakoutScreen) {
-		super(breakoutScreen);
+		super(breakoutScreen, breakoutScreen.getBricks());
 		this.breakoutScreen = breakoutScreen;
 		this.BALLS = new ArrayList<>();
 		this.bricks = breakoutScreen.getBricks();
@@ -50,7 +51,6 @@ public class BreakoutLoop extends GameLoop {
 		if (gameOn()) { return;}
 		updateScreen();
 		checkLevel();
-
 		checkLives();
 	}
 
@@ -290,10 +290,10 @@ public class BreakoutLoop extends GameLoop {
 	public boolean levelOver() {
 		for (Brick brick: bricks.getBricksList()) {
 			if (brick.isActive() && !brick.isUnbreakable()) {
-				return true;
+				return false;
 			}
 		}
-		return false;
+		return true;
 	}
 
 
@@ -316,18 +316,6 @@ public class BreakoutLoop extends GameLoop {
 		now = System.currentTimeMillis();
 		if (now - lastEasterEgg >= EASTER_EGG_COOLDOWN) {
 			addPowerUp(powerUp);
-			lastEasterEgg = now;
-		}
-	}
-
-	/**
-	 * Authors: Murph
-	 * creates a timer for clearing all the bricks and skipping a level
-	 */
-	public void tryLevelSkip() {
-		now = System.currentTimeMillis();
-		if (now - lastEasterEgg >= EASTER_EGG_COOLDOWN) {
-			bricks.clearObjects(breakoutScreen);
 			lastEasterEgg = now;
 		}
 	}
