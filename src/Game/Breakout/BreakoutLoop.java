@@ -238,6 +238,7 @@ public class BreakoutLoop extends GameLoop {
 	 * Authors: Murph
 	 * Handles slider movements
 	 */
+	@Override
 	public void handleKeyInput() {
 		if (!gameOver && moving) {
 			for (Slider slider : sliderList) {

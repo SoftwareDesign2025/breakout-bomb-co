@@ -23,7 +23,7 @@ public class GalagaLoop extends GameLoop {
      * @param galagaScreen is a new screen
      */
     public GalagaLoop(GalagaScreen galagaScreen) {
-        super(galagaScreen);
+        super(galagaScreen, galagaScreen.getEnemies());
         galagaScreen.loadLevel(2);
         this.enemies = galagaScreen.getEnemies();
         this.ship = galagaScreen.getShip();
