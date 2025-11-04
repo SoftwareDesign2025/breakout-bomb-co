@@ -18,7 +18,7 @@ public class Slider extends SideMover {
     private final double baseWidth;
 
     /**
-     * Authors:
+     * Authors: Gavin
      * @param startX
      * @param startY
      */
@@ -32,7 +32,7 @@ public class Slider extends SideMover {
     }
 
     /**
-     * Authors:
+     * Authors: Gavin
      */
     @Override
     protected void stopAtEdges() {
@@ -41,7 +41,7 @@ public class Slider extends SideMover {
     }
 
     /**
-     * Authors:
+     * Authors: Gavin
      */
     @Override
     protected void updateNode() {
@@ -49,7 +49,7 @@ public class Slider extends SideMover {
     }
 
     /**
-     * Authors:
+     * Authors: Gavin
      * @return
      */
     public Rectangle getNode() {
@@ -57,7 +57,7 @@ public class Slider extends SideMover {
     }
 
     /**
-     * Authors:
+     * Authors: Gavin
      * @param ball
      */
     public void checkSliderCollision(Ball ball) {
