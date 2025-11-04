@@ -1,132 +1,122 @@
 /*
 Authors:
-Murph Lennemann, Oscar Kardon
+Murph Lennemann
+
  */
 
 package Game.Galaga;
 
-import Game.CollisionDetector;
+
 import Game.GameLoop;
 import Objects.Galaga.Ship;
 import Objects.Galaga.GalagaEnemies;
-import Objects.Laser;
-import Objects.Lasers;
 import javafx.scene.input.KeyCode;
 
 public class GalagaLoop extends GameLoop {
     private final GalagaEnemies enemies;
-    private final Lasers lasers;
-    private final CollisionDetector collisionDetector;
+    private long lastShotTime = 0;
     private final Ship ship;
 
+    /**
+     * Authors: Murph
+     * Creates the loop that runs the code
+     * @param galagaScreen is a new screen
+     */
     public GalagaLoop(GalagaScreen galagaScreen) {
-        super(galagaScreen);
-        galagaScreen.loadLevel(1);
+        super(galagaScreen, galagaScreen.getEnemies());
+        galagaScreen.loadLevel(2);
         this.enemies = galagaScreen.getEnemies();
-        this.lasers = galagaScreen.getLasers();
-        this.collisionDetector = new CollisionDetector(lasers, enemies);
         this.ship = galagaScreen.getShip();
     }
 
+    /**
+     * Authors: Murph
+     * The step method that defines how the game is run
+     */
     @Override
     public void step() {
         showScreen();
-        handleKeyInput();
-
-        if (gameOn()) return;
-
-        runGame();
+        if (moving) {
+            runGame();
+            handleKeyInput();
+        }
         checkLives();
-        checkWin();
-        lasers.update();
-        points += collisionDetector.checkLaserEnemyCollisions();
-
-        Laser enemyLaser = enemies.tryShoot();
-        if (enemyLaser != null) {
-            lasers.addLaser(enemyLaser);
-        }
-
-        if (collisionDetector.checkLaserShipCollisions(ship)) {
-            lives--;
-            System.out.println("Ship hit! Lives remaining: " + lives);
-        }
     }
 
     /**
-     * Handles player input each frame
+     * Authors: Murph
+     * @return if the game is still playable
      */
-    public void handleKeyInput() {
-        if (gameOver || !moving) return;
-
-        // Move left/right
-        moveLeftAndRight(ship);
-
-        // Fire laser when space is pressed
-        if (pressedKeys.contains(KeyCode.SPACE)) {
-            lastShot(ship);
-        }
-
-        // Clear enemies (debug/cheat)
-        if (pressedKeys.contains(KeyCode.B)) {
-            enemies.clearObjects(screen);
-        }
-    }
-
     @Override
     public boolean levelOver() {
-        return enemies.isCleared();
+        return (enemies.isCleared());
     }
 
     /**
-     * Handles enemy movement and bottom check
+     * Authors: Murph
+     * handles the game portion
      */
     private void runGame() {
         enemies.drop();
         lives -= enemies.enemiesReachedBottom();
     }
 
-    private void checkWin() {
-        if (levelOver()) {
-            gameOverLogic();
-            screen.gameWinScreen();
-        }
+    /**
+     * Authors: Murph
+     * @return gets the file name of the High Score
+     */
+    public String getFileName() {
+        return "GalagaHighScore.txt";
     }
 
+    /**
+     * Authors: Murph
+     * resets the level when level is cleared
+     */
     @Override
-    public void resetLevel() {
-        // Optionally implement later
-    }
+    public void resetLevel(){}
 
+    /**
+     * Authors: Murph
+     */
     @Override
-    public void startMoving() {
+    public void startMoving(){
         super.startMoving();
         enemies.drop();
     }
 
+    /**
+     * Authors: Murph
+     * @return if the game is still being played
+     */
     @Override
     public boolean gameOn() {
         return (!moving || gameOver);
     }
 
     /**
-     * Handles shooting cooldown
+     * Authors: Murph
+     * Hanldes what happens on button press
+     */
+    @Override
+    public void handleKeyInput() {
+        moveLeftAndRight(ship);
+        if (pressedKeys.contains(KeyCode.SPACE)) {
+            lastShot(ship);
+        }
+    }
+
+    /**
+     * Authors: Murph
+     * Handles shot cooldown
+     * @param ship the ship on the screen
      */
     public void lastShot(Ship ship) {
         int laserCooldown = 300;
-        now = System.currentTimeMillis();
-        //if (now - lastShotTime >= laserCooldown) {
-            Laser laser = new Laser(
-                    ship.getShip().getLayoutX() + ship.getShip().getFitWidth() / 2,
-                    ship.getShip().getLayoutY(),
-                    true
-            );
-            lasers.addLaser(laser);
-           // lastShotTime = now;
-        //}
-    }
-
-    @Override
-    public String getFileName() {
-        return "GalagaHighScore.txt";
+        now =  System.currentTimeMillis();
+        if (now - lastShotTime >= laserCooldown) {
+            ship.shootLaser();
+            lastShotTime = now;
+        }
     }
 }
