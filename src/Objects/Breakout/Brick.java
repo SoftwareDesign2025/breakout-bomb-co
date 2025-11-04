@@ -1,6 +1,6 @@
 /*
 Authors:
-
+Oscar Kardon
  */
 
 package Objects.Breakout;
@@ -10,7 +10,7 @@ import javafx.scene.shape.Rectangle;
 import Powerups.PowerUp;
 import javafx.scene.paint.Color;
 
-//This class contains the Brick class
+//This class contains the Brick class for the Breakout game
 public class Brick extends HittableObject {
     private Rectangle brick;
     private boolean unbreakable = false;
@@ -96,14 +96,17 @@ public class Brick extends HittableObject {
         double overlapTop = Math.abs(ballY + ball.getBall().getRadius() - brickTop);
         double overlapBottom = Math.abs(brickBottom - (ballY - ball.getBall().getRadius()));
 
-        // find which overlap happens more
+        // find which overlap happens more to move
         double minOverlap = Math.min(Math.min(overlapLeft, overlapRight), Math.min(overlapTop, overlapBottom));
 
-        // if hits the side of a brick
+        //check to make sure pierce powerup is not active
         if (!Powerups.PiercePowerUp.isActive()) {
+            // if hits the side of a brick
             if (minOverlap == overlapLeft || minOverlap == overlapRight) {
                 ball.reverseXDirection();
-            } else {
+            }
+            //hits top or bottom of brick
+            else {
                 ball.reverseYDirection();
             }
         }
@@ -111,7 +114,6 @@ public class Brick extends HittableObject {
         if (powerUp != null){
             powerUp.spawnAt(brick.getX(), brick.getY());
         }
-
         
         if (!unbreakable) {
             deactivate();
