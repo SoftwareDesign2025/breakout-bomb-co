@@ -62,7 +62,7 @@ public class LevelOne implements Level<BreakoutLevelMaker> {
         double sevenOffsetX = startX + 5 * (brickWidth + brickGap);
         maker.buildBricks(sevenPattern, sevenOffsetX, startY, brickWidth, brickHeight, brickGap, pointValue, color, colorChange);
 
-        Brick unbreakable = new Brick(brickWidth, brickHeight, 400, 200, pointValue, Color.DARKGRAY, null);
+        Brick unbreakable = new Brick(250, 15, 300, 125, pointValue, Color.GOLD, null);
         unbreakable.setUnbreakable(true);
         maker.addBrick(unbreakable);
     }
