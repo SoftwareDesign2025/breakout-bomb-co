@@ -1,7 +1,6 @@
 /*
 Authors:
 Ben Farmer
-Murph Lennemann
 
  */
 

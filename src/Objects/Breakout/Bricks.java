@@ -29,7 +29,8 @@ public class Bricks implements HittableObjects {
 
     /**
      * Authors: Murph
-     * @return
+     * getter
+     * @return returns the list Bricks so they can be iterated through
      */
     public List<HittableObject> getHittableObjects() {
         return new ArrayList<>(bricks);
@@ -63,12 +64,7 @@ public class Bricks implements HittableObjects {
 
     /**
      * Authors: Murph
-     */
-    public void drop(){}
-
-    /**
-     * Authors: Murph
-     * @return
+     * @return if there are no more enemies left
      */
     public boolean isCleared() {
         return bricks.isEmpty();
@@ -76,7 +72,8 @@ public class Bricks implements HittableObjects {
 
     /**
      * Authors: Murph
-     * @param screen
+     * Used for easter egg
+     * @param screen the screen from which the objects will be removed
      */
     public void clearObjects(Screen screen) {
         for (Brick brick: bricks){
