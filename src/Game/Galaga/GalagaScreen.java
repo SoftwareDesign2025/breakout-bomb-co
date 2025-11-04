@@ -198,6 +198,7 @@ public class GalagaScreen extends Screen {
         levels = new ArrayList<>();
         levels.add(new GalagaLevelOne());
         levels.add(new GalagaLevelTwo());
+        levels.add(new GalagaLevelThree());
     }
 
 
