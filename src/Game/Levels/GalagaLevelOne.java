@@ -7,7 +7,6 @@ package Game.Levels;
 
 import Game.Galaga.GalagaLevelMaker;
 
-import Objects.GalagaEnemy;
 
 import Objects.Galaga.GalagaEnemy;
 

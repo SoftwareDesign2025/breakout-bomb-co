@@ -2,8 +2,7 @@ package Game.Breakout;
 
 import Game.LevelMaker;
 import Game.Levels.Level;
-import Objects.Brick;
-import Objects.Slider;
+
 
 /*
 Authors:
@@ -11,7 +10,6 @@ Murph Lennemann
 
  */
 
-package Game.Breakout;
 
 import Game.LevelMaker;
 import Objects.Breakout.Brick;

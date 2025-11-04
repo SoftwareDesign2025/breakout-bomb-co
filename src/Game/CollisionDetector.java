@@ -1,11 +1,11 @@
 package Game;
 
-import Objects.GalagaEnemy;
+import Objects.Galaga.GalagaEnemies;
+import Objects.Galaga.GalagaEnemy;
 import Objects.HittableObject;
 import Objects.Laser;
 import Objects.Lasers;
-import Objects.Ship;
-import Objects.GalagaEnemies;
+import Objects.Galaga.Ship;
 
 public class CollisionDetector {
     private Lasers lasers;

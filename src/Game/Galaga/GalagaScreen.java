@@ -1,19 +1,15 @@
 
 package Game.Galaga;
 
-import Objects.Ship;
-import Objects.GalagaEnemies;
-import Objects.GalagaEnemy;
-import Objects.SideMover;
+import Objects.Galaga.Ship;
+import Objects.Galaga.GalagaEnemies;
+import Objects.Galaga.GalagaEnemy;
 import Objects.Lasers;
-import Objects.Bricks;
 /*
 Authors:
 Murph Lennemann
 
  */
-
-package Game.Galaga;
 
 import Game.Levels.GalagaLevelOne;
 import Game.Levels.GalagaLevelTwo;
@@ -52,16 +48,7 @@ public class GalagaScreen extends Screen {
     private List<Star> stars = new ArrayList<>();
     private Random rand = new Random();
 
-    private Lasers lasers;
-
-    
-
-    public ArrayList<SideMover> getSideMoverList() { return galagaLevelMaker.getSideMoverList(); }
-
-    @Override
-    public void loadLevel(int level) {
-        galagaLevelMaker.loadLevel(new Game.Levels.GalagaLevel());
-    }
+    private Lasers lasers = new Lasers(root);
 
 
 
@@ -91,6 +78,8 @@ public class GalagaScreen extends Screen {
         enemies = new GalagaEnemies(enemyList);
         loadLevel(2);
     }
+
+
 
     /**
      * Authors:
@@ -185,10 +174,7 @@ public class GalagaScreen extends Screen {
     public GalagaEnemies getEnemies() {
         return enemies;
     }
-    @Override
-    public Bricks getBricks() {
-        return null;      }
-    
+
     public Lasers getLasers() {
     	return lasers;
     }

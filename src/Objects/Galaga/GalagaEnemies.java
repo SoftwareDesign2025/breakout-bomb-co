@@ -13,6 +13,7 @@ import Game.Screen;
 import Objects.Breakout.Ball;
 import Objects.HittableObject;
 import Objects.HittableObjects;
+import Objects.Laser;
 
 public class GalagaEnemies implements HittableObjects {
     private List<GalagaEnemy> enemies;
