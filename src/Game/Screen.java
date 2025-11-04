@@ -1,20 +1,27 @@
+/*
+Authors:
+Murph Lennemann
+
+ */
+
 package Game;
 
+import Game.Levels.Level;
 import javafx.scene.Group;
 import javafx.scene.text.Text;
 import javafx.scene.text.Font;
 import javafx.scene.paint.Color;
 import java.util.ArrayList;
 import java.util.List;
-import Objects.Ball;
-import Objects.Bricks;
+import Objects.Breakout.Ball;
+import Objects.Breakout.Bricks;
 import Objects.SideMover;
 
 public abstract class Screen {
+
     protected Group root;
     protected Text scoreboard;
-    protected Bricks bricks;
-    protected List<Ball> queuedBalls = new ArrayList<>();
+    protected List<Level> levels;
 
     public Screen() {
         root = new Group();
@@ -22,38 +29,43 @@ public abstract class Screen {
         scoreboard.setFill(Color.GREEN);
         scoreboard.setFont(new Font(23));
         root.getChildren().add(scoreboard);
-        bricks = new Bricks(new ArrayList<>());
     }
 
-    public abstract void loadLevel(int level);
-
-    public Group getRoot() { return root; }
-    public Bricks getBricks() { return bricks; }
-    public abstract ArrayList<SideMover> getSideMoverList();
-
-    public void queueNewBall(Ball b) { queuedBalls.add(b); }
-    public List<Ball> consumeQueuedBalls() {
-        List<Ball> list = new ArrayList<>(queuedBalls);
-        queuedBalls.clear();
-        return list;
-    }
-    public abstract void gameOverScreen();
-    public abstract void gameWinScreen();
-
+    /**
+     * Authors:
+     * @param ball
+     * @return
+     */
     public boolean ballOutOfBounds(Ball ball) {
-
         return false;
     }
 
+    /**
+     * Authors: Murph
+     * @return
+     */
+    public Group getRoot() {
+        return root;
+    }
 
+    /**
+     * Authors:
+     * @param highScore
+     * @param score
+     * @param lives
+     */
     public void displayScoreBoard(int highScore, int score, int lives) {
         scoreboard.setText("High Score: " + highScore + " Score: " + score + " Lives: " + lives);
     }
 
-    public void checkBallToWall(Ball ball) {
+    /**
+     * Authors:
+     * @param ball
+     */
+    public void checkBallToWall(Ball ball) {}
 
-    }
-
-
+    public abstract void gameOverScreen();
+    public abstract void loadLevel(int level);
+    public abstract void gameWinScreen();
 
 }

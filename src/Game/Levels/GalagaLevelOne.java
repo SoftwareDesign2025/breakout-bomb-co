@@ -1,12 +1,24 @@
+/*
+Authors:
+
+ */
+
 package Game.Levels;
 
 import Game.Galaga.GalagaLevelMaker;
+
 import Objects.GalagaEnemy;
 
-public class GalagaLevel implements Level<GalagaLevelMaker> {
+import Objects.Galaga.GalagaEnemy;
 
+
+public class GalagaLevelOne implements Level<GalagaLevelMaker> {
+
+    /**
+     * Authors:
+     * @param maker
+     */
     public void build(GalagaLevelMaker maker) {
-
         maker.addShip("ship.png", 400, 500);
         double startX = 100;
         double startY = 80;
@@ -21,10 +33,9 @@ public class GalagaLevel implements Level<GalagaLevelMaker> {
                 double x = startX + col * (enemyWidth + gapX);
                 double y = startY + row * (enemyHeight + gapY);
 
-                GalagaEnemy enemy = new GalagaEnemy(enemyWidth,enemyHeight,"/images/bfarmer.png", x, y, 1, null, 0.1);
+                GalagaEnemy enemy = new GalagaEnemy(enemyWidth,enemyHeight, "galagaEnemyImage.png", x, y, 1, null, 0.1, 1);
                 maker.addEnemy(enemy);
             }
         }
-
     }
 }

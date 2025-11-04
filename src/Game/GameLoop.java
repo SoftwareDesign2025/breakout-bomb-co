@@ -1,51 +1,62 @@
+/*
+Authors:
+Murph Lennemann
+
+ */
+
 package Game;
 
-import Objects.*;
+import Objects.SideMover;
 import javafx.scene.input.KeyCode;
-
 import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.Scanner;
-
+import java.util.Set;
 
 public abstract class GameLoop {
 
-
-    protected final ArrayList<Ball> BALLS;
-    protected final Screen screen;
-    protected ArrayList<SideMover> sideMoverList;
+    protected Screen screen;
     protected int lives = 5;
     protected int points = 0;
     protected int highScore;
     protected int level = 1;
     protected boolean gameOver = false;
-    protected final Bricks bricks;
     protected final String fileName;
+    protected boolean moving = false;
+    protected final Set<KeyCode> pressedKeys = new HashSet<>();
+    protected long now;
 
+    /**
+     * Authors: Murph
+     * @param screen
+     */
     public GameLoop(Screen screen) {
         this.screen = screen;
-        screen.loadLevel(level);
-        this.sideMoverList = screen.getSideMoverList();
-        this.BALLS = new ArrayList<>();
-        this.bricks = screen.getBricks();
         this.fileName = getFileName();
         this.highScore = getHighScore();
     }
 
-    public abstract void step();
-
+    /**
+     * Authors: Murph
+     */
     public void checkLives() {
         if (lives <= 0) {
             gameOverLogic();
             screen.gameOverScreen();
         }
     }
+
+    /**
+     * Authors: Murph
+     */
     public void checkLevel() {
         if (!levelOver()) {
             level++;
-            if (level <= 3) resetLevel();
+            if (level <= 3){
+                resetLevel();
+            }
             else {
                 gameOverLogic();
                 screen.gameWinScreen();
@@ -53,21 +64,28 @@ public abstract class GameLoop {
         }
     }
 
+    /**
+     * Authors: Murph
+     */
     protected void showScreen() {
         screen.displayScoreBoard(highScore, points, lives);
     }
 
-    public abstract boolean levelOver();
-
-    public abstract void resetLevel();
-
+    /**
+     * Authors: Murph
+     */
     public void gameOverLogic() {
         gameOver = true;
+        moving = false;
         if (points > highScore) {
             setHighScore();
         }
     }
 
+    /**
+     * Authors: Murph
+     * @return
+     */
     private int getHighScore() {
         try (Scanner in = new Scanner(new File(fileName))) {
             return in.nextInt();
@@ -76,6 +94,9 @@ public abstract class GameLoop {
         }
     }
 
+    /**
+     * Authors: Murph
+     */
     private void setHighScore() {
         try (PrintWriter out = new PrintWriter(fileName)) {
             out.println(points);
@@ -84,16 +105,47 @@ public abstract class GameLoop {
         }
     }
 
-    public abstract String getFileName();
-
-    public abstract void handleKeyInput(KeyCode code);
-
-    public void clearHittableObjects() {
-        for (HittableObject hittable : bricks.getHittableObjects()) {
-            screen.getRoot().getChildren().remove(hittable.getHittableObject());
+    /**
+     * Authors: Murph
+     * @param sideMover
+     */
+    protected void moveLeftAndRight(SideMover sideMover) {
+        if (pressedKeys.contains(KeyCode.LEFT) || pressedKeys.contains(KeyCode.A)) {
+            sideMover.moveLeft();
         }
-        bricks.getHittableObjects().clear();
+        if (pressedKeys.contains(KeyCode.RIGHT)  || pressedKeys.contains(KeyCode.D)) {
+            sideMover.moveRight();
+        }
     }
 
-    public abstract void startMoving();
+    /**
+     * Authors: Murph
+     */
+    public void startMoving() {
+        moving = true;
+    }
+
+    /**
+     * Authors: Murph
+     * @param code
+     */
+    public void keyPressed(KeyCode code) {
+        pressedKeys.add(code);
+    }
+
+    /**
+     * Authors: Murph
+     * @param code
+     */
+    public void keyReleased(KeyCode code) {
+        pressedKeys.remove(code);
+    }
+
+    public abstract void step();
+    public abstract boolean gameOn();
+    public abstract void handleKeyInput();
+    public abstract String getFileName();
+    public abstract void resetLevel();
+    public abstract boolean levelOver();
+
 }

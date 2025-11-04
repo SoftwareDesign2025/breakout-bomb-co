@@ -1,18 +1,27 @@
-package Objects;
+/*
+Authors:
 
+ */
+
+package Objects.Galaga;
+
+import Objects.SideMover;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.input.KeyCode;
-import javafx.scene.paint.Color;
-import javafx.scene.shape.Polygon;
 
 public class Ship extends SideMover {
 
     public static final double HEIGHT = 40;
     private ImageView shipImage;
 
+    /**
+     * Authors:
+     * @param imagePath
+     * @param startX
+     * @param startY
+     */
     public Ship(String imagePath, double startX, double startY) {
-        super(startX, startY, 40, 20);
+        super(startX, startY, 40, 5);
         Image image = new Image(getClass().getResource(imagePath).toExternalForm());
         shipImage = new ImageView(image);
         shipImage.setFitWidth(100);
@@ -24,6 +33,9 @@ public class Ship extends SideMover {
         updateNode();
     }
 
+    /**
+     * Authors:
+     */
     @Override
     protected void stopAtEdges() {
         double halfWidth = shipImage.getFitWidth() / 2;
@@ -35,24 +47,27 @@ public class Ship extends SideMover {
         else if (yLocation > 600 - halfHeight) yLocation = 600 - halfHeight;
     }
 
-
+    /**
+     * Authors:
+     */
     @Override
     protected void updateNode() {
         shipImage.setLayoutX(xLocation - shipImage.getFitWidth() / 2);
         shipImage.setLayoutY(yLocation - shipImage.getFitHeight() / 2);
     }
 
-
-
-
+    /**
+     * Authors:
+     * @return
+     */
     public ImageView getShip() {
         return shipImage;
     }
 
-    public void shootLaser(KeyCode code) {
-        if (code == KeyCode.SPACE) {
-
-            System.out.println("Shoot laser!");
-        }
+    /**
+     * Authors:
+     */
+    public void shootLaser() {
+        System.out.println("Shoot laser!");
     }
 }

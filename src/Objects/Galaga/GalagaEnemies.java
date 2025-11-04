@@ -1,18 +1,26 @@
-package Objects;
+/*
+Authors:
+Murph Lennemann
+
+ */
+
+package Objects.Galaga;
 
 import java.util.List;
 import java.util.ArrayList;
 import java.util.Random;
 import Game.Screen;
+import Objects.Breakout.Ball;
+import Objects.HittableObject;
+import Objects.HittableObjects;
 
-public class GalagaEnemies implements HittableObjects{
+public class GalagaEnemies implements HittableObjects {
     private List<GalagaEnemy> enemies;
     private static final double ENEMY_BOTTOM_THRESHOLD = 550;
     
     private int frameCounter = 0;
     private int shootInterval;
     private Random random;
-
 
     public GalagaEnemies(List<GalagaEnemy> enemies) {
         this(enemies, 60); // Default: shoot every 60 frames (~1 second at 60fps)
@@ -26,10 +34,17 @@ public class GalagaEnemies implements HittableObjects{
         this.random = new Random();
     }
 
+    /**
+     * Authors:
+     * @return
+     */
     public List<HittableObject> getHittableObjects(){
         return new ArrayList<>(enemies);
     }
 
+    /**
+     * Authors:
+     */
     public void drop() {
         for (GalagaEnemy enemy: enemies) {
             enemy.moveDown();
@@ -66,10 +81,19 @@ public class GalagaEnemies implements HittableObjects{
         );
     }
 
+    /**
+     * Authors:
+     * @param ball
+     * @return
+     */
     public int resolveCollisions(Ball ball) {
         return 0;
     }
 
+    /**
+     * Authors:
+     * @return
+     */
     public boolean isCleared() {
         return enemies.isEmpty();
     }
@@ -78,6 +102,10 @@ public class GalagaEnemies implements HittableObjects{
         this.shootInterval = interval;
     }
 
+    /**
+     * Authors:
+     * @return
+     */
     public int enemiesReachedBottom() {
         int livesLost = 0;
         for (GalagaEnemy enemy : enemies) {
@@ -92,6 +120,10 @@ public class GalagaEnemies implements HittableObjects{
     }
 
 
+    /**
+     * Authors: Murph
+     * @param screen
+     */
     @Override
     public void clearObjects(Screen screen) {
         for (GalagaEnemy enemy:  enemies) {

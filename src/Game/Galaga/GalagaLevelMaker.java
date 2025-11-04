@@ -1,51 +1,71 @@
+
+/*
+Authors:
+Murph Lennemann
+
+ */
+
 package Game.Galaga;
 
 import Game.LevelMaker;
-import Game.Levels.GalagaLevel;
-import Objects.GalagaEnemy;
-import Objects.Ship;
-import Objects.SideMover;
+import Objects.Galaga.GalagaEnemy;
+import Objects.Galaga.Ship;
 import javafx.scene.Group;
-import javafx.scene.paint.Color;
-import javafx.scene.shape.Rectangle;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
 
-public class GalagaLevelMaker extends LevelMaker{
+import java.util.List;
+
+public class GalagaLevelMaker extends LevelMaker {
 
     private final List<GalagaEnemy> ENEMIES;
+    private Ship ship;
+
+    /**
+     * Authors:
+     * @param root
+     * @param enemiesList
+     */
 
     public GalagaLevelMaker(Group root, List<GalagaEnemy> enemiesList) {
         super(root);
         this.ENEMIES = enemiesList;
     }
 
-    public List<GalagaEnemy> getEnemies() {
-        return ENEMIES;
-    }
 
-
+    /**
+     * Authors:
+     */
 
     public void resetLevel() {
         clearGameObjects();
         ENEMIES.clear();
     }
 
+    /**
+     * Authors: Murph
+     * creates a new ship
+     * @param imagePath The call to the image used.
+     * @param startX the starting X value
+     * @param startY the starting Y value
+     */
     public void addShip(String imagePath, double startX, double startY) {
-        Ship ship = new Ship(imagePath, startX, startY);
-        SIDE_MOVER_LIST.add(ship);
+        ship = new Ship(imagePath, startX, startY);
         ROOT.getChildren().add(ship.getShip());
         NODE_LIST.add(ship.getShip());
     }
 
-    public void addOutOfBounds(double x, double y, double width, double height, Color color) {
-        Rectangle r = new Rectangle(x, y, width, height);
-        r.setFill(color);
-        OUT_OF_BOUNDS_LIST.add(r);
-        ROOT.getChildren().add(r);
-        NODE_LIST.add(r);
+    /**
+     * Authors: Murph
+     * Getter
+     * @return a ship
+     */
+    public Ship getShip() {
+        return ship;
     }
+
+    /**
+     * Authors:
+     * @param enemy
+     */
 
     public void addEnemy(GalagaEnemy enemy) {
         ENEMIES.add(enemy);
@@ -53,8 +73,4 @@ public class GalagaLevelMaker extends LevelMaker{
         NODE_LIST.add(enemy.getEnemy());
     }
 
-    public void loadLevel(GalagaLevel level) {
-        resetLevel();
-        level.build(this);
-    }
 }

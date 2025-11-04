@@ -1,18 +1,22 @@
+
+/*
+Authors:
+Murph Lennemann
+
+ */
+
 package Game.Galaga;
 
 
-import Objects.Ship;
-import Game.CollisionDetector;
 import Game.GameLoop;
-import Objects.GalagaEnemies;
-import Objects.SideMover;
-import Objects.Lasers;
-import Objects.Laser;
-import Objects.Ship;
+import Objects.Galaga.Ship;
+import Objects.Galaga.GalagaEnemies;
+
 import javafx.scene.input.KeyCode;
 
 public class GalagaLoop extends GameLoop {
     private final GalagaEnemies enemies;
+
     private final Lasers lasers;
     private final CollisionDetector collisionDetector;
     private final Ship ship;
@@ -69,19 +73,33 @@ public class GalagaLoop extends GameLoop {
        
     }
     
+
     @Override
     public boolean levelOver() {
         return (enemies.isCleared());
     }
+
+
+    /**
+     * Authors: Murph
+     * handles the game portion
+     */
 
     private void runGame() {
         enemies.drop();
         lives -= enemies.enemiesReachedBottom();
     }
 
+
+    /**
+     * Authors: Murph
+     * @return gets the file name of the High Score
+     */
+
     public String getFileName() {
         return "GalagaHighScore.txt";
     }
+
 
     @Override
     public void resetLevel(){}
@@ -95,5 +113,55 @@ public class GalagaLoop extends GameLoop {
     		gameOverLogic();
     		screen.gameWinScreen();
     	}
+
+    /**
+     * Authors: Murph
+     * resets the level when level is cleared
+     */
+    @Override
+    public void resetLevel(){}
+
+    /**
+     * Authors: Murph
+     */
+    @Override
+    public void startMoving(){
+        super.startMoving();
+        enemies.drop();
+    }
+
+    /**
+     * Authors: Murph
+     * @return if the game is still being played
+     */
+    @Override
+    public boolean gameOn() {
+        return (!moving || gameOver);
+    }
+
+    /**
+     * Authors: Murph
+     * Hanldes what happens on button press
+     */
+    @Override
+    public void handleKeyInput() {
+        moveLeftAndRight(ship);
+        if (pressedKeys.contains(KeyCode.SPACE)) {
+            lastShot(ship);
+        }
+    }
+
+    /**
+     * Authors: Murph
+     * Handles shot cooldown
+     * @param ship the ship on the screen
+     */
+    public void lastShot(Ship ship) {
+        int laserCooldown = 300;
+        now =  System.currentTimeMillis();
+        if (now - lastShotTime >= laserCooldown) {
+            ship.shootLaser();
+            lastShotTime = now;
+        }
     }
 }

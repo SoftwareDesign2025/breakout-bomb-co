@@ -1,6 +1,10 @@
-package Objects;
+/*
+Authors:
 
-import javafx.scene.input.KeyCode;
+
+ */
+
+package Objects;
 
 public abstract class SideMover {
     protected double xLocation;
@@ -8,6 +12,13 @@ public abstract class SideMover {
     protected final double width;
     protected final double speed;
 
+    /**
+     * Authors:
+     * @param startX
+     * @param startY
+     * @param width
+     * @param speed
+     */
     public SideMover(double startX, double startY, double width, double speed) {
         this.xLocation = startX;
         this.yLocation = startY;
@@ -15,11 +26,24 @@ public abstract class SideMover {
         this.speed = speed;
     }
 
-    public void handleMovement(KeyCode code) {
-        if (code == KeyCode.LEFT || code == KeyCode.A) moveSideToSide(true);
-        else if (code == KeyCode.RIGHT || code == KeyCode.D) moveSideToSide(false);
+    /**
+     * Authors:
+     */
+    public void moveLeft() {
+        moveSideToSide(true);
     }
 
+    /**
+     * Authors:
+     */
+    public void moveRight() {
+        moveSideToSide(false);
+    }
+
+    /**
+     * Authors:
+     * @param goLeft
+     */
     public void moveSideToSide(boolean goLeft) {
         if (goLeft) xLocation -= speed;
         else xLocation += speed;

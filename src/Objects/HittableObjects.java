@@ -1,5 +1,13 @@
+/*
+Authors:
+Murph Lennemann
+
+ */
+
 package Objects;
+
 import Game.Screen;
+import Objects.Breakout.Ball;
 
 import java.util.List;
 

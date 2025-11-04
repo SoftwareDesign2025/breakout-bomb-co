@@ -1,18 +1,18 @@
-//Author Ben farmer
+/*
+Authors:
+Ben Farmer
+Murph Lennemann
+
+ */
+
 package Powerups;
 
 import java.util.ArrayList;
-import java.util.List;
-
-import Game.Screen;
-import Objects.Ball;
-import Objects.Slider;
-import javafx.scene.Group;
+import Game.Breakout.BreakoutScreen;
+import Objects.Breakout.Ball;
+import Objects.Breakout.Slider;
 import javafx.scene.paint.Color;
-import javafx.scene.text.Font;
-import javafx.scene.text.Text;
 import javafx.scene.shape.Circle;
-import javafx.scene.shape.Rectangle;
 
 
 /*this class is to implement power ups*/
@@ -34,7 +34,12 @@ public class PowerUp {
 	private int ypos;
 	
 	private int countdownFrames = -1;
-	
+
+	/**
+	 * Authors:
+	 * @param x
+	 * @param y
+	 */
 	public PowerUp(double x, double y) {
 		powerUp = new Circle(WIDTH, Color.POWDERBLUE);
 		powerUp.setCenterX(x);		
@@ -60,8 +65,10 @@ public class PowerUp {
 	*/
 	
 	//new powerup design for structured levels
-	
-	
+
+	/**
+	 * Authors:
+	 */
 	public void update_position() {
 		if (activated) 
 			return;
@@ -69,49 +76,79 @@ public class PowerUp {
 		xpos = (int) powerUp.getCenterX();
 	    ypos= (int) powerUp.getCenterY();
 	}
-	
-	// your team calls this when THEY detect a pickup
+
+
+	/**
+	 * Authors:
+	 * @param sliders
+	 */
     public void onPickup(ArrayList<Slider> sliders) {
         if (activated) return;
         activated = true;
         startEffect(sliders);   // <-- base declares this so subclasses can override
     }
-    
-	// declare these so subclasses can override ======
+
+	/**
+	 * Authors:
+	 * @param sliders
+	 */
     void startEffect(ArrayList<Slider> sliders) {
         // base no-op; BiggerSlider overrides
     }
 
+	/**
+	 * Authors:
+	 */
 	public void stopPowerUp() {
 		activated = false;
 		countdownFrames = -1;
 	}
-	
-	// allow subclass to start a countdown (frames)
+
+	/**
+	 * Authors
+	 * @param frames
+	 */
     void beginCountdown(int frames) { 
     	countdownFrames = frames; 
     	}
-	
-	
-	//helper functions
+
+
+	/**
+	 * Authors:
+	 * @return
+	 */
 	public boolean isactivated() {
 		return activated;
 	}
+
+	/**
+	 * Authors:
+	 * @return
+	 */
 	 public boolean isPowerUpOver() {
 		return finished;
 	}
+
+	/**
+	 * Authors:
+	 * @return
+	 */
 	public Circle getNode() { 
 		return powerUp;
 		}
 
 
-
+	/**
+	 * Authors:
+	 * @param x
+	 * @param y
+	 * @return
+	 */
 	public PowerUp spawnAt(double x, double y) {
-		 
 		return new PowerUp(x,y);
 	}
 
-	public void onSpawn(Screen screen, ArrayList<Ball> balls) {}
+	public void onSpawn(BreakoutScreen screen, ArrayList<Ball> balls) {}
 
 	public void tick() {}
 

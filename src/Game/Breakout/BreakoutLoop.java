@@ -1,29 +1,52 @@
-// Author: Murph Lennemann
+/*
+Authors:
+Murph Lennemann
+
+ */
 
 package Game.Breakout;
+import Game.GameLoop;
+import Objects.Breakout.Ball;
+import Objects.Breakout.Brick;
+import Objects.Breakout.Bricks;
+import Objects.Breakout.Slider;
 import javafx.scene.input.KeyCode;
 import java.util.*;
-
-import Game.GameLoop;
-import Objects.*;
 import Powerups.*;
 
 public class BreakoutLoop extends GameLoop {
+	private final ArrayList<Ball> BALLS;
 	private ArrayList<PowerUp> powerUpList;
 	private final BreakoutLevelMaker LEVEL_MAKER;
-	private boolean movingBall = false;
+	private long lastEasterEgg = 0;
+	private final long EASTER_EGG_COOLDOWN = 1000;
+	private final Bricks bricks;
+	private ArrayList<Slider> sliderList;
+	private BreakoutScreen breakoutScreen;
 
-
+	/**
+	 * Authors: Murph
+	 * @param breakoutScreen Is the screen object for this game
+	 */
 	public BreakoutLoop(BreakoutScreen breakoutScreen) {
 		super(breakoutScreen);
+		this.breakoutScreen = breakoutScreen;
+		this.BALLS = new ArrayList<>();
+		this.bricks = breakoutScreen.getBricks();
 		this.powerUpList = new ArrayList<>();
 		this.LEVEL_MAKER = breakoutScreen.getBreakoutLevelMaker();
+		this.sliderList = breakoutScreen.getSliderList();
 		initBall();
 	}
 
+	/**
+	 * Authors: Murph
+	 * The overall game running method that runs every frame
+	 */
 	@Override
 	public void step() {
 		showScreen();
+		handleKeyInput();
 		if (gameOn()) { return;}
 		updateScreen();
 		checkLevel();
@@ -31,16 +54,21 @@ public class BreakoutLoop extends GameLoop {
 		checkLives();
 	}
 
+
+	/**
+	 * Authors: Murph
+	 * This method updates things on the screen
+	 */
 	private void updateScreen() {
 		ArrayList<Ball> toRemove = new ArrayList<>();
 		for (Ball ball : BALLS) {
-			updateBall(ball);
+			ball.updateBallLocation();
 			handleSliderCollisions(ball);
-			screen.checkBallToWall(ball);
+			breakoutScreen.checkBallToWall(ball);
 			points += bricks.resolveCollisions(ball);
 			spawnPowerUpsFromBricks();
 			handlePowerUpPickups();
-			if (screen.ballOutOfBounds(ball)) {
+			if (breakoutScreen.ballOutOfBounds(ball)) {
 				toRemove.add(ball);
 			}
 
@@ -49,65 +77,78 @@ public class BreakoutLoop extends GameLoop {
 		handleBallRemovals(toRemove);
 	}
 
-	private boolean gameOn() {
-		return (!movingBall || gameOver);
+
+	/**
+	 * Authors: Murph
+	 * @return if the game is running
+	 */
+	@Override
+	public boolean gameOn() {
+		return (!moving || gameOver);
 	}
 
-
-
-	private void updateBall(Ball ball) {
-		ball.updateBallLocation();
-	}
-
+	/**
+	 * Authors: Murph
+	 * Sees if a ball contacts a slider
+	 * @param ball The ball being checked
+	 */
 	private void handleSliderCollisions(Ball ball) {
-		for (SideMover sideMover : sideMoverList) {
-			Slider slider = (Slider) sideMover;
+		for (Slider slider : sliderList) {
 			slider.checkSliderCollision(ball);
 		}
+
 	}
 
+	/**
+	 * Authors: Murph
+	 * Checks if a powerUp should be dropped and makes one if so
+	 */
 	private void spawnPowerUpsFromBricks() {
-		for (HittableObject h : new ArrayList<>(bricks.getHittableObjects())) {
-			Brick b = (Brick) h;
-			if (!b.isActive()) {
-				PowerUp p = b.getPowerUp();
-				if (p != null) {
-					PowerUp newPowerUp = p.spawnAt(
-							b.getBrick().getX() + b.getBrick().getWidth() / 2.0,
-							b.getBrick().getY() + b.getBrick().getHeight() / 2.0
+		for (Brick brick: bricks.getBricksList()) {
+			if (!brick.isActive()) {
+				PowerUp powerUp = brick.getPowerUp();
+				if (powerUp != null) {
+					PowerUp newPowerUp = powerUp.spawnAt(
+							brick.getBrick().getX() + brick.getBrick().getWidth() / 2.0,
+							brick.getBrick().getY() + brick.getBrick().getHeight() / 2.0
 					);
-					newPowerUp.onSpawn(screen, BALLS);
-					screen.getRoot().getChildren().add(newPowerUp.getNode());
-					powerUpList.add(newPowerUp);
-					b.setPowerUp(null);
+					addPowerUp(newPowerUp);
+					brick.setPowerUp(null);
+
 					}
 			}
 		}
 	}
 
+
+	/**
+	 * Authors: Murph
+	 * Checks if a powerUp has contacted a slider and activates the powerUp accordingly
+	 */
 	private void handlePowerUpPickups() {
-		ArrayList<Slider> sliders = new ArrayList<>();
-		for (SideMover sm : sideMoverList) {
-			sliders.add((Slider) sm);
-		}
-		for (Slider s : sliders) {
+		for (Slider slider : sliderList) {
 			for (int i = powerUpList.size() - 1; i >= 0; i--) {
-				PowerUp pu = powerUpList.get(i);
-				if (pu.getNode().getBoundsInParent().intersects(s.getNode().getBoundsInParent())) {
-					pu.onPickup(sliders);
-					screen.getRoot().getChildren().remove(pu.getNode());
+				PowerUp powerUp = powerUpList.get(i);
+				if (powerUp.getNode().getBoundsInParent().intersects(slider.getNode().getBoundsInParent())) {
+					powerUp.onPickup(sliderList);
+					breakoutScreen.getRoot().getChildren().remove(powerUp.getNode());
+
 				}
 			}
 		}
 		PiercePowerUp.tickGlobal();
 	}
 
+	/**
+	 * Authors: Murph
+	 * Moves the power up across the screen
+	 */
+
 	private void updatePowerUps() {
 		for (int i = powerUpList.size() - 1; i >= 0; i--) {
 			PowerUp pu = powerUpList.get(i);
 			pu.update_position();
 			if (!pu.isactivated() && pu.getNode().getBoundsInParent().getMinY() > 600) {
-				screen.getRoot().getChildren().remove(pu.getNode());
 				powerUpList.remove(i);
 			}
 			pu.tick();
@@ -117,14 +158,25 @@ public class BreakoutLoop extends GameLoop {
 		}
 	}
 
+
+	/**
+	 * Authors: Murph
+	 * Removes balls from screen
+	 * @param toRemove The list of balls that have left the screen
+	 */
 	private void handleBallRemovals(ArrayList<Ball> toRemove) {
-		BALLS.addAll(screen.consumeQueuedBalls());
+		BALLS.addAll(breakoutScreen.consumeQueuedBalls());
 		for (Ball ball : toRemove) {
-			screen.getRoot().getChildren().remove(ball.getBall());
+			breakoutScreen.getRoot().getChildren().remove(ball.getBall());
 			BALLS.remove(ball);
 		}
-		if (BALLS.isEmpty()) resetBall();
+		if (BALLS.isEmpty()) handleLifeLost();
 	}
+
+	/**
+	 * Authors: Murph
+	 * Initializes a new ball
+	 */
 
 	private void initBall() {
 		double resetBallSpeed = 1;
@@ -133,55 +185,106 @@ public class BreakoutLoop extends GameLoop {
 		Ball freshBall;
 		freshBall = new Ball(10, LEVEL_MAKER.getBallX(), LEVEL_MAKER.getBallY());
 		BALLS.add(freshBall);
-		screen.getRoot().getChildren().add(freshBall.getBall());
+
+		breakoutScreen.getRoot().getChildren().add(freshBall.getBall());
+
 		freshBall.changeSpeed(resetBallSpeed);
 		freshBall.changeXDirection(resetXDirection);
 		freshBall.changeYDirection(resetYDirection);
 	}
 
-	public void resetBall() {
-		movingBall = false;
+
+	/**
+	 * Authors: Murph
+	 * Resets game when a life is lost
+	 */
+	public void handleLifeLost() {
+		moving = false;
 		lives -= 1;
 		initBall();
+		for (Slider slider: sliderList) {
+			slider.resetSlider();
+		}
+		for (PowerUp powerUp: powerUpList) {
+			powerUp.stopPowerUp();
+			breakoutScreen.getRoot().getChildren().remove(powerUp.getNode());
+		}
+		powerUpList.clear();
+
 	}
 
+	/**
+	 * Authors: Murph
+	 * Resets a level including things added to the screen
+	 */
 	@Override
 	public void resetLevel() {
-		movingBall = false;
-		BALLS.forEach(ball -> screen.getRoot().getChildren().remove(ball.getBall()));
-		BALLS.clear();
-		powerUpList.forEach(pu -> screen.getRoot().getChildren().remove(pu.getNode()));
-		powerUpList.clear();
-		screen.loadLevel(level);
-		initBall();
-		sideMoverList = screen.getSideMoverList();
-	}
-
-	@Override
-	public void handleKeyInput(KeyCode code) {
-		if (!gameOver) {
-			for (SideMover sideMover : sideMoverList) {
-				Slider slider = (Slider) sideMover;
-				slider.handleMovement(code);
-			}
+		moving = false;
+		for (Ball ball: BALLS) {
+			breakoutScreen.getRoot().getChildren().remove(ball.getBall());
 		}
-		if (code == KeyCode.B) bricks.clearObjects(screen);
-		if (code == KeyCode.SPACE) PiercePowerUp.tryActivate();
-		handleTestPowerUps(code);
+		BALLS.clear();
+		for (PowerUp powerUp: powerUpList) {
+			breakoutScreen.getRoot().getChildren().remove(powerUp.getNode());
+		}
+		powerUpList.clear();
+		breakoutScreen.loadLevel(level);
+		sliderList = breakoutScreen.getSliderList();
+		initBall();
 	}
 
-	private void handleTestPowerUps(KeyCode code) {
-		double bx = 400, by = 200;
-		if (code == KeyCode.Z) addPowerUp(new BiggerSlider(bx, by));
-		else if (code == KeyCode.X) addPowerUp(new BallPowerUp(bx, by));
-		else if (code == KeyCode.C) addPowerUp(new PiercePowerUp(bx, by));
+	/**
+	 * Authors: Murph
+	 * Handles slider movements
+	 */
+	@Override
+	public void handleKeyInput() {
+		if (!gameOver && moving) {
+			for (Slider slider : sliderList) {
+				moveLeftAndRight(slider);
+			}
+			if (pressedKeys.contains(KeyCode.SPACE)) {
+				PiercePowerUp.tryActivate();
+			}
+			if (pressedKeys.contains(KeyCode.B)) {
+				tryLevelSkip();
+			}
+			handleTestPowerUps();
+		}
 	}
 
-	private void addPowerUp(PowerUp pu) {
-		pu.onSpawn(screen, BALLS);
-		screen.getRoot().getChildren().add(pu.getNode());
-		powerUpList.add(pu);
+	/**
+	 * Authors: Murph
+	 * Handles creating test powerups
+	 */
+	private void handleTestPowerUps() {
+		double bx = 400;
+		double by = 200;
+		if (pressedKeys.contains(KeyCode.Z)) {
+			tryActivatePowerUp(new BiggerSlider(bx, by));
+		}
+		if (pressedKeys.contains(KeyCode.X)) {
+			tryActivatePowerUp(new BallPowerUp(bx, by));
+		}
+		if  (pressedKeys.contains(KeyCode.C)) {
+			tryActivatePowerUp(new PiercePowerUp(bx, by));
+		}
 	}
+
+	/**
+	 * Authors: Murph
+	 * @param powerUp is a powerUp being added to the screen
+	 */
+	private void addPowerUp(PowerUp powerUp) {
+		powerUp.onSpawn(breakoutScreen, BALLS);
+		breakoutScreen.getRoot().getChildren().add(powerUp.getNode());
+		powerUpList.add(powerUp);
+	}
+
+	/**
+	 * Authors: Murph
+	 * @return if the level is over
+	 */
 
 	@Override
 	public boolean levelOver() {
@@ -193,19 +296,39 @@ public class BreakoutLoop extends GameLoop {
 		return false;
 	}
 
+
+	/**
+	 * Authors: Murph
+	 * @return the string with the fileName for the high score
+	 */
+
 	@Override
 	public String getFileName() {
 		return "BreakoutHighScore.txt";
 	}
 
-	@Override
-	public void gameOverLogic() {
-		super.gameOverLogic();
-		movingBall = false;
+	/**
+	 * Authors: Murph
+	 * Creates a timer for creating an easter egg power up
+	 * @param powerUp a powerUp to be generated
+	 */
+	public void tryActivatePowerUp(PowerUp powerUp) {
+		now = System.currentTimeMillis();
+		if (now - lastEasterEgg >= EASTER_EGG_COOLDOWN) {
+			addPowerUp(powerUp);
+			lastEasterEgg = now;
+		}
 	}
 
-	@Override
-	public void startMoving() {
-		movingBall = true;
+	/**
+	 * Authors: Murph
+	 * creates a timer for clearing all the bricks and skipping a level
+	 */
+	public void tryLevelSkip() {
+		now = System.currentTimeMillis();
+		if (now - lastEasterEgg >= EASTER_EGG_COOLDOWN) {
+			bricks.clearObjects(breakoutScreen);
+			lastEasterEgg = now;
+		}
 	}
 }
