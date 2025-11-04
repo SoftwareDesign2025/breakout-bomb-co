@@ -1,5 +1,5 @@
 /*
-Authors:
+Authors: Oscar Kardon
 
  */
 
@@ -11,7 +11,7 @@ import Objects.Galaga.GalagaEnemy;
 public class GalagaLevelOne implements Level<GalagaLevelMaker> {
 
     /**
-     * Authors:
+     * Authors: Oscar Kardon
      * @param maker
      */
     public void build(GalagaLevelMaker maker) {
