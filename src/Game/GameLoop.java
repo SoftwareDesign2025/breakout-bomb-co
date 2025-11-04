@@ -6,6 +6,7 @@ Murph Lennemann
 
 package Game;
 
+import Objects.HittableObjects;
 import Objects.SideMover;
 import javafx.scene.input.KeyCode;
 import java.io.File;
@@ -27,16 +28,20 @@ public abstract class GameLoop {
     protected boolean moving = false;
     protected final Set<KeyCode> pressedKeys = new HashSet<>();
     protected long now;
+    protected long lastSkip = 0;
+    protected final int SKIP_COOLDOWN = 1000;
+    protected HittableObjects hittableObjects;
 
     /**
      * Authors: Murph
      * The game Loop object wich has shared functionality
      * @param screen the screen that the game time is showing
      */
-    public GameLoop(Screen screen) {
+    public GameLoop(Screen screen, HittableObjects hittableObjects) {
         this.screen = screen;
         this.fileName = getFileName();
         this.highScore = getHighScore();
+        this.hittableObjects = hittableObjects;
     }
 
     /**
@@ -149,6 +154,18 @@ public abstract class GameLoop {
      */
     public void keyReleased(KeyCode code) {
         pressedKeys.remove(code);
+    }
+
+    /**
+     * Authors: Murph
+     * creates a timer for clearing all the bricks and skipping a level
+     */
+    public void tryLevelSkip() {
+        now = System.currentTimeMillis();
+        if (now - lastSkip >= SKIP_COOLDOWN) {
+            hittableObjects.clearObjects(screen);
+            lastSkip = now;
+        }
     }
 
     public abstract void step();
