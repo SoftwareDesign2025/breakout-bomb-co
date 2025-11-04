@@ -6,6 +6,7 @@ Murph Lennemann
 
 package Game;
 
+import Game.Levels.Level;
 import javafx.scene.Group;
 import javafx.scene.text.Text;
 import javafx.scene.text.Font;
@@ -20,6 +21,7 @@ public abstract class Screen {
 
     protected Group root;
     protected Text scoreboard;
+    protected List<Level> levels;
 
     public Screen() {
         root = new Group();

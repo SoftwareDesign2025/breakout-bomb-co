@@ -34,7 +34,6 @@ public abstract class GameLoop {
      */
     public GameLoop(Screen screen) {
         this.screen = screen;
-        screen.loadLevel(level);
         this.fileName = getFileName();
         this.highScore = getHighScore();
     }

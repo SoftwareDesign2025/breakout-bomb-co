@@ -136,7 +136,6 @@ public class GalagaScreen extends Screen {
      */
     @Override
     public void loadLevel(int level) {
-        galagaLevelMaker.resetLevel();
         if(level == 1) {galagaLevelMaker.loadLevel(new GalagaLevelOne());}
         else if(level == 2){galagaLevelMaker.loadLevel(new GalagaLevelTwo());}
         ship = galagaLevelMaker.getShip();
