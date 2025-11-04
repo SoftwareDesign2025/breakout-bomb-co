@@ -1,5 +1,7 @@
 package Game.Galaga;
 
+import Game.Levels.GalagaLevel;
+import Game.Levels.GalagaLevelTwo;
 import Game.Screen;
 import Objects.Galaga.Ship;
 import Objects.Galaga.GalagaEnemies;
@@ -111,7 +113,9 @@ public class GalagaScreen extends Screen {
 
     @Override
     public void loadLevel(int level) {
-        galagaLevelMaker.loadLevel(new Game.Levels.GalagaLevel());
+        galagaLevelMaker.resetLevel();
+        if(level == 1) {galagaLevelMaker.loadLevel(new GalagaLevel());}
+        else if(level == 2){galagaLevelMaker.loadLevel(new GalagaLevelTwo());}
     }
 
     public Ship getShip() {

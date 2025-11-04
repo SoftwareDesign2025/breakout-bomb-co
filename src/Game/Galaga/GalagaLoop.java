@@ -14,7 +14,7 @@ public class GalagaLoop extends GameLoop {
 
     public GalagaLoop(GalagaScreen galagaScreen) {
         super(galagaScreen);
-        galagaScreen.loadLevel(0);
+        galagaScreen.loadLevel(2);
         this.enemies = galagaScreen.getEnemies();
     }
 
