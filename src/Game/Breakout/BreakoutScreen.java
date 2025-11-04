@@ -1,3 +1,9 @@
+/*
+Authors:
+Murph Lennemann
+
+ */
+
 package Game.Breakout;
 
 import Game.Screen;
@@ -17,6 +23,9 @@ public class BreakoutScreen extends Screen {
     private Bricks bricks;
     protected List<Ball> queuedBalls = new ArrayList<>();
 
+    /**
+     * Authors: Murph
+     */
     public BreakoutScreen() {
         super();
         bricks = new Bricks(new ArrayList<>());
@@ -24,16 +33,28 @@ public class BreakoutScreen extends Screen {
         loadLevel(1);
     }
 
+    /**
+     * Authors: Murph
+     * @param b
+     */
     public void queueNewBall(Ball b) {
         queuedBalls.add(b);
     }
 
+    /**
+     * Authors: Murph
+     * @return
+     */
     public List<Ball> consumeQueuedBalls() {
         List<Ball> list = new ArrayList<>(queuedBalls);
         queuedBalls.clear();
         return list;
     }
 
+    /**
+     * Authors: Murph
+     * @param level
+     */
     @Override
     public void loadLevel(int level) {
         breakoutLevelMaker.resetLevel();
@@ -43,8 +64,15 @@ public class BreakoutScreen extends Screen {
 
     }
 
+    /**
+     * Authors: Murph
+     * @return
+     */
     public ArrayList<Slider> getSliderList() { return breakoutLevelMaker.getSliderList(); }
 
+    /**
+     * Authors:
+     */
     @Override
     public void gameOverScreen() {
         Text over = new Text(300, 300, "GAME OVER");
@@ -53,6 +81,9 @@ public class BreakoutScreen extends Screen {
         root.getChildren().add(over);
     }
 
+    /**
+     * Authors:
+     */
     @Override
     public void gameWinScreen() {
         Text win = new Text(300, 300, "YOU WIN!");
@@ -60,6 +91,11 @@ public class BreakoutScreen extends Screen {
         win.setFont(new Font(40));
         root.getChildren().add(win);
     }
+
+    /**
+     * Authors:
+     * @param ball
+     */
     public void checkBallToWall(Ball ball) {
         double ballX = ball.getBall().getCenterX();
         double ballY = ball.getBall().getCenterY();
@@ -69,6 +105,11 @@ public class BreakoutScreen extends Screen {
         if (ballY - radius <= 0) { ball.reverseYDirection(); }
     }
 
+    /**
+     * Authors:
+     * @param ball
+     * @return
+     */
     public boolean ballOutOfBounds(Ball ball) {
         for (javafx.scene.shape.Rectangle bounds : breakoutLevelMaker.getOutOfBounds()) {
             if (ball.getBall().getBoundsInParent().intersects(bounds.getBoundsInParent())) {
@@ -78,10 +119,18 @@ public class BreakoutScreen extends Screen {
         return false;
     }
 
+    /**
+     * Authors: Murph
+     * @return
+     */
     public Bricks getBricks() {
         return bricks;
     }
 
+    /**
+     * Authors: Murph
+     * @return
+     */
     public BreakoutLevelMaker getBreakoutLevelMaker(){
         return breakoutLevelMaker;
     }

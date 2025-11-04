@@ -1,4 +1,8 @@
-// Author: Murph Lennemann
+/*
+Authors:
+Murph Lennemann
+
+ */
 
 package Game.Breakout;
 import Game.GameLoop;
@@ -21,6 +25,10 @@ public class BreakoutLoop extends GameLoop {
 	private ArrayList<Slider> sliderList;
 	private BreakoutScreen breakoutScreen;
 
+	/**
+	 * Authors: Murph
+	 * @param breakoutScreen
+	 */
 	public BreakoutLoop(BreakoutScreen breakoutScreen) {
 		super(breakoutScreen);
 		this.breakoutScreen = breakoutScreen;
@@ -32,6 +40,9 @@ public class BreakoutLoop extends GameLoop {
 		initBall();
 	}
 
+	/**
+	 * Authors: Murph
+	 */
 	@Override
 	public void step() {
 		showScreen();
@@ -43,6 +54,9 @@ public class BreakoutLoop extends GameLoop {
 		checkLives();
 	}
 
+	/**
+	 * Authors: Murph
+	 */
 	private void updateScreen() {
 		ArrayList<Ball> toRemove = new ArrayList<>();
 		for (Ball ball : BALLS) {
@@ -61,15 +75,27 @@ public class BreakoutLoop extends GameLoop {
 		handleBallRemovals(toRemove);
 	}
 
+	/**
+	 * Authors: Murph
+	 * @return
+	 */
 	@Override
 	public boolean gameOn() {
 		return (!moving || gameOver);
 	}
 
+	/**
+	 * Authors: Murph
+	 * @param ball
+	 */
 	private void updateBall(Ball ball) {
 		ball.updateBallLocation();
 	}
 
+	/**
+	 * Authors: Murph
+	 * @param ball
+	 */
 	private void handleSliderCollisions(Ball ball) {
 		for (Slider slider : sliderList) {
 			slider.checkSliderCollision(ball);
@@ -77,6 +103,9 @@ public class BreakoutLoop extends GameLoop {
 
 	}
 
+	/**
+	 * Authors: Murph
+	 */
 	private void spawnPowerUpsFromBricks() {
 		for (HittableObject h : new ArrayList<>(bricks.getHittableObjects())) {
 			Brick b = (Brick) h;
@@ -96,6 +125,9 @@ public class BreakoutLoop extends GameLoop {
 		}
 	}
 
+	/**
+	 * Murph
+	 */
 	private void handlePowerUpPickups() {
 		for (Slider slider : sliderList) {
 			for (int i = powerUpList.size() - 1; i >= 0; i--) {
@@ -109,6 +141,9 @@ public class BreakoutLoop extends GameLoop {
 		PiercePowerUp.tickGlobal();
 	}
 
+	/**
+	 * Author: Murph
+	 */
 	private void updatePowerUps() {
 		for (int i = powerUpList.size() - 1; i >= 0; i--) {
 			PowerUp pu = powerUpList.get(i);
@@ -124,6 +159,10 @@ public class BreakoutLoop extends GameLoop {
 		}
 	}
 
+	/**
+	 * Author: Murph
+	 * @param toRemove
+	 */
 	private void handleBallRemovals(ArrayList<Ball> toRemove) {
 		BALLS.addAll(breakoutScreen.consumeQueuedBalls());
 		for (Ball ball : toRemove) {
@@ -133,6 +172,9 @@ public class BreakoutLoop extends GameLoop {
 		if (BALLS.isEmpty()) handleLifeLost();
 	}
 
+	/**
+	 * Authors: Murph
+	 */
 	private void initBall() {
 		double resetBallSpeed = 1;
 		double resetXDirection = 0.2;
@@ -146,6 +188,9 @@ public class BreakoutLoop extends GameLoop {
 		freshBall.changeYDirection(resetYDirection);
 	}
 
+	/**
+	 * Authors: Murph
+	 */
 	public void handleLifeLost() {
 		moving = false;
 		lives -= 1;
@@ -161,6 +206,9 @@ public class BreakoutLoop extends GameLoop {
 
 	}
 
+	/**
+	 * Authors: Murph
+	 */
 	@Override
 	public void resetLevel() {
 		BreakoutScreen breakoutScreen = (BreakoutScreen) screen;
@@ -178,6 +226,9 @@ public class BreakoutLoop extends GameLoop {
 		initBall();
 	}
 
+	/**
+	 * Authors: Murph
+	 */
 	@Override
 	public void handleKeyInput() {
 		if (!gameOver && moving) {
@@ -194,6 +245,9 @@ public class BreakoutLoop extends GameLoop {
 		}
 	}
 
+	/**
+	 * Authors: Murph
+	 */
 	private void handleTestPowerUps() {
 		double bx = 400;
 		double by = 200;
@@ -208,12 +262,20 @@ public class BreakoutLoop extends GameLoop {
 		}
 	}
 
+	/**
+	 * Authors: Murph
+	 * @param pu
+	 */
 	private void addPowerUp(PowerUp pu) {
 		pu.onSpawn(breakoutScreen, BALLS);
 		screen.getRoot().getChildren().add(pu.getNode());
 		powerUpList.add(pu);
 	}
 
+	/**
+	 * Authors: Murph
+	 * @return
+	 */
 	@Override
 	public boolean levelOver() {
 		for (Brick brick: bricks.getBricksList()) {
@@ -224,11 +286,19 @@ public class BreakoutLoop extends GameLoop {
 		return false;
 	}
 
+	/**
+	 * Authors: Murph
+	 * @return
+	 */
 	@Override
 	public String getFileName() {
 		return "BreakoutHighScore.txt";
 	}
 
+	/**
+	 * Authors: Murph
+	 * @param pu
+	 */
 	public void tryActivatePowerUp(PowerUp pu) {
 		now = System.currentTimeMillis();
 		if (now - lastEasterEgg >= EASTER_EGG_COOLDOWN) {
@@ -237,6 +307,9 @@ public class BreakoutLoop extends GameLoop {
 		}
 	}
 
+	/**
+	 * Authors: Murph
+	 */
 	public void tryLevelSkip() {
 		now = System.currentTimeMillis();
 		if (now - lastEasterEgg >= EASTER_EGG_COOLDOWN) {
@@ -244,5 +317,4 @@ public class BreakoutLoop extends GameLoop {
 			lastEasterEgg = now;
 		}
 	}
-
 }

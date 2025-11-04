@@ -1,3 +1,9 @@
+/*
+Authors:
+Murph Lennemann
+
+ */
+
 package Objects.Breakout;
 
 import java.util.ArrayList;
@@ -9,6 +15,10 @@ import Objects.HittableObjects;
 public class Bricks implements HittableObjects {
     private List<Brick> bricks;
 
+    /**
+     * Authors:
+     * @param bricks
+     */
     public Bricks(List<Brick> bricks){
         if (bricks == null) {
             this.bricks = new ArrayList<>();
@@ -17,14 +27,27 @@ public class Bricks implements HittableObjects {
         }
     }
 
+    /**
+     * Authors: Murph
+     * @return
+     */
     public List<HittableObject> getHittableObjects() {
         return new ArrayList<>(bricks);
     }
 
+    /**
+     * Authors:
+     * @return
+     */
     public List<Brick> getBricksList() {
         return bricks;
     }
 
+    /**
+     * Authors:
+     * @param ball
+     * @return
+     */
     public int resolveCollisions(Ball ball){
         int pointsUpdate = 0;
         for (Brick brick : bricks) {
@@ -38,12 +61,23 @@ public class Bricks implements HittableObjects {
         return pointsUpdate;
     }
 
+    /**
+     * Authors: Murph
+     */
     public void drop(){}
 
+    /**
+     * Authors: Murph
+     * @return
+     */
     public boolean isCleared() {
         return bricks.isEmpty();
     }
 
+    /**
+     * Authors: Murph
+     * @param screen
+     */
     public void clearObjects(Screen screen) {
         for (Brick brick: bricks){
             screen.getRoot().getChildren().remove(brick.getBrick());
