@@ -91,7 +91,12 @@ public class GalagaEnemies implements HittableObjects {
     }
 
     public boolean isCleared() {
-        return enemies.isEmpty();
+        for (GalagaEnemy enemy: enemies) {
+            if (enemy.isActive()) {
+                return false;
+            }
+        }
+        return true;
     }
 
     public void setShootInterval(int interval) {
