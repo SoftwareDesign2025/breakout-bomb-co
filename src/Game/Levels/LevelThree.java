@@ -17,7 +17,7 @@ import Powerups.PowerUp;
 public class LevelThree implements Level<BreakoutLevelMaker> {
 
     /**
-     * Authors:
+     * Authors:Oscar Kardon
      * @param maker
      */
     @Override

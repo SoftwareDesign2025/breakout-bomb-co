@@ -13,7 +13,9 @@ public class GalagaLevelOne implements Level<GalagaLevelMaker> {
     /**
      * Authors: Oscar Kardon
      * @param maker
+     * Builds simple first level
      */
+
     public void build(GalagaLevelMaker maker) {
         maker.addShip("ship.png", 400, 500);
         double startX = 100;

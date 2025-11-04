@@ -1,7 +1,7 @@
 /*
 Authors:
 Murph Lennemann
-
+Oscar Kardon
  */
 
 package Objects.Breakout;
@@ -16,7 +16,7 @@ public class Bricks implements HittableObjects {
     private List<Brick> bricks;
 
     /**
-     * Authors:
+     * Authors:Oscar Kardon
      * @param bricks
      */
     public Bricks(List<Brick> bricks){
@@ -36,7 +36,7 @@ public class Bricks implements HittableObjects {
     }
 
     /**
-     * Authors:
+     * Authors: Oscar Kardon
      * @return
      */
     public List<Brick> getBricksList() {
@@ -44,7 +44,7 @@ public class Bricks implements HittableObjects {
     }
 
     /**
-     * Authors:
+     * Authors: Oscar Kardon
      * @param ball
      * @return
      */
