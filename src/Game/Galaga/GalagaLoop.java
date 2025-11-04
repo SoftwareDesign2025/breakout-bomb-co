@@ -104,6 +104,9 @@ public class GalagaLoop extends GameLoop {
         if (pressedKeys.contains(KeyCode.SPACE)) {
             lastShot(ship);
         }
+        if (pressedKeys.contains(KeyCode.B)) {
+            tryLevelSkip();
+        }
     }
 
     /**
