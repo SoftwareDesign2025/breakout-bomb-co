@@ -1,7 +1,7 @@
 /*
 Authors:
 Murph Lennemann
-
+Oscar Kardon
  */
 
 package Game.Breakout;
@@ -25,7 +25,7 @@ public class BreakoutLevelMaker extends LevelMaker {
     private final ArrayList<Slider> SLIDER_LIST;
 
     /**
-     * Author:
+     * Author: Oscar Kardon
      * @param root
      * @param bricks
      */

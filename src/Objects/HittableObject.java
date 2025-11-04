@@ -16,7 +16,7 @@ public abstract class HittableObject {
     protected PowerUp powerUp;
 
     /**
-     * Authors:
+     * Authors:Oscar Kardon
      * @param startX
      * @param startY
      * @param pointValue
@@ -29,15 +29,7 @@ public abstract class HittableObject {
     }
 
     /**
-     * Authors:
-     * @return
-     */
-    public Node getHittableObject(){
-        return hittableObject;
-    }
-
-    /**
-     * Authors:
+     * Authors:Oscar Kardon
      * @return
      */
     public boolean isActive(){
@@ -45,7 +37,7 @@ public abstract class HittableObject {
     }
 
     /**
-     * Authors:
+     * Authors:Oscar Kardon
      * @return
      */
     public PowerUp getPowerUp(){
@@ -53,7 +45,7 @@ public abstract class HittableObject {
     }
 
     /**
-     * Authors:
+     * Authors:Oscar Kardon
      * @param powerUp
      */
     public void setPowerUp(PowerUp powerUp){
@@ -61,15 +53,7 @@ public abstract class HittableObject {
     }
 
     /**
-     * Authors:
-     * @return
-     */
-    public boolean isUnbreakable(){
-        return false;
-    }
-
-    /**
-     * Authors:
+     * Authors:Oscar Kardon
      */
     public void deactivate(){
         active = false;

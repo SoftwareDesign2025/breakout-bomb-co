@@ -28,7 +28,6 @@ public class CollisionDetector {
     	int pointsEarned = 0;
         for (Laser laser : lasers.getActiveLasers()) {
             if (!laser.isPlayerLaser()) continue;
-            
             for (HittableObject hittableObject : enemies.getHittableObjects()) {
                 if (!hittableObject.isActive()) continue;
                 
@@ -41,8 +40,11 @@ public class CollisionDetector {
                     enemy.getEnemy().getFitHeight()
                 )) {
                     laser.destroy();
-                    enemy.deactivate();
-                    pointsEarned += 1;
+                    enemy.loseLife();
+                    if(enemy.getLives() <= 0) {
+                        enemy.deactivate();
+                    }
+                    pointsEarned += enemy.getPointValue();
                     break;
                 }
             }

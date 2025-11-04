@@ -48,7 +48,7 @@ public class GalagaEnemies implements HittableObjects {
      */
     public void drop() {
         for (GalagaEnemy enemy : enemies) {
-            enemy.moveDown();
+            enemy.movePatterned();
         }
     }
 
@@ -91,13 +91,19 @@ public class GalagaEnemies implements HittableObjects {
     }
 
     public boolean isCleared() {
-        return enemies.isEmpty();
+        for (GalagaEnemy enemy: enemies) {
+            if (enemy.isActive()) {
+                return false;
+            }
+        }
+        return true;
     }
 
     public void setShootInterval(int interval) {
         this.shootInterval = interval;
     }
 
+    //Oscar Kardon
     public int enemiesReachedBottom() {
         int livesLost = 0;
         for (GalagaEnemy enemy : enemies) {
@@ -114,6 +120,7 @@ public class GalagaEnemies implements HittableObjects {
         return livesLost;
     }
 
+    //Oscar Kardon
     @Override
     public void clearObjects(Screen screen) {
         for (GalagaEnemy enemy : enemies) {

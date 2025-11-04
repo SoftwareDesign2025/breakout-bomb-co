@@ -19,7 +19,7 @@ public class Ball {
     private Circle ball;
 
     /**
-     * Authors:
+     * Authors:Oscar Kardon
      * @param radius
      * @param startX
      * @param startY
@@ -32,15 +32,15 @@ public class Ball {
     }
 
     /**
-     * Authors:
-     * @return
+     * Authors:Oscar Kardon
+     * @return the Circle object of ball
      */
     public Circle getBall() {
         return ball;
     }
 
     /**
-     * Authors:
+     * Authors:Oscar Kardon
      */
     public void updateBallLocation(){
         ball.setCenterX(ball.getCenterX() + xDirection * speed);
@@ -48,21 +48,21 @@ public class Ball {
     }
 
     /**
-     * Authors:
+     * Authors:Oscar Kardon
      */
     public void reverseXDirection() {
         xDirection *= -1;
     }
 
     /**
-     * Authors:
+     * Authors:Oscar Kardon
      */
     public void reverseYDirection() {
         yDirection *= -1;
     }
 
     /**
-     * Authors:
+     * Authors:Oscar Kardon
      * @param xDirection
      */
     public void changeXDirection(double xDirection) {
@@ -70,7 +70,7 @@ public class Ball {
     }
 
     /**
-     * Authors:
+     * Authors:Oscar Kardon
      * @param yDirection
      */
     public void changeYDirection(double yDirection) {
@@ -78,7 +78,7 @@ public class Ball {
     }
 
     /**
-     * Authors:
+     * Authors:Oscar Kardon
      * @param speed
      */
     public void changeSpeed(double speed){
@@ -86,7 +86,7 @@ public class Ball {
     }
 
     /**
-     * Authors:
+     * Authors:Oscar Kardon
      */
     public void increaseSpeed(){
         speed+=0.05;

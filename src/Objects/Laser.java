@@ -16,12 +16,12 @@ public class Laser {
     private boolean active;
 
     // Laser dimensions
-    private static final double LASER_WIDTH = 4;
-    private static final double LASER_HEIGHT = 15;
+    private static final double LASER_WIDTH = 8;
+    private static final double LASER_HEIGHT = 20;
 
     // Speed constants
     private static final double PLAYER_SPEED = 12;
-    private static final double ALIEN_SPEED = 6;
+    private static final double ALIEN_SPEED = 4;
 
     public Laser(double x, double y) {
         this(x, y, true);
