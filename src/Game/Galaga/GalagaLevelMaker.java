@@ -1,7 +1,7 @@
 /*
 Authors:
 Murph Lennemann
-
+Oscar Kardon
  */
 
 package Game.Galaga;
@@ -19,7 +19,7 @@ public class GalagaLevelMaker extends LevelMaker {
     private Ship ship;
 
     /**
-     * Authors:
+     * Authors: Oscar Kardon
      * @param root
      * @param enemiesList
      */
@@ -29,7 +29,7 @@ public class GalagaLevelMaker extends LevelMaker {
     }
 
     /**
-     * Authors:
+     * Authors: Oscar Kardon
      */
     public void resetLevel() {
         clearGameObjects();
@@ -59,7 +59,7 @@ public class GalagaLevelMaker extends LevelMaker {
     }
 
     /**
-     * Authors:
+     * Authors: Oscar Kardon
      * @param enemy
      */
     public void addEnemy(GalagaEnemy enemy) {

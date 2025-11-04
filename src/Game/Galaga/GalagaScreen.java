@@ -47,10 +47,6 @@ public class GalagaScreen extends Screen {
     private Random rand = new Random();
     private Lasers lasers = new Lasers(root);
 
-
-
-
-
     /**
      * Authors:
      */
@@ -177,10 +173,6 @@ public class GalagaScreen extends Screen {
     	return lasers;
     }
 
-    public GalagaLevelMaker getGalagaLevelMaker() {
-        return galagaLevelMaker;
-    }
-
 
     @Override
     public void gameOverScreen() {
@@ -198,6 +190,7 @@ public class GalagaScreen extends Screen {
         levels = new ArrayList<>();
         levels.add(new GalagaLevelOne());
         levels.add(new GalagaLevelTwo());
+        levels.add(new GalagaLevelThree());
     }
 
 

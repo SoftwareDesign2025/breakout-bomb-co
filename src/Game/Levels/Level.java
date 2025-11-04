@@ -7,7 +7,8 @@ package Game.Levels;
 
 import Game.LevelMaker;
 
-//Interface so all levels need to have a build method
+//Generic interface so all levels, Galaga or Breakout, need to have a build method that
+//can use either kind of LevelMaker
 public interface Level<Maker extends LevelMaker> {
     /**
      * Author

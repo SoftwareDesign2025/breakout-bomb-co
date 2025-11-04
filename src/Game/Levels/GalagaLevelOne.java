@@ -1,5 +1,5 @@
 /*
-Authors:
+Authors: Oscar Kardon
 
  */
 
@@ -11,9 +11,11 @@ import Objects.Galaga.GalagaEnemy;
 public class GalagaLevelOne implements Level<GalagaLevelMaker> {
 
     /**
-     * Authors:
+     * Authors: Oscar Kardon
      * @param maker
+     * Builds simple first level
      */
+
     public void build(GalagaLevelMaker maker) {
         maker.addShip("ship.png", 400, 500);
         double startX = 100;
