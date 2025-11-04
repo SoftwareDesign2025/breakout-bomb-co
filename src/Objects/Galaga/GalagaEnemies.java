@@ -79,7 +79,8 @@ public class GalagaEnemies implements HittableObjects {
 
     /**
      * Authors: Murph
-     * @param screen
+     * Used for Easter eggs
+     * @param screen the screen to be cleared
      */
     @Override
     public void clearObjects(Screen screen) {
