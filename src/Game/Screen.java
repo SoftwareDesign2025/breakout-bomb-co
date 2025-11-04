@@ -42,7 +42,8 @@ public abstract class Screen {
 
     /**
      * Authors: Murph
-     * @return
+     * Getter
+     * @return returns the root that runs the scene
      */
     public Group getRoot() {
         return root;

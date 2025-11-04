@@ -13,7 +13,7 @@ public class LevelTwo implements Level<BreakoutLevelMaker> {
 
     /**
      * Authors: Murph
-     * @param maker
+     * @param maker is the LevelMaker that helps build out the level
      */
     @Override
     public void build(BreakoutLevelMaker maker) {
