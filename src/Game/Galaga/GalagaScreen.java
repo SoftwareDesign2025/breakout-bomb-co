@@ -1,15 +1,10 @@
-
-package Game.Galaga;
-
-import Objects.Galaga.Ship;
-import Objects.Galaga.GalagaEnemies;
-import Objects.Galaga.GalagaEnemy;
-import Objects.Lasers;
 /*
 Authors:
 Murph Lennemann
 
  */
+
+package Game.Galaga;
 
 import Game.Levels.GalagaLevelOne;
 import Game.Levels.GalagaLevelTwo;
@@ -20,21 +15,14 @@ import Objects.Galaga.GalagaEnemy;
 import javafx.animation.AnimationTimer;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
-
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
-
-
-import java.util.ArrayList;
-import java.util.List;
-
-import Game.Screen;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
+
 
 
 public class GalagaScreen extends Screen {
@@ -48,13 +36,8 @@ public class GalagaScreen extends Screen {
     private List<Star> stars = new ArrayList<>();
     private Random rand = new Random();
 
-    private Lasers lasers = new Lasers(root);
-
-
-
-
     /**
-     * Authors:
+     * Authors: Gavin
      */
     public GalagaScreen() {
         super();
@@ -79,10 +62,8 @@ public class GalagaScreen extends Screen {
         loadLevel(2);
     }
 
-
-
     /**
-     * Authors:
+     * Authors: Gavin
      * Simple class to store each star's data
      */
     private class Star {
@@ -98,7 +79,7 @@ public class GalagaScreen extends Screen {
     }
 
     /**
-     * Authors:
+     * Authors: Gavin
      * Create a list of randomly placed colorful stars
      * @param count
      */
@@ -107,7 +88,7 @@ public class GalagaScreen extends Screen {
             stars.add(new Star(
                     rand.nextDouble() * 800,
                     rand.nextDouble() * 600,
-                    1 + rand.nextDouble() * 3, // vertical speed
+                    1 + rand.nextDouble() * 1, // vertical speed
                     1 + rand.nextDouble() * 3, // size
                     getRandomColor()            // random color
             ));
@@ -115,7 +96,7 @@ public class GalagaScreen extends Screen {
     }
 
     /**
-     * Authors:
+     * Authors: Gavin
      * Return a random star color from a set of bright colors
      * @return
      */
@@ -132,20 +113,20 @@ public class GalagaScreen extends Screen {
      * Continuously animate stars falling to create space effect
      */
     private void animateStars() {
-        GraphicsContext gc = starCanvas.getGraphicsContext2D();
+        GraphicsContext screen = starCanvas.getGraphicsContext2D();
         new AnimationTimer() {
             @Override
             public void handle(long now) {
-                gc.clearRect(0, 0, 800, 600);
-                for (Star s : stars) {
-                    s.y += s.speed;
-                    if (s.y > 600) {
-                        s.y = 0;
-                        s.x = rand.nextDouble() * 800;
-                        s.color = getRandomColor();
+                screen.clearRect(0, 0, 800, 600);
+                for (Star star : stars) {
+                    star.y += star.speed;
+                    if (star.y > 600) {
+                        star.y = 0;
+                        star.x = rand.nextDouble() * 800;
+                        star.color = getRandomColor();
                     }
-                    gc.setFill(s.color);
-                    gc.fillOval(s.x, s.y, s.size, s.size);
+                    screen.setFill(star.color);
+                    screen.fillOval(star.x, star.y, star.size, star.size);
                 }
             }
         }.start();
@@ -164,39 +145,43 @@ public class GalagaScreen extends Screen {
 
     /**
      * Authors: Murph
-     * @return returns the ship used in this game
+     * @return
      */
-
     public Ship getShip() {
         return ship;
     }
 
+    /**
+     * Authors:
+     * @return
+     */
     public GalagaEnemies getEnemies() {
         return enemies;
-    }
-
-    public Lasers getLasers() {
-    	return lasers;
-    }
-
-    public GalagaLevelMaker getGalagaLevelMaker() {
-        return galagaLevelMaker;
-    }
-
-
-    @Override
-    public void gameOverScreen() {
-        Text over = new Text(300, 300, "GAME OVER LOSER");
-        over.setFill(Color.RED);
-        over.setFont(Font.font("Impact", 40));
-        root.getChildren().add(over);
     }
 
 
     /**
      * Authors:
+     * @return
      */
+    public GalagaLevelMaker getGalagaLevelMaker() {
+        return galagaLevelMaker;
+    }
 
+    /**
+     * Authors: Gavin
+     */
+    @Override
+    public void gameOverScreen() {
+        Text over = new Text(250, 300, "GAME OVER LOSER");
+        over.setFill(Color.RED);
+        over.setFont(Font.font("Impact", 40));
+        root.getChildren().add(over);
+    }
+
+    /**
+     * Authors:
+     */
     @Override
     public void gameWinScreen() {
         Text win = new Text(300, 300, "YOU WIN!");

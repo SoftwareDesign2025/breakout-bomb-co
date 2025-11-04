@@ -6,9 +6,6 @@ Murph Lennemann
 
 package Game.Levels;
 
-
-import Game.LevelMaker;
-
 import Game.Breakout.BreakoutLevelMaker;
 import javafx.scene.paint.Color;
 
@@ -16,7 +13,7 @@ public class LevelTwo implements Level<BreakoutLevelMaker> {
 
     /**
      * Authors: Murph
-     * @param maker is the LevelMaker that helps build out the level
+     * @param maker
      */
     @Override
     public void build(BreakoutLevelMaker maker) {

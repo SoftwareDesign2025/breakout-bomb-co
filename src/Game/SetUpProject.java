@@ -33,7 +33,7 @@ public class SetUpProject extends Application {
     private GameLoop gameLoop;
 
     /**
-     * Authors: Murph
+     * Authors:
      * @param stage the primary stage for this application, onto which
      * the application scene can be set.
      * Applications may create other stages, if needed, but they will not be
@@ -50,8 +50,7 @@ public class SetUpProject extends Application {
     // below. You can add more buttons or change anything in this method as long as you start from this method
 
     /**
-     * Authors: Murph, Gavin
-     * Displays the main menu for displaying different game types
+     * Authors: Murph
      */
     private void showMainMenu() {
         Group menuRoot = new Group();
@@ -91,8 +90,8 @@ public class SetUpProject extends Application {
 
     /**
      * Authors: Murph
-     * @param text the text to be written
-     * @param yNum the Y value at which the text is placed
+     * @param text
+     * @param yNum
      */
     public void handleText(Text text, int yNum) {
         text.setFont(Font.font("Impact", 36));
@@ -103,7 +102,7 @@ public class SetUpProject extends Application {
 
     /**
      * Authors: Murph
-     * @param yInt the Y value at which the background is placed
+     * @param yInt
      * @return
      */
     public Rectangle createBackground(int yInt) {
@@ -115,7 +114,6 @@ public class SetUpProject extends Application {
 
     /**
      * Authors: Murph
-     * Starts the breakout Game
      */
     private void startBreakout() {
         BreakoutScreen breakoutScreen = new BreakoutScreen();
@@ -125,7 +123,6 @@ public class SetUpProject extends Application {
 
     /**
      * Authors: Murph
-     * Starts the galaga game
      */
     private void startGalaga() {
         GalagaScreen galagaScreen = new GalagaScreen();
@@ -135,43 +132,24 @@ public class SetUpProject extends Application {
 
     /**
      * Authors: Murph
-     * Loads the game
-     * @param screen The screen that will be showing the game
+     * @param screen
      */
         public void startGame(Screen screen) {
             Scene gameScene = new Scene(screen.getRoot(), GAME_WIDTH, GAME_HEIGHT);
-            handleKeyPresses(gameScene);
+            gameScene.setOnKeyPressed(e -> gameLoop.keyPressed(e.getCode()));
+            gameScene.setOnKeyReleased(e -> gameLoop.keyReleased(e.getCode()));
+            gameScene.setOnMouseClicked(e -> gameLoop.startMoving());
             stage.setScene(gameScene);
-            handleAnimationCycle();
+            KeyFrame frame = new KeyFrame(Duration.millis(MILLISECOND_DELAY), e -> gameLoop.step());
+            Timeline animation = new Timeline();
+            animation.setCycleCount(Timeline.INDEFINITE);
+            animation.getKeyFrames().add(frame);
+            animation.play();
         }
 
-    /**
-     * Authors: Murph
-     * Hanldes pressed keys in set up
-     * @param gameScene the scene in question
-     */
-    public void handleKeyPresses(Scene gameScene) {
-        gameScene.setOnKeyPressed(e -> gameLoop.keyPressed(e.getCode()));
-        gameScene.setOnKeyReleased(e -> gameLoop.keyReleased(e.getCode()));
-        gameScene.setOnMouseClicked(e -> gameLoop.startMoving());
-    }
 
     /**
      * Authors: Murph
-     * Handles the timing and animation
-     */
-    public void handleAnimationCycle() {
-        KeyFrame frame = new KeyFrame(Duration.millis(MILLISECOND_DELAY), e -> gameLoop.step());
-        Timeline animation = new Timeline();
-        animation.setCycleCount(Timeline.INDEFINITE);
-        animation.getKeyFrames().add(frame);
-        animation.play();
-    }
-
-
-    /**
-     * Authors: Murph
-     * Runs the game
      */
     public static void runGame() {
         launch();

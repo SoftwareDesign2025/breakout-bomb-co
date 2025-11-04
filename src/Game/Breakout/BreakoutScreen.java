@@ -1,4 +1,3 @@
-
 /*
 Authors:
 Murph Lennemann
@@ -82,9 +81,8 @@ public class BreakoutScreen extends Screen {
     public ArrayList<Slider> getSliderList() { return breakoutLevelMaker.getSliderList(); }
 
     /**
-     * Authors:
+     * Authors: Gavin
      */
-
     @Override
     public void gameOverScreen() {
         Text over = new Text(300, 300, "GAME OVER");
@@ -94,7 +92,7 @@ public class BreakoutScreen extends Screen {
     }
 
     /**
-     * Authors:
+     * Authors: Gavin
      */
     @Override
     public void gameWinScreen() {
@@ -104,12 +102,10 @@ public class BreakoutScreen extends Screen {
         root.getChildren().add(win);
     }
 
-
     /**
-     * Authors:
+     * Authors: Gavin
      * @param ball
      */
-
     public void checkBallToWall(Ball ball) {
         double ballX = ball.getBall().getCenterX();
         double ballY = ball.getBall().getCenterY();
@@ -120,11 +116,10 @@ public class BreakoutScreen extends Screen {
     }
 
     /**
-     * Authors:
+     * Authors: Gavin
      * @param ball
      * @return
      */
-
     public boolean ballOutOfBounds(Ball ball) {
         for (javafx.scene.shape.Rectangle bounds : breakoutLevelMaker.getOutOfBounds()) {
             if (ball.getBall().getBoundsInParent().intersects(bounds.getBoundsInParent())) {

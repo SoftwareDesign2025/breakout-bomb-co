@@ -15,7 +15,7 @@ public class Ship extends SideMover {
     private ImageView shipImage;
 
     /**
-     * Authors:
+     * Authors: Oscar
      * @param imagePath
      * @param startX
      * @param startY
@@ -34,7 +34,7 @@ public class Ship extends SideMover {
     }
 
     /**
-     * Authors:
+     * Authors: Gavin
      */
     @Override
     protected void stopAtEdges() {
@@ -48,7 +48,7 @@ public class Ship extends SideMover {
     }
 
     /**
-     * Authors:
+     * Authors: Gavin
      */
     @Override
     protected void updateNode() {

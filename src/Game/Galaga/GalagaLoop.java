@@ -20,8 +20,8 @@ public class GalagaLoop extends GameLoop {
     private final Ship ship;
 
     public GalagaLoop(GalagaScreen galagaScreen) {
-        super(galagaScreen, galagaScreen.getEnemies());
-        galagaScreen.loadLevel(1);
+        super(galagaScreen);
+        galagaScreen.loadLevel(2);
         this.enemies = galagaScreen.getEnemies();
         this.lasers = galagaScreen.getLasers();
         this.collisionDetector = new CollisionDetector(lasers, enemies);

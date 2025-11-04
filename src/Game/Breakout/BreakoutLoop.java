@@ -5,7 +5,6 @@ Murph Lennemann
  */
 
 package Game.Breakout;
-
 import Game.GameLoop;
 import Objects.Breakout.Ball;
 import Objects.Breakout.Brick;
@@ -30,7 +29,7 @@ public class BreakoutLoop extends GameLoop {
 	 * @param breakoutScreen Is the screen object for this game
 	 */
 	public BreakoutLoop(BreakoutScreen breakoutScreen) {
-		super(breakoutScreen, breakoutScreen.getBricks());
+		super(breakoutScreen);
 		this.breakoutScreen = breakoutScreen;
 		this.BALLS = new ArrayList<>();
 		this.bricks = breakoutScreen.getBricks();
@@ -55,7 +54,6 @@ public class BreakoutLoop extends GameLoop {
 		checkLives();
 	}
 
-
 	/**
 	 * Authors: Murph
 	 * This method updates things on the screen
@@ -77,7 +75,6 @@ public class BreakoutLoop extends GameLoop {
 		updatePowerUps();
 		handleBallRemovals(toRemove);
 	}
-
 
 	/**
 	 * Authors: Murph
@@ -115,12 +112,10 @@ public class BreakoutLoop extends GameLoop {
 					);
 					addPowerUp(newPowerUp);
 					brick.setPowerUp(null);
-
 					}
 			}
 		}
 	}
-
 
 	/**
 	 * Authors: Murph
@@ -133,7 +128,6 @@ public class BreakoutLoop extends GameLoop {
 				if (powerUp.getNode().getBoundsInParent().intersects(slider.getNode().getBoundsInParent())) {
 					powerUp.onPickup(sliderList);
 					breakoutScreen.getRoot().getChildren().remove(powerUp.getNode());
-
 				}
 			}
 		}
@@ -144,12 +138,12 @@ public class BreakoutLoop extends GameLoop {
 	 * Authors: Murph
 	 * Moves the power up across the screen
 	 */
-
 	private void updatePowerUps() {
 		for (int i = powerUpList.size() - 1; i >= 0; i--) {
 			PowerUp pu = powerUpList.get(i);
 			pu.update_position();
 			if (!pu.isactivated() && pu.getNode().getBoundsInParent().getMinY() > 600) {
+				breakoutScreen.getRoot().getChildren().remove(pu.getNode());
 				powerUpList.remove(i);
 			}
 			pu.tick();
@@ -158,7 +152,6 @@ public class BreakoutLoop extends GameLoop {
 			}
 		}
 	}
-
 
 	/**
 	 * Authors: Murph
@@ -178,7 +171,6 @@ public class BreakoutLoop extends GameLoop {
 	 * Authors: Murph
 	 * Initializes a new ball
 	 */
-
 	private void initBall() {
 		double resetBallSpeed = 1;
 		double resetXDirection = 0.2;
@@ -186,14 +178,11 @@ public class BreakoutLoop extends GameLoop {
 		Ball freshBall;
 		freshBall = new Ball(10, LEVEL_MAKER.getBallX(), LEVEL_MAKER.getBallY());
 		BALLS.add(freshBall);
-
 		breakoutScreen.getRoot().getChildren().add(freshBall.getBall());
-
 		freshBall.changeSpeed(resetBallSpeed);
 		freshBall.changeXDirection(resetXDirection);
 		freshBall.changeYDirection(resetYDirection);
 	}
-
 
 	/**
 	 * Authors: Murph
@@ -286,7 +275,6 @@ public class BreakoutLoop extends GameLoop {
 	 * Authors: Murph
 	 * @return if the level is over
 	 */
-
 	@Override
 	public boolean levelOver() {
 		for (Brick brick: bricks.getBricksList()) {
@@ -297,12 +285,10 @@ public class BreakoutLoop extends GameLoop {
 		return false;
 	}
 
-
 	/**
 	 * Authors: Murph
 	 * @return the string with the fileName for the high score
 	 */
-
 	@Override
 	public String getFileName() {
 		return "BreakoutHighScore.txt";
@@ -317,6 +303,18 @@ public class BreakoutLoop extends GameLoop {
 		now = System.currentTimeMillis();
 		if (now - lastEasterEgg >= EASTER_EGG_COOLDOWN) {
 			addPowerUp(powerUp);
+			lastEasterEgg = now;
+		}
+	}
+
+	/**
+	 * Authors: Murph
+	 * creates a timer for clearing all the bricks and skipping a level
+	 */
+	public void tryLevelSkip() {
+		now = System.currentTimeMillis();
+		if (now - lastEasterEgg >= EASTER_EGG_COOLDOWN) {
+			bricks.clearObjects(breakoutScreen);
 			lastEasterEgg = now;
 		}
 	}

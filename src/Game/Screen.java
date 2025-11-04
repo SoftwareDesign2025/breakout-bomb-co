@@ -32,7 +32,7 @@ public abstract class Screen {
     }
 
     /**
-     * Authors:
+     * Authors: Gavin
      * @param ball
      * @return
      */
@@ -42,15 +42,14 @@ public abstract class Screen {
 
     /**
      * Authors: Murph
-     * Getter
-     * @return returns the root that runs the scene
+     * @return
      */
     public Group getRoot() {
         return root;
     }
 
     /**
-     * Authors:
+     * Authors: Gavin
      * @param highScore
      * @param score
      * @param lives
