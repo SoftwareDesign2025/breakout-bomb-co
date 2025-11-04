@@ -18,10 +18,10 @@ public class GalagaLevelTwo implements Level<GalagaLevelMaker> {
         double gapY = 25;
 
         String[] enemyImages = {
-                "/images/bfarmer.png",
-                "/images/okardon.png",
-                "/images/gcollins.png",
-                "/images/mlennemann.png"
+                "bfarmer.png",
+                "okardon.png",
+                "gcollins.png",
+                "mlennemann.png"
         };
 
         int rows = 4;
@@ -56,7 +56,7 @@ public class GalagaLevelTwo implements Level<GalagaLevelMaker> {
         GalagaEnemy boss = new GalagaEnemy(
                 bossWidth,
                 bossHeight,
-                "/images/mlennemann.png",
+                "mlennemannhonors.png",
                 bossX,
                 bossY,
                 10,
