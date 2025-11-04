@@ -4,15 +4,24 @@ package Game;
 import Objects.Ship;
 import Objects.GalagaEnemies;
 import Objects.SideMover;
+import Objects.Lasers;
+import Objects.Laser;
+import Objects.Ship;
 import javafx.scene.input.KeyCode;
 
 public class GalagaLoop extends GameLoop {
     private final GalagaEnemies enemies;
+    private final Lasers lasers;
+    private final CollisionDetector collisionDetector;
+    private final Ship ship;
 
     public GalagaLoop(GalagaScreen galagaScreen) {
         super(galagaScreen);
         galagaScreen.loadLevel(0);
         this.enemies = galagaScreen.getEnemies();
+        this.lasers = galagaScreen.getLasers();
+        this.collisionDetector = new CollisionDetector(lasers, enemies);
+        this.ship = galagaScreen.getShip();
     }
 
     @Override
@@ -20,6 +29,8 @@ public class GalagaLoop extends GameLoop {
         showScreen();
         runGame();
         checkLives();
+        lasers.update();
+        collisionDetector.checkLaserEnemyCollisions();
     }
 
     @Override
@@ -30,12 +41,21 @@ public class GalagaLoop extends GameLoop {
             ship.handleMovement(code);
             ship.shootLaser(code);
 
+            if (code == KeyCode.SPACE) {             
+                Laser laser = new Laser(
+                    ship.getShip().getLayoutX() + ship.getShip().getFitWidth() / 2,
+                    ship.getShip().getLayoutY(),
+                    true
+                );
+                lasers.addLaser(laser);
+            }
         }
         if (code == KeyCode.B) {
             clearHittableObjects();
         }
+       
     }
-
+    
     @Override
     public boolean levelOver() {
         return (enemies.isCleared());
@@ -56,3 +76,4 @@ public class GalagaLoop extends GameLoop {
     @Override
     public void startMoving(){}
 }
+	

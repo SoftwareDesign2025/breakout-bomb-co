@@ -4,6 +4,8 @@ import Objects.Ship;
 import Objects.GalagaEnemies;
 import Objects.GalagaEnemy;
 import Objects.SideMover;
+import Objects.Lasers;
+import Objects.Bricks;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
@@ -17,6 +19,7 @@ public class GalagaScreen extends Screen {
     private GalagaLevelMaker galagaLevelMaker;
     private List<GalagaEnemy> enemyList;
     private GalagaEnemies enemies;
+    private Lasers lasers;
 
     public GalagaScreen() {
         super();
@@ -26,7 +29,8 @@ public class GalagaScreen extends Screen {
         enemyList = new ArrayList<>();
         galagaLevelMaker = new GalagaLevelMaker(root, enemyList);
         enemies = new GalagaEnemies(enemyList);
-
+        lasers = new Lasers(root);
+        
         loadLevel(1);
     }
 
@@ -43,6 +47,13 @@ public class GalagaScreen extends Screen {
 
     public GalagaEnemies getEnemies() {
         return enemies;
+    }
+    @Override
+    public Bricks getBricks() {
+        return null;      }
+    
+    public Lasers getLasers() {
+    	return lasers;
     }
 
     public GalagaLevelMaker getGalagaLevelMaker() {
