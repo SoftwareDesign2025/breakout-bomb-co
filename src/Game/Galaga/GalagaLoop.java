@@ -86,6 +86,7 @@ public class GalagaLoop extends GameLoop {
     @Override
     public void resetLevel(){
         moving = false;
+        galagaScreen.loadLevel(level);
         ship = galagaScreen.getShip();
     }
 
