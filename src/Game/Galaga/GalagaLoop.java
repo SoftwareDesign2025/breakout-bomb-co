@@ -19,7 +19,8 @@ public class GalagaLoop extends GameLoop {
 
     /**
      * Authors: Murph
-     * @param galagaScreen
+     * Creates the loop that runs the code
+     * @param galagaScreen is a new screen
      */
     public GalagaLoop(GalagaScreen galagaScreen) {
         super(galagaScreen);
@@ -30,6 +31,7 @@ public class GalagaLoop extends GameLoop {
 
     /**
      * Authors: Murph
+     * The step method that defines how the game is run
      */
     @Override
     public void step() {
@@ -43,7 +45,7 @@ public class GalagaLoop extends GameLoop {
 
     /**
      * Authors: Murph
-     * @return
+     * @return if the game is still playable
      */
     @Override
     public boolean levelOver() {
@@ -52,6 +54,7 @@ public class GalagaLoop extends GameLoop {
 
     /**
      * Authors: Murph
+     * handles the game portion
      */
     private void runGame() {
         enemies.drop();
@@ -60,7 +63,7 @@ public class GalagaLoop extends GameLoop {
 
     /**
      * Authors: Murph
-     * @return
+     * @return gets the file name of the High Score
      */
     public String getFileName() {
         return "GalagaHighScore.txt";
@@ -68,6 +71,7 @@ public class GalagaLoop extends GameLoop {
 
     /**
      * Authors: Murph
+     * resets the level when level is cleared
      */
     @Override
     public void resetLevel(){}
@@ -83,16 +87,16 @@ public class GalagaLoop extends GameLoop {
 
     /**
      * Authors: Murph
-     * @return
+     * @return if the game is still being played
      */
     @Override
     public boolean gameOn() {
-        moving = true;
-        return moving;
+        return (!moving || gameOver);
     }
 
     /**
      * Authors: Murph
+     * Hanldes what happens on button press
      */
     @Override
     public void handleKeyInput() {
@@ -104,7 +108,8 @@ public class GalagaLoop extends GameLoop {
 
     /**
      * Authors: Murph
-     * @param ship
+     * Handles shot cooldown
+     * @param ship the ship on the screen
      */
     public void lastShot(Ship ship) {
         int laserCooldown = 300;

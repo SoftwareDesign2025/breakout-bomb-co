@@ -57,7 +57,7 @@ public class GalagaScreen extends Screen {
         enemyList = new ArrayList<>();
         galagaLevelMaker = new GalagaLevelMaker(root, enemyList);
         enemies = new GalagaEnemies(enemyList);
-        loadLevel(1);
+        loadLevel(2);
     }
 
     /**

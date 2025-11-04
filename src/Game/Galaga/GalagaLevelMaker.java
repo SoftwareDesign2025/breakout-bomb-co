@@ -38,9 +38,10 @@ public class GalagaLevelMaker extends LevelMaker {
 
     /**
      * Authors: Murph
-     * @param imagePath
-     * @param startX
-     * @param startY
+     * creates a new ship
+     * @param imagePath The call to the image used.
+     * @param startX the starting X value
+     * @param startY the starting Y value
      */
     public void addShip(String imagePath, double startX, double startY) {
         ship = new Ship(imagePath, startX, startY);
@@ -50,7 +51,8 @@ public class GalagaLevelMaker extends LevelMaker {
 
     /**
      * Authors: Murph
-     * @return
+     * Getter
+     * @return a ship
      */
     public Ship getShip() {
         return ship;
