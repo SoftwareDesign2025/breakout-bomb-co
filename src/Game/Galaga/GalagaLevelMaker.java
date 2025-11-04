@@ -10,6 +10,7 @@ import java.util.List;
 public class GalagaLevelMaker extends LevelMaker {
 
     private final List<GalagaEnemy> ENEMIES;
+    private Ship ship;
 
     public GalagaLevelMaker(Group root, List<GalagaEnemy> enemiesList) {
         super(root);
@@ -22,10 +23,13 @@ public class GalagaLevelMaker extends LevelMaker {
     }
 
     public void addShip(String imagePath, double startX, double startY) {
-        Ship ship = new Ship(imagePath, startX, startY);
-        SIDE_MOVER_LIST.add(ship);
+        ship = new Ship(imagePath, startX, startY);
         ROOT.getChildren().add(ship.getShip());
         NODE_LIST.add(ship.getShip());
+    }
+
+    public Ship getShip() {
+        return ship;
     }
 
     public void addEnemy(GalagaEnemy enemy) {

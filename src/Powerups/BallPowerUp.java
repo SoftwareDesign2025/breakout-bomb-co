@@ -1,5 +1,6 @@
 
 package Powerups;
+import Game.Breakout.BreakoutScreen;
 import Game.Screen;
 import Objects.Breakout.Ball;
 import Objects.Breakout.Slider;
@@ -8,7 +9,7 @@ import javafx.scene.paint.Color;
 import java.util.ArrayList;
 
 public class BallPowerUp extends PowerUp {
-    private Screen screen;
+    private BreakoutScreen screen;
     private java.util.List<Ball> balls;
     private boolean finished = false;
 
@@ -18,7 +19,7 @@ public class BallPowerUp extends PowerUp {
     }
 
     // set right after spawning (so it knows where to put the new ball)
-    public void setBallPosition(Screen screen, java.util.List<Ball> balls) {
+    public void setBallPosition(BreakoutScreen screen, java.util.List<Ball> balls) {
         this.screen = screen;
         this.balls = balls;
     }
@@ -68,7 +69,7 @@ public class BallPowerUp extends PowerUp {
     }
 
     @Override
-    public void onSpawn(Screen myScreen, ArrayList<Ball> myBalls) {
+    public void onSpawn(BreakoutScreen myScreen, ArrayList<Ball> myBalls) {
         setBallPosition(myScreen, myBalls);
     }
 

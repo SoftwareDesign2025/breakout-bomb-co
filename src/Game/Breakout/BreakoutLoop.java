@@ -4,6 +4,7 @@ package Game.Breakout;
 import Game.GameLoop;
 import Objects.Breakout.Ball;
 import Objects.Breakout.Brick;
+import Objects.Breakout.Bricks;
 import Objects.Breakout.Slider;
 import javafx.scene.input.KeyCode;
 import java.util.*;
@@ -11,17 +12,23 @@ import Objects.*;
 import Powerups.*;
 
 public class BreakoutLoop extends GameLoop {
+	private final ArrayList<Ball> BALLS;
 	private ArrayList<PowerUp> powerUpList;
 	private final BreakoutLevelMaker LEVEL_MAKER;
 	private long lastEasterEgg = 0;
 	private final long EASTER_EGG_COOLDOWN = 1000;
-
-
+	private final Bricks bricks;
+	private ArrayList<Slider> sliderList;
+	private BreakoutScreen breakoutScreen;
 
 	public BreakoutLoop(BreakoutScreen breakoutScreen) {
 		super(breakoutScreen);
+		this.breakoutScreen = breakoutScreen;
+		this.BALLS = new ArrayList<>();
+		this.bricks = breakoutScreen.getBricks();
 		this.powerUpList = new ArrayList<>();
 		this.LEVEL_MAKER = breakoutScreen.getBreakoutLevelMaker();
+		this.sliderList = breakoutScreen.getSliderList();
 		initBall();
 	}
 
@@ -59,16 +66,15 @@ public class BreakoutLoop extends GameLoop {
 		return (!moving || gameOver);
 	}
 
-
-
 	private void updateBall(Ball ball) {
 		ball.updateBallLocation();
 	}
 
 	private void handleSliderCollisions(Ball ball) {
-		for (Slider slider : sliderList()) {
+		for (Slider slider : sliderList) {
 			slider.checkSliderCollision(ball);
 		}
+
 	}
 
 	private void spawnPowerUpsFromBricks() {
@@ -81,7 +87,7 @@ public class BreakoutLoop extends GameLoop {
 							b.getBrick().getX() + b.getBrick().getWidth() / 2.0,
 							b.getBrick().getY() + b.getBrick().getHeight() / 2.0
 					);
-					newPowerUp.onSpawn(screen, BALLS);
+					newPowerUp.onSpawn(breakoutScreen, BALLS);
 					screen.getRoot().getChildren().add(newPowerUp.getNode());
 					powerUpList.add(newPowerUp);
 					b.setPowerUp(null);
@@ -91,12 +97,11 @@ public class BreakoutLoop extends GameLoop {
 	}
 
 	private void handlePowerUpPickups() {
-		ArrayList<Slider> sliders = sliderList();
-		for (Slider slider : sliders) {
+		for (Slider slider : sliderList) {
 			for (int i = powerUpList.size() - 1; i >= 0; i--) {
 				PowerUp pu = powerUpList.get(i);
 				if (pu.getNode().getBoundsInParent().intersects(slider.getNode().getBoundsInParent())) {
-					pu.onPickup(sliders);
+					pu.onPickup(sliderList);
 					screen.getRoot().getChildren().remove(pu.getNode());
 				}
 			}
@@ -120,7 +125,7 @@ public class BreakoutLoop extends GameLoop {
 	}
 
 	private void handleBallRemovals(ArrayList<Ball> toRemove) {
-		BALLS.addAll(screen.consumeQueuedBalls());
+		BALLS.addAll(breakoutScreen.consumeQueuedBalls());
 		for (Ball ball : toRemove) {
 			screen.getRoot().getChildren().remove(ball.getBall());
 			BALLS.remove(ball);
@@ -145,7 +150,7 @@ public class BreakoutLoop extends GameLoop {
 		moving = false;
 		lives -= 1;
 		initBall();
-		for (Slider slider: sliderList()) {
+		for (Slider slider: sliderList) {
 			slider.resetSlider();
 		}
 		for (PowerUp powerUp: powerUpList) {
@@ -158,26 +163,26 @@ public class BreakoutLoop extends GameLoop {
 
 	@Override
 	public void resetLevel() {
+		BreakoutScreen breakoutScreen = (BreakoutScreen) screen;
 		moving = false;
-		BALLS.forEach(ball -> screen.getRoot().getChildren().remove(ball.getBall()));
+		for (Ball ball: BALLS) {
+			screen.getRoot().getChildren().remove(ball.getBall());
+		}
 		BALLS.clear();
-		powerUpList.forEach(pu -> screen.getRoot().getChildren().remove(pu.getNode()));
+		for (PowerUp powerUp: powerUpList) {
+			screen.getRoot().getChildren().remove(powerUp.getNode());
+		}
 		powerUpList.clear();
 		screen.loadLevel(level);
+		sliderList = breakoutScreen.getSliderList();
 		initBall();
-		sideMoverList = screen.getSideMoverList();
 	}
 
 	@Override
 	public void handleKeyInput() {
 		if (!gameOver && moving) {
-			for (Slider slider : sliderList()) {
-				if (pressedKeys.contains(KeyCode.LEFT) || pressedKeys.contains(KeyCode.A)) {
-					slider.moveLeft();
-				}
-				if (pressedKeys.contains(KeyCode.RIGHT)  || pressedKeys.contains(KeyCode.D)) {
-					slider.moveRight();
-				}
+			for (Slider slider : sliderList) {
+				moveLeftAndRight(slider);
 			}
 			if (pressedKeys.contains(KeyCode.SPACE)) {
 				PiercePowerUp.tryActivate();
@@ -204,7 +209,7 @@ public class BreakoutLoop extends GameLoop {
 	}
 
 	private void addPowerUp(PowerUp pu) {
-		pu.onSpawn(screen, BALLS);
+		pu.onSpawn(breakoutScreen, BALLS);
 		screen.getRoot().getChildren().add(pu.getNode());
 		powerUpList.add(pu);
 	}
@@ -224,12 +229,6 @@ public class BreakoutLoop extends GameLoop {
 		return "BreakoutHighScore.txt";
 	}
 
-	@Override
-	public void gameOverLogic() {
-		super.gameOverLogic();
-		moving = false;
-	}
-
 	public void tryActivatePowerUp(PowerUp pu) {
 		now = System.currentTimeMillis();
 		if (now - lastEasterEgg >= EASTER_EGG_COOLDOWN) {
@@ -244,14 +243,6 @@ public class BreakoutLoop extends GameLoop {
 			bricks.clearObjects(screen);
 			lastEasterEgg = now;
 		}
-	}
-
-	private ArrayList<Slider> sliderList() {
-		ArrayList<Slider> sliders = new ArrayList<>();
-		for (SideMover sideMover : sideMoverList) {
-			sliders.add((Slider) sideMover);
-		}
-		return sliders;
 	}
 
 }
