@@ -1,6 +1,7 @@
 /*
 Authors:
-Murph Lennemann, Oscar Kardon
+Murph Lennemann
+Oscar Kardon
  */
 
 package Game.Galaga;
@@ -40,6 +41,7 @@ public class GalagaLoop extends GameLoop {
     }
 
     /**
+     * Authors: Murph
      * Main step method, runs each frame
      */
     @Override
@@ -70,6 +72,7 @@ public class GalagaLoop extends GameLoop {
     }
 
     /**
+     * Authors: Murph
      * Handles player input each frame
      */
     @Override
@@ -89,6 +92,7 @@ public class GalagaLoop extends GameLoop {
     }
 
     /**
+     * Authors: Murph
      * Handles laser shooting with cooldown
      */
     public void lastShot(Ship ship) {
@@ -105,6 +109,7 @@ public class GalagaLoop extends GameLoop {
     }
 
     /**
+     * Authors: Murph
      * Handles enemy movement and bottom check
      */
     private void runGame() {
@@ -116,6 +121,10 @@ public class GalagaLoop extends GameLoop {
         }
     }
 
+    /**
+     * Authors: Murph
+     * checks if the game is won
+     */
     private void checkWin() {
         if (levelOver()) {
             gameOverLogic();
@@ -123,6 +132,10 @@ public class GalagaLoop extends GameLoop {
         }
     }
 
+    /**
+     * Authors: Murph
+     * @return if the level is over
+     */
     @Override
     public boolean levelOver() {
         int enemyCount = 0;
@@ -133,6 +146,10 @@ public class GalagaLoop extends GameLoop {
         return enemies.isCleared();
     }
 
+    /**
+     * Authors: Murph
+     * resets to new level
+     */
     @Override
     public void resetLevel() {
         moving = false;
@@ -141,17 +158,29 @@ public class GalagaLoop extends GameLoop {
         ship = galagaScreen.getShip();
     }
 
+    /**
+     * Authors: Murph
+     * Used to start the game on click
+     */
     @Override
     public void startMoving() {
         super.startMoving();
         enemies.drop();
     }
 
+    /**
+     * Authors: Murph
+     * @return if the game is still playable
+     */
     @Override
     public boolean gameOn() {
         return (!moving || gameOver);
     }
 
+    /**
+     * Authors: Murph
+     * @return the high score file name
+     */
     @Override
     public String getFileName() {
         return "GalagaHighScore.txt";

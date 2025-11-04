@@ -26,16 +26,15 @@ public class BreakoutScreen extends Screen {
     private Bricks bricks;
     protected List<Ball> queuedBalls = new ArrayList<>();
 
-
     /**
      * Authors: Murph
      * Creates a screen used for breakout
      */
-    public BreakoutScreen() {
-        super();
+    public BreakoutScreen(int level) {
+        super(level);
         bricks = new Bricks(new ArrayList<>());
         this.breakoutLevelMaker = new BreakoutLevelMaker(root, bricks.getBricksList());
-        loadLevel(1);
+        loadLevel(level);
     }
 
     /**
