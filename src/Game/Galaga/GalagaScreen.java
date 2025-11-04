@@ -54,8 +54,8 @@ public class GalagaScreen extends Screen {
     /**
      * Authors:
      */
-    public GalagaScreen() {
-        super();
+    public GalagaScreen(int level) {
+        super(level);
 
         // Black background rectangle
         Rectangle bg = new Rectangle(0, 0, 800, 600);
@@ -74,7 +74,7 @@ public class GalagaScreen extends Screen {
         enemyList = new ArrayList<>();
         galagaLevelMaker = new GalagaLevelMaker(root, enemyList);
         enemies = new GalagaEnemies(enemyList);
-        loadLevel(1);
+        loadLevel(level);
     }
 
 

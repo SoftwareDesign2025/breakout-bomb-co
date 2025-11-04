@@ -70,10 +70,10 @@ public class BreakoutLevelMaker extends LevelMaker {
      * @param startY is the y location of a slider
      */
     public void addSlider(double startX, double startY) {
-        Slider s = new Slider(startX, startY);
-        SLIDER_LIST.add(s);
-        ROOT.getChildren().add(s.getNode());
-        NODE_LIST.add(s.getNode());
+        Slider slider = new Slider(startX, startY);
+        SLIDER_LIST.add(slider);
+        ROOT.getChildren().add(slider.getNode());
+        NODE_LIST.add(slider.getNode());
     }
 
     /**
