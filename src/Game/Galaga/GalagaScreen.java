@@ -23,7 +23,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-import static jdk.internal.org.jline.utils.Colors.s;
+
 
 public class GalagaScreen extends Screen {
     private Ship ship;
@@ -88,7 +88,7 @@ public class GalagaScreen extends Screen {
             stars.add(new Star(
                     rand.nextDouble() * 800,
                     rand.nextDouble() * 600,
-                    1 + rand.nextDouble() * 3, // vertical speed
+                    1 + rand.nextDouble() * 1, // vertical speed
                     1 + rand.nextDouble() * 3, // size
                     getRandomColor()            // random color
             ));
@@ -173,14 +173,14 @@ public class GalagaScreen extends Screen {
      */
     @Override
     public void gameOverScreen() {
-        Text over = new Text(300, 300, "GAME OVER LOSER");
+        Text over = new Text(250, 300, "GAME OVER LOSER");
         over.setFill(Color.RED);
         over.setFont(Font.font("Impact", 40));
         root.getChildren().add(over);
     }
 
     /**
-     * Authors: Gavin
+     * Authors:
      */
     @Override
     public void gameWinScreen() {
