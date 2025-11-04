@@ -1,3 +1,9 @@
+/*
+Authors:
+Murph Lennemann
+
+ */
+
 package Game;
 
 import javafx.scene.Group;
@@ -23,26 +29,41 @@ public abstract class Screen {
         root.getChildren().add(scoreboard);
     }
 
-    public abstract void loadLevel(int level);
-
-    public Group getRoot() {
-        return root;
-    }
-
-    public abstract void gameOverScreen();
-
-    public abstract void gameWinScreen();
-
+    /**
+     * Authors:
+     * @param ball
+     * @return
+     */
     public boolean ballOutOfBounds(Ball ball) {
         return false;
     }
 
+    /**
+     * Authors: Murph
+     * @return
+     */
+    public Group getRoot() {
+        return root;
+    }
+
+    /**
+     * Authors:
+     * @param highScore
+     * @param score
+     * @param lives
+     */
     public void displayScoreBoard(int highScore, int score, int lives) {
         scoreboard.setText("High Score: " + highScore + " Score: " + score + " Lives: " + lives);
     }
 
+    /**
+     * Authors:
+     * @param ball
+     */
     public void checkBallToWall(Ball ball) {}
 
-
+    public abstract void gameOverScreen();
+    public abstract void loadLevel(int level);
+    public abstract void gameWinScreen();
 
 }

@@ -1,15 +1,25 @@
+/*
+Authors:
+
+ */
+
 package Objects.Galaga;
 
 import Objects.SideMover;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.input.KeyCode;
 
 public class Ship extends SideMover {
 
     public static final double HEIGHT = 40;
     private ImageView shipImage;
 
+    /**
+     * Authors:
+     * @param imagePath
+     * @param startX
+     * @param startY
+     */
     public Ship(String imagePath, double startX, double startY) {
         super(startX, startY, 40, 5);
         Image image = new Image(getClass().getResource(imagePath).toExternalForm());
@@ -23,6 +33,9 @@ public class Ship extends SideMover {
         updateNode();
     }
 
+    /**
+     * Authors:
+     */
     @Override
     protected void stopAtEdges() {
         double halfWidth = shipImage.getFitWidth() / 2;
@@ -34,17 +47,26 @@ public class Ship extends SideMover {
         else if (yLocation > 600 - halfHeight) yLocation = 600 - halfHeight;
     }
 
-
+    /**
+     * Authors:
+     */
     @Override
     protected void updateNode() {
         shipImage.setLayoutX(xLocation - shipImage.getFitWidth() / 2);
         shipImage.setLayoutY(yLocation - shipImage.getFitHeight() / 2);
     }
 
+    /**
+     * Authors:
+     * @return
+     */
     public ImageView getShip() {
         return shipImage;
     }
 
+    /**
+     * Authors:
+     */
     public void shootLaser() {
         System.out.println("Shoot laser!");
     }

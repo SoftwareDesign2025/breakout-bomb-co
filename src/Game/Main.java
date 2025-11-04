@@ -1,3 +1,9 @@
+/*
+Authors:
+Murph Lennemann
+
+ */
+
 package Game;
 
 public class Main {

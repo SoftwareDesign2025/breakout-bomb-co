@@ -1,3 +1,8 @@
+/*
+Authors:
+
+ */
+
 package Objects.Breakout;
 
 import Objects.SideMover;
@@ -12,6 +17,11 @@ public class Slider extends SideMover {
     private final double startY;
     private final double baseWidth;
 
+    /**
+     * Authors:
+     * @param startX
+     * @param startY
+     */
     public Slider(double startX, double startY) {
         super(startX, startY, 80, 5);
         this.startX = startX;
@@ -21,21 +31,35 @@ public class Slider extends SideMover {
         slider.setFill(Color.BLACK);
     }
 
+    /**
+     * Authors:
+     */
     @Override
     protected void stopAtEdges() {
         if (xLocation < 0) xLocation = 0;
         else if (xLocation + width > 800) xLocation = 800 - width;
     }
 
+    /**
+     * Authors:
+     */
     @Override
     protected void updateNode() {
         slider.setX(xLocation);
     }
 
+    /**
+     * Authors:
+     * @return
+     */
     public Rectangle getNode() {
         return slider;
     }
 
+    /**
+     * Authors:
+     * @param ball
+     */
     public void checkSliderCollision(Ball ball) {
         if (ball.getBall().getBoundsInParent().intersects(slider.getBoundsInParent())) {
             double sliderX = slider.getX();
@@ -48,10 +72,12 @@ public class Slider extends SideMover {
         }
     }
 
+    /**
+     * Authors:
+     */
     public void resetSlider() {
         xLocation = startX;
         yLocation = startY;
-
         slider.setX(xLocation);
         slider.setY(yLocation);
         slider.setWidth(baseWidth);

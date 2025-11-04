@@ -1,4 +1,11 @@
+/*
+Authors:
+Ben Farmer
+
+ */
+
 package Powerups;
+
 import Objects.Breakout.Ball;
 import Objects.Breakout.Slider;
 import javafx.scene.paint.Color;
@@ -12,11 +19,20 @@ public class PiercePowerUp extends PowerUp {
     private Ball ball;
     private boolean finished = false;
 
+    /**
+     * Authors:
+     * @param x
+     * @param y
+     */
     public PiercePowerUp(double x, double y) {
         super(x, y);
         getNode().setFill(Color.ORANGERED);
     }
 
+    /**
+     * Authors:
+     * @param sliders
+     */
     @Override
     void startEffect(ArrayList<Slider> sliders) {
         charges++;          // pickup grants a charge
@@ -24,7 +40,9 @@ public class PiercePowerUp extends PowerUp {
         super.stopPowerUp();
     }
 
-    // called from your input handler (e.g., SPACE key)
+    /**
+     * Authors:
+     */
     public static void tryActivate() {
         if (charges > 0 && framesLeft == 0) {
             charges--;
@@ -32,23 +50,43 @@ public class PiercePowerUp extends PowerUp {
         }
     }
 
-    // called once per frame
+    /**
+     * Authors:
+     * called once per frame
+     */
     public static void tickGlobal() {
         if (framesLeft > 0) framesLeft--;
     }
 
-    // Brick uses this to decide whether to skip the bounce
+    /**
+     * Authors:
+     * Brick uses this to decide wether to skip the bounce
+     * @return
+     */
     public static boolean isActive() {
         return framesLeft > 0;
     }
 
+    /**
+     * Authors:
+     * @return
+     */
     public boolean isPowerUpOver() { return finished; }
 
+    /**
+     * Authors:
+     * @param ball
+     */
 	public void setBall(Ball ball) {
 		this.ball = ball;
-		
 	}
-	
+
+    /**
+     * Authors:
+     * @param x
+     * @param y
+     * @return
+     */
 	@Override public PowerUp spawnAt(double x, double y) {
 		return new PiercePowerUp(x, y); 
 		}

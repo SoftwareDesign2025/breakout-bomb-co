@@ -1,3 +1,9 @@
+/*
+Authors:
+Murph Lennemann
+
+ */
+
 package Game;
 
 import Objects.SideMover;
@@ -22,13 +28,19 @@ public abstract class GameLoop {
     protected final Set<KeyCode> pressedKeys = new HashSet<>();
     protected long now;
 
+    /**
+     * Authors: Murph
+     * @param screen
+     */
     public GameLoop(Screen screen) {
-        this.screen = screen;
         screen.loadLevel(level);
         this.fileName = getFileName();
         this.highScore = getHighScore();
     }
 
+    /**
+     * Authors: Murph
+     */
     public void checkLives() {
         if (lives <= 0) {
             gameOverLogic();
@@ -36,6 +48,9 @@ public abstract class GameLoop {
         }
     }
 
+    /**
+     * Authors: Murph
+     */
     public void checkLevel() {
         if (!levelOver()) {
             level++;
@@ -49,10 +64,16 @@ public abstract class GameLoop {
         }
     }
 
+    /**
+     * Authors: Murph
+     */
     protected void showScreen() {
         screen.displayScoreBoard(highScore, points, lives);
     }
 
+    /**
+     * Authors: Murph
+     */
     public void gameOverLogic() {
         gameOver = true;
         moving = false;
@@ -61,6 +82,10 @@ public abstract class GameLoop {
         }
     }
 
+    /**
+     * Authors: Murph
+     * @return
+     */
     private int getHighScore() {
         try (Scanner in = new Scanner(new File(fileName))) {
             return in.nextInt();
@@ -69,6 +94,9 @@ public abstract class GameLoop {
         }
     }
 
+    /**
+     * Authors: Murph
+     */
     private void setHighScore() {
         try (PrintWriter out = new PrintWriter(fileName)) {
             out.println(points);
@@ -77,6 +105,10 @@ public abstract class GameLoop {
         }
     }
 
+    /**
+     * Authors: Murph
+     * @param sideMover
+     */
     protected void moveLeftAndRight(SideMover sideMover) {
         if (pressedKeys.contains(KeyCode.LEFT) || pressedKeys.contains(KeyCode.A)) {
             sideMover.moveLeft();
@@ -86,14 +118,25 @@ public abstract class GameLoop {
         }
     }
 
+    /**
+     * Authors: Murph
+     */
     public void startMoving() {
         moving = true;
     }
 
+    /**
+     * Authors: Murph
+     * @param code
+     */
     public void keyPressed(KeyCode code) {
         pressedKeys.add(code);
     }
 
+    /**
+     * Authors: Murph
+     * @param code
+     */
     public void keyReleased(KeyCode code) {
         pressedKeys.remove(code);
     }

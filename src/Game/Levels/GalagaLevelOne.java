@@ -1,10 +1,19 @@
+/*
+Authors:
+
+ */
+
 package Game.Levels;
 
 import Game.Galaga.GalagaLevelMaker;
 import Objects.Galaga.GalagaEnemy;
 
-public class GalagaLevel implements Level<GalagaLevelMaker> {
+public class GalagaLevelOne implements Level<GalagaLevelMaker> {
 
+    /**
+     * Authors:
+     * @param maker
+     */
     public void build(GalagaLevelMaker maker) {
         maker.addShip("ship.png", 400, 500);
         double startX = 100;

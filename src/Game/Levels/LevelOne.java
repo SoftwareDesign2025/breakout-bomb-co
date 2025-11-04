@@ -1,3 +1,9 @@
+/*
+Authors:
+Gavin Collins
+
+ */
+
 package Game.Levels;
 
 import Game.Breakout.BreakoutLevelMaker;
@@ -5,6 +11,11 @@ import javafx.scene.paint.Color;
 import Objects.Breakout.Brick;
 
 public class LevelOne implements Level<BreakoutLevelMaker> {
+
+    /**
+     * Authors:
+     * @param maker
+     */
     @Override
     public void build(BreakoutLevelMaker maker) {
         maker.addSlider(360, 500);

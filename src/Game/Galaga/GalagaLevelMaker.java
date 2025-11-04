@@ -1,3 +1,9 @@
+/*
+Authors:
+Murph Lennemann
+
+ */
+
 package Game.Galaga;
 
 import Game.LevelMaker;
@@ -12,26 +18,48 @@ public class GalagaLevelMaker extends LevelMaker {
     private final List<GalagaEnemy> ENEMIES;
     private Ship ship;
 
+    /**
+     * Authors:
+     * @param root
+     * @param enemiesList
+     */
     public GalagaLevelMaker(Group root, List<GalagaEnemy> enemiesList) {
         super(root);
         this.ENEMIES = enemiesList;
     }
 
+    /**
+     * Authors:
+     */
     public void resetLevel() {
         clearGameObjects();
         ENEMIES.clear();
     }
 
+    /**
+     * Authors: Murph
+     * @param imagePath
+     * @param startX
+     * @param startY
+     */
     public void addShip(String imagePath, double startX, double startY) {
         ship = new Ship(imagePath, startX, startY);
         ROOT.getChildren().add(ship.getShip());
         NODE_LIST.add(ship.getShip());
     }
 
+    /**
+     * Authors: Murph
+     * @return
+     */
     public Ship getShip() {
         return ship;
     }
 
+    /**
+     * Authors:
+     * @param enemy
+     */
     public void addEnemy(GalagaEnemy enemy) {
         ENEMIES.add(enemy);
         ROOT.getChildren().add(enemy.getEnemy());

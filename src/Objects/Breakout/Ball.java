@@ -1,4 +1,10 @@
+/*
+Authors:
+
+ */
+
 package Objects.Breakout;
+
 import javafx.scene.shape.Circle;
 import javafx.scene.paint.Color;
 
@@ -13,6 +19,12 @@ public class Ball {
     private double yDirection;
     private Circle ball;
 
+    /**
+     * Authors:
+     * @param radius
+     * @param startX
+     * @param startY
+     */
     public Ball(double radius, double startX, double startY){
         this.radius = radius;
         speed = STARTING_BALL_SPEED;
@@ -20,34 +32,64 @@ public class Ball {
         yDirection = STARTING_Y_DIRECTION;
         ball = new Circle(startX, startY, radius, Color.GREEN);
     }
+
+    /**
+     * Authors:
+     * @return
+     */
     public Circle getBall() {
         return ball;
     }
+
+    /**
+     * Authors:
+     */
     public void updateBallLocation(){
         ball.setCenterX(ball.getCenterX() + xDirection * speed);
         ball.setCenterY(ball.getCenterY() + yDirection * speed);
     }
 
+    /**
+     * Authors:
+     */
     public void reverseXDirection() {
         xDirection *= -1;
     }
 
+    /**
+     * Authors:
+     */
     public void reverseYDirection() {
         yDirection *= -1;
     }
 
+    /**
+     * Authors:
+     * @param xDirection
+     */
     public void changeXDirection(double xDirection) {
         this.xDirection = xDirection;
     }
 
+    /**
+     * Authors:
+     * @param yDirection
+     */
     public void changeYDirection(double yDirection) {
         this.yDirection = yDirection;
     }
 
+    /**
+     * Authors:
+     * @param speed
+     */
     public void changeSpeed(double speed){
         this.speed = speed;
     }
 
+    /**
+     * Authors:
+     */
     public void increaseSpeed(){
         speed+=0.05;
     }

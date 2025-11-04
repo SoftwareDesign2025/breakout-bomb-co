@@ -1,3 +1,8 @@
+/*
+Authors:
+
+ */
+
 package Game.Levels;
 
 import Game.Galaga.GalagaLevelMaker;
@@ -5,6 +10,10 @@ import Objects.Galaga.GalagaEnemy;
 
 public class GalagaLevelTwo implements Level<GalagaLevelMaker> {
 
+    /**
+     * Authors:
+     * @param maker
+     */
     @Override
     public void build(GalagaLevelMaker maker) {
 

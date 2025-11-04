@@ -1,7 +1,12 @@
+/*
+Authors:
+Murph Lennemann
+
+ */
+
 package Game.Breakout;
 
 import Game.LevelMaker;
-import Game.Levels.Level;
 import Objects.Breakout.Brick;
 import Objects.Breakout.Slider;
 import Powerups.BallPowerUp;
@@ -19,16 +24,28 @@ public class BreakoutLevelMaker extends LevelMaker {
     private final List<Brick> BRICKS;
     private final ArrayList<Slider> SLIDER_LIST;
 
+    /**
+     * Author:
+     * @param root
+     * @param bricks
+     */
     public BreakoutLevelMaker(Group root, List<Brick> bricks){
         super(root);
         this.BRICKS = bricks;
         this.SLIDER_LIST = new ArrayList<>();
     }
 
+    /**
+     * Authors: Murph
+     * @return
+     */
     public ArrayList<Slider> getSliderList(){
         return SLIDER_LIST;
     }
 
+    /**
+     * Authors: Murph, Oscar
+     */
     public void resetLevel() {
         clearGameObjects();
         for (Brick b : new ArrayList<>(BRICKS)) {
@@ -43,6 +60,11 @@ public class BreakoutLevelMaker extends LevelMaker {
         ballY = 0;
     }
 
+    /**
+     * Authors: Murph
+     * @param startX
+     * @param startY
+     */
     public void addSlider(double startX, double startY) {
         Slider s = new Slider(startX, startY);
         SLIDER_LIST.add(s);
@@ -50,14 +72,27 @@ public class BreakoutLevelMaker extends LevelMaker {
         NODE_LIST.add(s.getNode());
     }
 
+    /**
+     * Authors: Murph
+     * @return
+     */
     public double getBallX() {
         return ballX;
     }
 
+    /**
+     * Authors: Murph
+     * @return
+     */
     public double getBallY() {
         return ballY;
     }
 
+    /**
+     * Authors:
+     * @param val
+     * @return
+     */
     public int randomizeBrick(int val) {
         if (val != 1) return val;
         int chance = RAND.nextInt(100);
@@ -67,6 +102,12 @@ public class BreakoutLevelMaker extends LevelMaker {
         return 1;
     }
 
+    /**
+     * Authors:
+     * @param val
+     * @param color
+     * @return
+     */
     private Color getBrickColor(int val, Color color) {
         if (val == 2) return Color.YELLOW;
         if (val == 3) return Color.LIMEGREEN;
@@ -74,12 +115,31 @@ public class BreakoutLevelMaker extends LevelMaker {
         return color;
     }
 
+    /**
+     * Authors:
+     * @param brick
+     * @param val
+     * @param x
+     * @param y
+     */
     public void assignPowerUp(Brick brick, int val, double x, double y) {
         if (val == 2) brick.setPowerUp(new BiggerSlider(x, y));
         if (val == 3) brick.setPowerUp(new PiercePowerUp(x, y));
         if (val == 4) brick.setPowerUp(new BallPowerUp(x, y));
     }
 
+    /**
+     * Authors: Murph
+     * @param pattern
+     * @param startX
+     * @param startY
+     * @param brickWidth
+     * @param brickHeight
+     * @param brickGap
+     * @param pointValue
+     * @param color
+     * @param colorChange
+     */
     public void buildBricks(int[][] pattern, double startX, double startY, double brickWidth, double brickHeight, double brickGap, int pointValue, Color color, boolean colorChange) {
         for (int row = 0; row < pattern.length; row++) {
             for (int col = 0; col < pattern[row].length; col++) {
@@ -99,11 +159,20 @@ public class BreakoutLevelMaker extends LevelMaker {
         }
     }
 
+    /**
+     * Authors:
+     * @param x
+     * @param y
+     */
     public void setBallPosition(double x, double y) {
         this.ballX = x;
         this.ballY = y;
     }
 
+    /**
+     * Authors:
+     * @param brick
+     */
     public void addBrick(Brick brick) {
         BRICKS.add(brick);
         ROOT.getChildren().add(brick.getBrick());

@@ -1,3 +1,9 @@
+/*
+Authors:
+Oscar Kardon
+
+ */
+
 package Game.Levels;
 
 import Game.Breakout.BreakoutLevelMaker;
@@ -9,6 +15,11 @@ import Powerups.PiercePowerUp;
 import Powerups.PowerUp;
 
 public class LevelThree implements Level<BreakoutLevelMaker> {
+
+    /**
+     * Authors:
+     * @param maker
+     */
     @Override
     public void build(BreakoutLevelMaker maker) {
         maker.addOutOfBounds(0, 580, 800, 20, Color.RED);

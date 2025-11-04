@@ -1,3 +1,9 @@
+/*
+Authors:
+Murph Lennemann
+
+ */
+
 package Game;
 
 import Game.Breakout.BreakoutLoop;
@@ -26,6 +32,13 @@ public class SetUpProject extends Application {
     private Stage stage;
     private GameLoop gameLoop;
 
+    /**
+     * Authors:
+     * @param stage the primary stage for this application, onto which
+     * the application scene can be set.
+     * Applications may create other stages, if needed, but they will not be
+     * primary stages.
+     */
     @Override
     public void start(Stage stage) {
         this.stage = stage;
@@ -35,6 +48,10 @@ public class SetUpProject extends Application {
     }
     // Starting at the method allows you to see the menu and has the buttons that allow the game to start, with the methods
     // below. You can add more buttons or change anything in this method as long as you start from this method
+
+    /**
+     * Authors: Murph
+     */
     private void showMainMenu() {
         Group menuRoot = new Group();
 
@@ -71,6 +88,11 @@ public class SetUpProject extends Application {
         stage.setScene(menuScene);
     }
 
+    /**
+     * Authors: Murph
+     * @param text
+     * @param yNum
+     */
     public void handleText(Text text, int yNum) {
         text.setFont(Font.font("Impact", 36));
         text.setFill(Color.BLACK);
@@ -78,6 +100,11 @@ public class SetUpProject extends Application {
         text.setY(yNum + 45);
     }
 
+    /**
+     * Authors: Murph
+     * @param yInt
+     * @return
+     */
     public Rectangle createBackground(int yInt) {
         Rectangle background = new Rectangle(300, 60, Color.BLUE);
         background.setX(GAME_WIDTH / 2.0 - 150);
@@ -85,18 +112,28 @@ public class SetUpProject extends Application {
         return background;
     }
 
+    /**
+     * Authors: Murph
+     */
     private void startBreakout() {
         BreakoutScreen breakoutScreen = new BreakoutScreen();
         gameLoop = new BreakoutLoop(breakoutScreen);
         startGame(breakoutScreen);
     }
 
+    /**
+     * Authors: Murph
+     */
     private void startGalaga() {
         GalagaScreen galagaScreen = new GalagaScreen();
         gameLoop = new GalagaLoop(galagaScreen);
         startGame(galagaScreen);
         }
 
+    /**
+     * Authors: Murph
+     * @param screen
+     */
         public void startGame(Screen screen) {
             Scene gameScene = new Scene(screen.getRoot(), GAME_WIDTH, GAME_HEIGHT);
             gameScene.setOnKeyPressed(e -> gameLoop.keyPressed(e.getCode()));
@@ -111,6 +148,9 @@ public class SetUpProject extends Application {
         }
 
 
+    /**
+     * Authors: Murph
+     */
     public static void runGame() {
         launch();
     }
