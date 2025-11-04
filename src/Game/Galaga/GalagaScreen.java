@@ -1,10 +1,15 @@
+
+package Game.Galaga;
+
+import Objects.Galaga.Ship;
+import Objects.Galaga.GalagaEnemies;
+import Objects.Galaga.GalagaEnemy;
+import Objects.Lasers;
 /*
 Authors:
 Murph Lennemann
 
  */
-
-package Game.Galaga;
 
 import Game.Levels.GalagaLevelOne;
 import Game.Levels.GalagaLevelTwo;
@@ -15,13 +20,22 @@ import Objects.Galaga.GalagaEnemy;
 import javafx.animation.AnimationTimer;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
+
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
+
+
+import java.util.ArrayList;
+import java.util.List;
+
+import Game.Screen;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
+
 
 public class GalagaScreen extends Screen {
     private Ship ship;
@@ -33,6 +47,11 @@ public class GalagaScreen extends Screen {
     private Canvas starCanvas;
     private List<Star> stars = new ArrayList<>();
     private Random rand = new Random();
+
+    private Lasers lasers = new Lasers(root);
+
+
+
 
     /**
      * Authors:
@@ -59,6 +78,8 @@ public class GalagaScreen extends Screen {
         enemies = new GalagaEnemies(enemyList);
         loadLevel(2);
     }
+
+
 
     /**
      * Authors:
@@ -145,30 +166,24 @@ public class GalagaScreen extends Screen {
      * Authors: Murph
      * @return returns the ship used in this game
      */
+
     public Ship getShip() {
         return ship;
     }
 
-    /**
-     * Authors:
-     * @return
-     */
     public GalagaEnemies getEnemies() {
         return enemies;
     }
 
+    public Lasers getLasers() {
+    	return lasers;
+    }
 
-    /**
-     * Authors:
-     * @return
-     */
     public GalagaLevelMaker getGalagaLevelMaker() {
         return galagaLevelMaker;
     }
 
-    /**
-     * Authors:
-     */
+
     @Override
     public void gameOverScreen() {
         Text over = new Text(300, 300, "GAME OVER LOSER");
@@ -177,9 +192,11 @@ public class GalagaScreen extends Screen {
         root.getChildren().add(over);
     }
 
+
     /**
      * Authors:
      */
+
     @Override
     public void gameWinScreen() {
         Text win = new Text(300, 300, "YOU WIN!");

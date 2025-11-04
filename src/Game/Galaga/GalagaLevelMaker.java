@@ -1,3 +1,4 @@
+
 /*
 Authors:
 Murph Lennemann
@@ -23,14 +24,17 @@ public class GalagaLevelMaker extends LevelMaker {
      * @param root
      * @param enemiesList
      */
+
     public GalagaLevelMaker(Group root, List<GalagaEnemy> enemiesList) {
         super(root);
         this.ENEMIES = enemiesList;
     }
 
+
     /**
      * Authors:
      */
+
     public void resetLevel() {
         clearGameObjects();
         ENEMIES.clear();
@@ -62,9 +66,11 @@ public class GalagaLevelMaker extends LevelMaker {
      * Authors:
      * @param enemy
      */
+
     public void addEnemy(GalagaEnemy enemy) {
         ENEMIES.add(enemy);
         ROOT.getChildren().add(enemy.getEnemy());
         NODE_LIST.add(enemy.getEnemy());
     }
+
 }

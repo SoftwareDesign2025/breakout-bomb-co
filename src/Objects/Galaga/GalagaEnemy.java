@@ -1,6 +1,5 @@
 /*
 Authors:
-
  */
 
 package Objects.Galaga;

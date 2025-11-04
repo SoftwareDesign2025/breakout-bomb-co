@@ -6,6 +6,9 @@ Murph Lennemann
 
 package Game.Levels;
 
+
+import Game.LevelMaker;
+
 import Game.Breakout.BreakoutLevelMaker;
 import javafx.scene.paint.Color;
 

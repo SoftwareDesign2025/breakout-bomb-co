@@ -54,6 +54,7 @@ public class BreakoutLoop extends GameLoop {
 		checkLives();
 	}
 
+
 	/**
 	 * Authors: Murph
 	 * This method updates things on the screen
@@ -75,6 +76,7 @@ public class BreakoutLoop extends GameLoop {
 		updatePowerUps();
 		handleBallRemovals(toRemove);
 	}
+
 
 	/**
 	 * Authors: Murph
@@ -112,10 +114,12 @@ public class BreakoutLoop extends GameLoop {
 					);
 					addPowerUp(newPowerUp);
 					brick.setPowerUp(null);
+
 					}
 			}
 		}
 	}
+
 
 	/**
 	 * Authors: Murph
@@ -128,6 +132,7 @@ public class BreakoutLoop extends GameLoop {
 				if (powerUp.getNode().getBoundsInParent().intersects(slider.getNode().getBoundsInParent())) {
 					powerUp.onPickup(sliderList);
 					breakoutScreen.getRoot().getChildren().remove(powerUp.getNode());
+
 				}
 			}
 		}
@@ -138,12 +143,12 @@ public class BreakoutLoop extends GameLoop {
 	 * Authors: Murph
 	 * Moves the power up across the screen
 	 */
+
 	private void updatePowerUps() {
 		for (int i = powerUpList.size() - 1; i >= 0; i--) {
 			PowerUp pu = powerUpList.get(i);
 			pu.update_position();
 			if (!pu.isactivated() && pu.getNode().getBoundsInParent().getMinY() > 600) {
-				breakoutScreen.getRoot().getChildren().remove(pu.getNode());
 				powerUpList.remove(i);
 			}
 			pu.tick();
@@ -152,6 +157,7 @@ public class BreakoutLoop extends GameLoop {
 			}
 		}
 	}
+
 
 	/**
 	 * Authors: Murph
@@ -171,6 +177,7 @@ public class BreakoutLoop extends GameLoop {
 	 * Authors: Murph
 	 * Initializes a new ball
 	 */
+
 	private void initBall() {
 		double resetBallSpeed = 1;
 		double resetXDirection = 0.2;
@@ -178,11 +185,14 @@ public class BreakoutLoop extends GameLoop {
 		Ball freshBall;
 		freshBall = new Ball(10, LEVEL_MAKER.getBallX(), LEVEL_MAKER.getBallY());
 		BALLS.add(freshBall);
+
 		breakoutScreen.getRoot().getChildren().add(freshBall.getBall());
+
 		freshBall.changeSpeed(resetBallSpeed);
 		freshBall.changeXDirection(resetXDirection);
 		freshBall.changeYDirection(resetYDirection);
 	}
+
 
 	/**
 	 * Authors: Murph
@@ -227,7 +237,6 @@ public class BreakoutLoop extends GameLoop {
 	 * Authors: Murph
 	 * Handles slider movements
 	 */
-	@Override
 	public void handleKeyInput() {
 		if (!gameOver && moving) {
 			for (Slider slider : sliderList) {
@@ -275,6 +284,7 @@ public class BreakoutLoop extends GameLoop {
 	 * Authors: Murph
 	 * @return if the level is over
 	 */
+
 	@Override
 	public boolean levelOver() {
 		for (Brick brick: bricks.getBricksList()) {
@@ -285,10 +295,12 @@ public class BreakoutLoop extends GameLoop {
 		return false;
 	}
 
+
 	/**
 	 * Authors: Murph
 	 * @return the string with the fileName for the high score
 	 */
+
 	@Override
 	public String getFileName() {
 		return "BreakoutHighScore.txt";

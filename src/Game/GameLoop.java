@@ -153,7 +153,7 @@ public abstract class GameLoop {
 
     public abstract void step();
     public abstract boolean gameOn();
-    public abstract void handleKeyInput();
+//    public abstract void handleKeyInput();
     public abstract String getFileName();
     public abstract void resetLevel();
     public abstract boolean levelOver();
