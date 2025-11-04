@@ -8,9 +8,15 @@ public class Slider extends SideMover {
 
     private final Rectangle slider;
     public static final double HEIGHT = 20;
+    private final double startX;
+    private final double startY;
+    private final double baseWidth;
 
     public Slider(double startX, double startY) {
         super(startX, startY, 80, 5);
+        this.startX = startX;
+        this.startY = startY;
+        this.baseWidth = 80;
         slider = new Rectangle(xLocation, yLocation, width, HEIGHT);
         slider.setFill(Color.BLACK);
     }
@@ -40,5 +46,14 @@ public class Slider extends SideMover {
             ball.reverseYDirection();
             ball.increaseSpeed();
         }
+    }
+
+    public void resetSlider() {
+        xLocation = startX;
+        yLocation = startY;
+
+        slider.setX(xLocation);
+        slider.setY(yLocation);
+        slider.setWidth(baseWidth);
     }
 }

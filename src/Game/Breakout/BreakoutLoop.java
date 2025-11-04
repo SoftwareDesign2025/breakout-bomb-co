@@ -66,8 +66,7 @@ public class BreakoutLoop extends GameLoop {
 	}
 
 	private void handleSliderCollisions(Ball ball) {
-		for (SideMover sideMover : sideMoverList) {
-			Slider slider = (Slider) sideMover;
+		for (Slider slider : sliderList()) {
 			slider.checkSliderCollision(ball);
 		}
 	}
@@ -92,14 +91,11 @@ public class BreakoutLoop extends GameLoop {
 	}
 
 	private void handlePowerUpPickups() {
-		ArrayList<Slider> sliders = new ArrayList<>();
-		for (SideMover sm : sideMoverList) {
-			sliders.add((Slider) sm);
-		}
-		for (Slider s : sliders) {
+		ArrayList<Slider> sliders = sliderList();
+		for (Slider slider : sliders) {
 			for (int i = powerUpList.size() - 1; i >= 0; i--) {
 				PowerUp pu = powerUpList.get(i);
-				if (pu.getNode().getBoundsInParent().intersects(s.getNode().getBoundsInParent())) {
+				if (pu.getNode().getBoundsInParent().intersects(slider.getNode().getBoundsInParent())) {
 					pu.onPickup(sliders);
 					screen.getRoot().getChildren().remove(pu.getNode());
 				}
@@ -129,7 +125,7 @@ public class BreakoutLoop extends GameLoop {
 			screen.getRoot().getChildren().remove(ball.getBall());
 			BALLS.remove(ball);
 		}
-		if (BALLS.isEmpty()) resetBall();
+		if (BALLS.isEmpty()) handleLifeLost();
 	}
 
 	private void initBall() {
@@ -145,10 +141,19 @@ public class BreakoutLoop extends GameLoop {
 		freshBall.changeYDirection(resetYDirection);
 	}
 
-	public void resetBall() {
+	public void handleLifeLost() {
 		moving = false;
 		lives -= 1;
 		initBall();
+		for (Slider slider: sliderList()) {
+			slider.resetSlider();
+		}
+		for (PowerUp powerUp: powerUpList) {
+			powerUp.stopPowerUp();
+			screen.getRoot().getChildren().remove(powerUp.getNode());
+		}
+		powerUpList.clear();
+
 	}
 
 	@Override
@@ -165,9 +170,8 @@ public class BreakoutLoop extends GameLoop {
 
 	@Override
 	public void handleKeyInput() {
-		if (!gameOver) {
-			for (SideMover sideMover : sideMoverList) {
-				Slider slider = (Slider) sideMover;
+		if (!gameOver && moving) {
+			for (Slider slider : sliderList()) {
 				if (pressedKeys.contains(KeyCode.LEFT) || pressedKeys.contains(KeyCode.A)) {
 					slider.moveLeft();
 				}
@@ -240,6 +244,14 @@ public class BreakoutLoop extends GameLoop {
 			bricks.clearObjects(screen);
 			lastEasterEgg = now;
 		}
+	}
+
+	private ArrayList<Slider> sliderList() {
+		ArrayList<Slider> sliders = new ArrayList<>();
+		for (SideMover sideMover : sideMoverList) {
+			sliders.add((Slider) sideMover);
+		}
+		return sliders;
 	}
 
 }
