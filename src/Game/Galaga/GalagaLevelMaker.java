@@ -1,5 +1,6 @@
-package Game;
+package Game.Galaga;
 
+import Game.LevelMaker;
 import Game.Levels.GalagaLevel;
 import Objects.GalagaEnemy;
 import Objects.Ship;

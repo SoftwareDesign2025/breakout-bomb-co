@@ -1,4 +1,4 @@
-package Game;
+package Game.Galaga;
 
 import Objects.Ship;
 import Objects.GalagaEnemies;
@@ -13,6 +13,8 @@ import javafx.scene.text.Text;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import Game.Screen;
 
 public class GalagaScreen extends Screen {
     private Ship ship;

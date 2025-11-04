@@ -1,8 +1,10 @@
 // Author: Murph Lennemann
 
-package Game;
+package Game.Breakout;
 import javafx.scene.input.KeyCode;
 import java.util.*;
+
+import Game.GameLoop;
 import Objects.*;
 import Powerups.*;
 

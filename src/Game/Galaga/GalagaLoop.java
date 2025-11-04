@@ -1,7 +1,9 @@
-package Game;
+package Game.Galaga;
 
 
 import Objects.Ship;
+import Game.CollisionDetector;
+import Game.GameLoop;
 import Objects.GalagaEnemies;
 import Objects.SideMover;
 import Objects.Lasers;

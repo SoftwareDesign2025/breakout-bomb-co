@@ -1,4 +1,4 @@
-package Game;
+package Game.Breakout;
 
 import Objects.Ball;
 import Objects.Bricks;
@@ -8,6 +8,8 @@ import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 
 import java.util.ArrayList;
+
+import Game.Screen;
 
 public class BreakoutScreen extends Screen {
     private BreakoutLevelMaker breakoutLevelMaker;

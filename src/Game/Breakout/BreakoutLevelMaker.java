@@ -1,5 +1,6 @@
-package Game;
+package Game.Breakout;
 
+import Game.LevelMaker;
 import Game.Levels.Level;
 import Objects.Brick;
 import Objects.Slider;

@@ -1,6 +1,6 @@
 package Objects;
 
-import Game.GalagaScreen;
+import Game.Galaga.GalagaScreen;
 import Powerups.PowerUp;
 
 import javafx.scene.image.Image;
