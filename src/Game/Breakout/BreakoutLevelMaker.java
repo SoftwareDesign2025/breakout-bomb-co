@@ -17,10 +17,16 @@ public class BreakoutLevelMaker extends LevelMaker {
     private double ballX;
     private double ballY;
     private final List<Brick> BRICKS;
+    private final ArrayList<Slider> SLIDER_LIST;
 
     public BreakoutLevelMaker(Group root, List<Brick> bricks){
         super(root);
         this.BRICKS = bricks;
+        this.SLIDER_LIST = new ArrayList<>();
+    }
+
+    public ArrayList<Slider> getSliderList(){
+        return SLIDER_LIST;
     }
 
     public void resetLevel() {
@@ -29,13 +35,17 @@ public class BreakoutLevelMaker extends LevelMaker {
             ROOT.getChildren().remove(b.getBrick());
         }
         BRICKS.clear();
+        for (Slider s : new ArrayList<>(SLIDER_LIST)) {
+            ROOT.getChildren().remove(s.getNode());
+        }
+        SLIDER_LIST.clear();
         ballX  = 0;
         ballY = 0;
     }
 
     public void addSlider(double startX, double startY) {
         Slider s = new Slider(startX, startY);
-        SIDE_MOVER_LIST.add(s);
+        SLIDER_LIST.add(s);
         ROOT.getChildren().add(s.getNode());
         NODE_LIST.add(s.getNode());
     }

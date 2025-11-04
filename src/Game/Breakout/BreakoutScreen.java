@@ -2,19 +2,36 @@ package Game.Breakout;
 
 import Game.Screen;
 import Objects.Breakout.Ball;
+import Objects.Breakout.Bricks;
+import Objects.Breakout.Slider;
 import Objects.SideMover;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class BreakoutScreen extends Screen {
     private BreakoutLevelMaker breakoutLevelMaker;
+    private Bricks bricks;
+    protected List<Ball> queuedBalls = new ArrayList<>();
+
     public BreakoutScreen() {
         super();
+        bricks = new Bricks(new ArrayList<>());
         this.breakoutLevelMaker = new BreakoutLevelMaker(root, bricks.getBricksList());
         loadLevel(1);
+    }
+
+    public void queueNewBall(Ball b) {
+        queuedBalls.add(b);
+    }
+
+    public List<Ball> consumeQueuedBalls() {
+        List<Ball> list = new ArrayList<>(queuedBalls);
+        queuedBalls.clear();
+        return list;
     }
 
     @Override
@@ -26,7 +43,7 @@ public class BreakoutScreen extends Screen {
 
     }
 
-    public ArrayList<SideMover> getSideMoverList() { return breakoutLevelMaker.getSideMoverList(); }
+    public ArrayList<Slider> getSliderList() { return breakoutLevelMaker.getSliderList(); }
 
     @Override
     public void gameOverScreen() {
@@ -59,6 +76,10 @@ public class BreakoutScreen extends Screen {
             }
         }
         return false;
+    }
+
+    public Bricks getBricks() {
+        return bricks;
     }
 
     public BreakoutLevelMaker getBreakoutLevelMaker(){

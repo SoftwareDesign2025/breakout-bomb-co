@@ -4,18 +4,18 @@ package Game.Galaga;
 import Game.GameLoop;
 import Objects.Galaga.Ship;
 import Objects.Galaga.GalagaEnemies;
-import Objects.SideMover;
 import javafx.scene.input.KeyCode;
 
 public class GalagaLoop extends GameLoop {
     private final GalagaEnemies enemies;
     private long lastShotTime = 0;
-    private final long LASER_COOLDOWN = 300;
+    private final Ship ship;
 
     public GalagaLoop(GalagaScreen galagaScreen) {
         super(galagaScreen);
         galagaScreen.loadLevel(2);
         this.enemies = galagaScreen.getEnemies();
+        this.ship = galagaScreen.getShip();
     }
 
     @Override
@@ -59,23 +59,17 @@ public class GalagaLoop extends GameLoop {
 
     @Override
     public void handleKeyInput() {
-        for (SideMover sideMover : sideMoverList) {
-            Ship ship = (Ship) sideMover;
-            if (pressedKeys.contains(KeyCode.LEFT) || pressedKeys.contains(KeyCode.A)) {
-                ship.moveLeft();
-            }
-            if (pressedKeys.contains(KeyCode.RIGHT) || pressedKeys.contains(KeyCode.D)) {
-                ship.moveRight();
-            }
-            if (pressedKeys.contains(KeyCode.SPACE)) {
-                lastShot(ship);
-            }
+        moveLeftAndRight(ship);
+        if (pressedKeys.contains(KeyCode.SPACE)) {
+            lastShot(ship);
         }
+
     }
 
     public void lastShot(Ship ship) {
+        int laserCooldown = 300;
         now =  System.currentTimeMillis();
-        if (now - lastShotTime >= LASER_COOLDOWN) {
+        if (now - lastShotTime >= laserCooldown) {
             ship.shootLaser();
             lastShotTime = now;
         }

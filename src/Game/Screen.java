@@ -11,10 +11,9 @@ import Objects.Breakout.Bricks;
 import Objects.SideMover;
 
 public abstract class Screen {
+
     protected Group root;
     protected Text scoreboard;
-    protected Bricks bricks;
-    protected List<Ball> queuedBalls = new ArrayList<>();
 
     public Screen() {
         root = new Group();
@@ -22,27 +21,12 @@ public abstract class Screen {
         scoreboard.setFill(Color.GREEN);
         scoreboard.setFont(new Font(23));
         root.getChildren().add(scoreboard);
-        bricks = new Bricks(new ArrayList<>());
     }
 
     public abstract void loadLevel(int level);
 
     public Group getRoot() {
         return root;
-    }
-    public Bricks getBricks() {
-        return bricks;
-    }
-    public abstract ArrayList<SideMover> getSideMoverList();
-
-    public void queueNewBall(Ball b) {
-        queuedBalls.add(b);
-
-    }
-    public List<Ball> consumeQueuedBalls() {
-        List<Ball> list = new ArrayList<>(queuedBalls);
-        queuedBalls.clear();
-        return list;
     }
 
     public abstract void gameOverScreen();

@@ -13,17 +13,12 @@ import Objects.SideMover;
 
 public abstract class LevelMaker {
     protected final Group ROOT;
-    protected final ArrayList<SideMover> SIDE_MOVER_LIST = new ArrayList<>();
     protected final ArrayList<Rectangle> OUT_OF_BOUNDS_LIST = new ArrayList<>();
     protected final ArrayList<Node> NODE_LIST = new ArrayList<>();
     protected final Random RAND = new Random();
 
     public LevelMaker(Group root) {
         this.ROOT = root;
-    }
-
-    public ArrayList<SideMover> getSideMoverList() {
-        return SIDE_MOVER_LIST;
     }
 
     public ArrayList<Rectangle> getOutOfBounds() {
@@ -37,7 +32,6 @@ public abstract class LevelMaker {
             ROOT.getChildren().removeAll(NODE_LIST);
             NODE_LIST.clear();
         }
-        SIDE_MOVER_LIST.clear();
         OUT_OF_BOUNDS_LIST.clear();
     }
 

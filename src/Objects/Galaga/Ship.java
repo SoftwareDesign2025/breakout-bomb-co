@@ -41,9 +41,6 @@ public class Ship extends SideMover {
         shipImage.setLayoutY(yLocation - shipImage.getFitHeight() / 2);
     }
 
-
-
-
     public ImageView getShip() {
         return shipImage;
     }

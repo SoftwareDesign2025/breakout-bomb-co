@@ -108,14 +108,12 @@ public class GalagaScreen extends Screen {
             }
         }.start();
     }
-
-    public ArrayList<SideMover> getSideMoverList() { return galagaLevelMaker.getSideMoverList(); }
-
     @Override
     public void loadLevel(int level) {
         galagaLevelMaker.resetLevel();
         if(level == 1) {galagaLevelMaker.loadLevel(new GalagaLevel());}
         else if(level == 2){galagaLevelMaker.loadLevel(new GalagaLevelTwo());}
+        ship = galagaLevelMaker.getShip();
     }
 
     public Ship getShip() {

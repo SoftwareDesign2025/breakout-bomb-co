@@ -3,6 +3,7 @@ package Powerups;
 
 import java.util.ArrayList;
 
+import Game.Breakout.BreakoutScreen;
 import Game.Screen;
 import Objects.Breakout.Ball;
 import Objects.Breakout.Slider;
@@ -106,7 +107,7 @@ public class PowerUp {
 		return new PowerUp(x,y);
 	}
 
-	public void onSpawn(Screen screen, ArrayList<Ball> balls) {}
+	public void onSpawn(BreakoutScreen screen, ArrayList<Ball> balls) {}
 
 	public void tick() {}
 
