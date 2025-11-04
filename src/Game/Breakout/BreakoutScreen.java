@@ -81,7 +81,7 @@ public class BreakoutScreen extends Screen {
     public ArrayList<Slider> getSliderList() { return breakoutLevelMaker.getSliderList(); }
 
     /**
-     * Authors:
+     * Authors: Gavin
      */
     @Override
     public void gameOverScreen() {
@@ -92,7 +92,7 @@ public class BreakoutScreen extends Screen {
     }
 
     /**
-     * Authors:
+     * Authors: Gavin
      */
     @Override
     public void gameWinScreen() {
@@ -103,7 +103,7 @@ public class BreakoutScreen extends Screen {
     }
 
     /**
-     * Authors:
+     * Authors: Gavin
      * @param ball
      */
     public void checkBallToWall(Ball ball) {
@@ -116,7 +116,7 @@ public class BreakoutScreen extends Screen {
     }
 
     /**
-     * Authors:
+     * Authors: Gavin
      * @param ball
      * @return
      */

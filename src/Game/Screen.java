@@ -32,7 +32,7 @@ public abstract class Screen {
     }
 
     /**
-     * Authors:
+     * Authors: Gavin
      * @param ball
      * @return
      */
@@ -49,7 +49,7 @@ public abstract class Screen {
     }
 
     /**
-     * Authors:
+     * Authors: Gavin
      * @param highScore
      * @param score
      * @param lives

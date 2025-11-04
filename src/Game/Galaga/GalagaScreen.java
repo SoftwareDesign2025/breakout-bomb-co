@@ -23,6 +23,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
+import static jdk.internal.org.jline.utils.Colors.s;
+
 public class GalagaScreen extends Screen {
     private Ship ship;
     private GalagaLevelMaker galagaLevelMaker;
@@ -35,7 +37,7 @@ public class GalagaScreen extends Screen {
     private Random rand = new Random();
 
     /**
-     * Authors:
+     * Authors: Gavin
      */
     public GalagaScreen() {
         super();
@@ -61,7 +63,7 @@ public class GalagaScreen extends Screen {
     }
 
     /**
-     * Authors:
+     * Authors: Gavin
      * Simple class to store each star's data
      */
     private class Star {
@@ -77,7 +79,7 @@ public class GalagaScreen extends Screen {
     }
 
     /**
-     * Authors:
+     * Authors: Gavin
      * Create a list of randomly placed colorful stars
      * @param count
      */
@@ -94,7 +96,7 @@ public class GalagaScreen extends Screen {
     }
 
     /**
-     * Authors:
+     * Authors: Gavin
      * Return a random star color from a set of bright colors
      * @return
      */
@@ -111,20 +113,20 @@ public class GalagaScreen extends Screen {
      * Continuously animate stars falling to create space effect
      */
     private void animateStars() {
-        GraphicsContext gc = starCanvas.getGraphicsContext2D();
+        GraphicsContext screen = starCanvas.getGraphicsContext2D();
         new AnimationTimer() {
             @Override
             public void handle(long now) {
-                gc.clearRect(0, 0, 800, 600);
-                for (Star s : stars) {
-                    s.y += s.speed;
-                    if (s.y > 600) {
-                        s.y = 0;
-                        s.x = rand.nextDouble() * 800;
-                        s.color = getRandomColor();
+                screen.clearRect(0, 0, 800, 600);
+                for (Star star : stars) {
+                    star.y += star.speed;
+                    if (star.y > 600) {
+                        star.y = 0;
+                        star.x = rand.nextDouble() * 800;
+                        star.color = getRandomColor();
                     }
-                    gc.setFill(s.color);
-                    gc.fillOval(s.x, s.y, s.size, s.size);
+                    screen.setFill(star.color);
+                    screen.fillOval(star.x, star.y, star.size, star.size);
                 }
             }
         }.start();
@@ -167,7 +169,7 @@ public class GalagaScreen extends Screen {
     }
 
     /**
-     * Authors:
+     * Authors: Gavin
      */
     @Override
     public void gameOverScreen() {
@@ -178,7 +180,7 @@ public class GalagaScreen extends Screen {
     }
 
     /**
-     * Authors:
+     * Authors: Gavin
      */
     @Override
     public void gameWinScreen() {
