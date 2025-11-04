@@ -14,6 +14,7 @@ public class GalagaLevelTwo implements Level<GalagaLevelMaker> {
     /**
      * Authors: Oscar Kardon
      * @param maker
+     * builds second level of Galaga using four images for enemies
      */
     @Override
     public void build(GalagaLevelMaker maker) {

@@ -6,6 +6,7 @@ Authors: Oscar Kardon
 import Game.Galaga.GalagaLevelMaker;
 import Objects.Galaga.GalagaEnemy;
 
+//Builds third level of Galaga with an every-other pattern, lives increase by row
 public class GalagaLevelThree implements Level<GalagaLevelMaker> {
 
     @Override

@@ -1,5 +1,5 @@
 /*
-Authors:
+Authors: Oscar Kardon
 
  */
 
@@ -18,7 +18,7 @@ public class GalagaEnemy extends HittableObject {
     private int lives;
 
     /**
-     * Authors:
+     * Authors:Oscar Kardon
      * @param width
      * @param height
      * @param imagePath
@@ -45,50 +45,64 @@ public class GalagaEnemy extends HittableObject {
     }
 
     /**
-     * Authors:
-     * @return
+     * Authors:Oscar Kardon
+     * @return ImageView of enemy
      */
     public ImageView getEnemy(){
         return imageView;
     }
 
     /**
-     * Authors:
+     * Authors:Oscar Kardon
+     * moves enemy down screen
      */
     public void moveDown(){
         imageView.setLayoutY(getEnemy().getLayoutY() + speed);
     }
 
+    /**
+     * Authors:Oscar Kardon
+     */
     public void setMovementPattern(String pattern) {
         this.movementPattern = pattern;
     }
 
-    public String getMovementPattern(){
-        return movementPattern;
-    }
 
+    //used to determine movement
     private double angle = 0;
-
+    /**
+     * Authors:Oscar Kardon
+     */
     public void moveWavey(){
         angle += 0.1;
         double offsetX = Math.sin(angle) * 5;
         imageView.setLayoutX(getEnemy().getLayoutX() + offsetX);
         imageView.setLayoutY(imageView.getLayoutY() + speed);
     }
+    /**
+     * Authors:Oscar Kardon
+     */
     public void movePatterned() {
         if(movementPattern.equals("wavey")){
             moveWavey();
         }
         moveDown();
     }
-
+    /**
+     * Authors:Oscar Kardon
+     */
     public int getPointValue(){
         return pointValue;
     }
-
+    /**
+     * Authors:Oscar Kardon
+     */
     public void loseLife(){
         lives--;
     }
+    /**
+     * Authors:Oscar Kardon
+     */
     public int getLives(){
         return lives;
     }

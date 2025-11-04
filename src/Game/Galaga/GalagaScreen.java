@@ -47,10 +47,6 @@ public class GalagaScreen extends Screen {
     private Random rand = new Random();
     private Lasers lasers = new Lasers(root);
 
-
-
-
-
     /**
      * Authors:
      */
@@ -175,10 +171,6 @@ public class GalagaScreen extends Screen {
 
     public Lasers getLasers() {
     	return lasers;
-    }
-
-    public GalagaLevelMaker getGalagaLevelMaker() {
-        return galagaLevelMaker;
     }
 
 

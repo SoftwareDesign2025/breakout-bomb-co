@@ -16,7 +16,7 @@ public class Brick extends HittableObject {
     private boolean unbreakable = false;
 
     /**
-     * Authors:
+     * Authors:Oscar Kardon
      * @param width
      * @param height
      * @param startX
@@ -33,15 +33,15 @@ public class Brick extends HittableObject {
     }
 
     /**
-     * Authors:
-     * @return
+     * Authors:Oscar Kardon
+     * @return Rectangle of brick
      */
     public Rectangle getBrick() {
         return brick;
     }
 
     /**
-     * Authors:
+     * Authors:Oscar Kardon
      * @param value
      */
     public void setUnbreakable(boolean value) {
@@ -49,16 +49,15 @@ public class Brick extends HittableObject {
     }
 
     /**
-     * Authors:
-     * @return
+     * Authors:Oscar Kardon
+     * @return if the brick is an unbreakable obstacle
      */
-    @Override
     public boolean isUnbreakable() {
         return unbreakable;
     }
 
     /**
-     * Authors:
+     * Authors:Oscar Kardon
      */
     @Override
     public void deactivate(){
@@ -67,9 +66,9 @@ public class Brick extends HittableObject {
     }
 
     /**
-     * Authors:
+     * Authors:Oscar Kardon
      * @param ball
-     * @return
+     * @return pointValue associated with brick
      */
     public int detectCollisionWithBall(Ball ball) {
         if (brick.getBoundsInParent().intersects(ball.getBall().getBoundsInParent())) {
