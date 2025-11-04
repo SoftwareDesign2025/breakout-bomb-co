@@ -6,11 +6,13 @@ Murph Lennemann
 
 package Game.Breakout;
 
+import Game.Levels.LevelOne;
+import Game.Levels.LevelThree;
+import Game.Levels.LevelTwo;
 import Game.Screen;
 import Objects.Breakout.Ball;
 import Objects.Breakout.Bricks;
 import Objects.Breakout.Slider;
-import Objects.SideMover;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
@@ -23,26 +25,29 @@ public class BreakoutScreen extends Screen {
     private Bricks bricks;
     protected List<Ball> queuedBalls = new ArrayList<>();
 
+
     /**
      * Authors: Murph
+     * Creates a screen used for breakout
      */
     public BreakoutScreen() {
         super();
         bricks = new Bricks(new ArrayList<>());
         this.breakoutLevelMaker = new BreakoutLevelMaker(root, bricks.getBricksList());
+        createLevelList();
         loadLevel(1);
     }
 
     /**
-     * Authors: Murph
-     * @param b
+     * Authors:
+     * @param ball
      */
-    public void queueNewBall(Ball b) {
-        queuedBalls.add(b);
+    public void queueNewBall(Ball ball) {
+        queuedBalls.add(ball);
     }
 
     /**
-     * Authors: Murph
+     * Authors:
      * @return
      */
     public List<Ball> consumeQueuedBalls() {
@@ -51,22 +56,27 @@ public class BreakoutScreen extends Screen {
         return list;
     }
 
-    /**
-     * Authors: Murph
-     * @param level
-     */
-    @Override
-    public void loadLevel(int level) {
-        breakoutLevelMaker.resetLevel();
-        if (level == 1) breakoutLevelMaker.loadLevel(new Game.Levels.LevelOne());
-        else if (level == 2) breakoutLevelMaker.loadLevel(new Game.Levels.LevelTwo());
-        else if (level == 3) breakoutLevelMaker.loadLevel(new Game.Levels.LevelThree());
-
+    public void createLevelList() {
+        levels = new ArrayList<>();
+        levels.add(new LevelOne());
+        levels.add(new LevelTwo());
+        levels.add(new LevelThree());
     }
 
     /**
      * Authors: Murph
-     * @return
+     * @param level The current level being played
+     */
+    @Override
+    public void loadLevel(int level) {
+        int index = level - 1;
+        breakoutLevelMaker.loadLevel(levels.get(index));
+    }
+
+    /**
+     * Authors: Murph
+     * Getter
+     * @return the list of sliders currently used in the level
      */
     public ArrayList<Slider> getSliderList() { return breakoutLevelMaker.getSliderList(); }
 
@@ -121,7 +131,8 @@ public class BreakoutScreen extends Screen {
 
     /**
      * Authors: Murph
-     * @return
+     * Getter
+     * @return the bricks currently used in the level
      */
     public Bricks getBricks() {
         return bricks;
@@ -129,7 +140,8 @@ public class BreakoutScreen extends Screen {
 
     /**
      * Authors: Murph
-     * @return
+     * Getter
+     * @return the levelMaker being used
      */
     public BreakoutLevelMaker getBreakoutLevelMaker(){
         return breakoutLevelMaker;

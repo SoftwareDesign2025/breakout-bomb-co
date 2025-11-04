@@ -47,7 +47,7 @@ public class BreakoutLevelMaker extends LevelMaker {
     /**
      * Authors: Murph, Oscar
      * Resets all of the gameObjects and removes them from the screen
-     * Used
+     * Used when loading a new level
      */
     public void resetLevel() {
         clearGameObjects();
@@ -65,8 +65,9 @@ public class BreakoutLevelMaker extends LevelMaker {
 
     /**
      * Authors: Murph
-     * @param startX
-     * @param startY
+     * Adds a new slider into list and onto scene
+     * @param startX is the x location of a slider
+     * @param startY is the y location of a slider
      */
     public void addSlider(double startX, double startY) {
         Slider s = new Slider(startX, startY);
@@ -77,7 +78,7 @@ public class BreakoutLevelMaker extends LevelMaker {
 
     /**
      * Authors: Murph
-     * @return
+     * @return gets the x location of the ball center
      */
     public double getBallX() {
         return ballX;
@@ -85,7 +86,7 @@ public class BreakoutLevelMaker extends LevelMaker {
 
     /**
      * Authors: Murph
-     * @return
+     * @return gets the y location of the ball center
      */
     public double getBallY() {
         return ballY;
@@ -133,15 +134,16 @@ public class BreakoutLevelMaker extends LevelMaker {
 
     /**
      * Authors: Murph
-     * @param pattern
-     * @param startX
-     * @param startY
-     * @param brickWidth
-     * @param brickHeight
-     * @param brickGap
-     * @param pointValue
-     * @param color
-     * @param colorChange
+     * Creates the level given level parameters
+     * @param pattern the 2d arrayList that holds the brick pattern
+     * @param startX the x location of the left most brick
+     * @param startY the y location of the top most brick
+     * @param brickWidth the width of a brick
+     * @param brickHeight the height of a brick
+     * @param brickGap how far apart bricks are from each other
+     * @param pointValue how many points a brick is worth
+     * @param color The colors of the bricks
+     * @param colorChange Weather or not colors are randomized
      */
     public void buildBricks(int[][] pattern, double startX, double startY, double brickWidth, double brickHeight, double brickGap, int pointValue, Color color, boolean colorChange) {
         for (int row = 0; row < pattern.length; row++) {
