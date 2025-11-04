@@ -1,5 +1,5 @@
 /*
-Authors:
+Authors: Oscar Kardon
 
  */
 
@@ -8,10 +8,11 @@ package Game.Levels;
 import Game.Galaga.GalagaLevelMaker;
 import Objects.Galaga.GalagaEnemy;
 
+//This class is the second Galaga level
 public class GalagaLevelTwo implements Level<GalagaLevelMaker> {
 
     /**
-     * Authors:
+     * Authors: Oscar Kardon
      * @param maker
      */
     @Override
@@ -56,7 +57,7 @@ public class GalagaLevelTwo implements Level<GalagaLevelMaker> {
             }
         }
 
-
+        //big boss starts off screen
         double bossWidth = 200;
         double bossHeight = 150;
         double bossX = 300;
