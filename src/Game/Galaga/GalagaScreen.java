@@ -143,7 +143,7 @@ public class GalagaScreen extends Screen {
 
     /**
      * Authors: Murph
-     * @return
+     * @return returns the ship used in this game
      */
     public Ship getShip() {
         return ship;
