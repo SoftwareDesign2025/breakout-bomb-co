@@ -48,7 +48,7 @@ public class GalagaEnemies implements HittableObjects {
      */
     public void drop() {
         for (GalagaEnemy enemy : enemies) {
-            enemy.movePatterned();
+            enemy.moveDown();
         }
     }
 

@@ -41,11 +41,8 @@ public class CollisionDetector {
                     enemy.getEnemy().getFitHeight()
                 )) {
                     laser.destroy();
-                    enemy.loseLife();
-                    if(enemy.getLives() <= 0) {
-                        enemy.deactivate();
-                    }
-                    pointsEarned += enemy.getPointValue();
+                    enemy.deactivate();
+                    pointsEarned += 1;
                     break;
                 }
             }

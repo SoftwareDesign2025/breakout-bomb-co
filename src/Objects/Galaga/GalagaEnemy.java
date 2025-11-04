@@ -14,8 +14,6 @@ import javafx.scene.image.ImageView;
 public class GalagaEnemy extends HittableObject {
     private ImageView imageView;
     private double speed = 0.1;
-    private String movementPattern = "default";
-    private int lives;
 
     /**
      * Authors:
@@ -27,9 +25,9 @@ public class GalagaEnemy extends HittableObject {
      * @param pointValue
      * @param powerUp
      * @param speed
-     * @param lives
+     * @param hits
      */
-    public GalagaEnemy(double width, double height, String imagePath, double startX, double startY, int pointValue, PowerUp powerUp, double speed, int lives){
+    public GalagaEnemy(double width, double height, String imagePath, double startX, double startY, int pointValue, PowerUp powerUp, double speed, int hits){
 
         super(startX, startY, pointValue, powerUp);
 
@@ -41,7 +39,7 @@ public class GalagaEnemy extends HittableObject {
         imageView.setFitWidth(width);
         imageView.setFitHeight(height);
         this.speed = speed;
-        this.lives = lives;
+
     }
 
     /**
@@ -59,37 +57,5 @@ public class GalagaEnemy extends HittableObject {
         imageView.setLayoutY(getEnemy().getLayoutY() + speed);
     }
 
-    public void setMovementPattern(String pattern) {
-        this.movementPattern = pattern;
-    }
 
-    public String getMovementPattern(){
-        return movementPattern;
-    }
-
-    private double angle = 0;
-
-    public void moveWavey(){
-        angle += 0.1;
-        double offsetX = Math.sin(angle) * 5;
-        imageView.setLayoutX(getEnemy().getLayoutX() + offsetX);
-        imageView.setLayoutY(imageView.getLayoutY() + speed);
-    }
-    public void movePatterned() {
-        if(movementPattern.equals("wavey")){
-            moveWavey();
-        }
-        moveDown();
-    }
-
-    public int getPointValue(){
-        return pointValue;
-    }
-
-    public void loseLife(){
-        lives--;
-    }
-    public int getLives(){
-        return lives;
-    }
 }
