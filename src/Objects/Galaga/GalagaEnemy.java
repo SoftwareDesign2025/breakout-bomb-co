@@ -11,7 +11,7 @@ public class GalagaEnemy extends HittableObject {
     private double speed = 0.1;
 
 
-    public GalagaEnemy(double width, double height, String imagePath, double startX, double startY, int pointValue, PowerUp powerUp, double speed){
+    public GalagaEnemy(double width, double height, String imagePath, double startX, double startY, int pointValue, PowerUp powerUp, double speed, int hits){
 
         super(startX, startY, pointValue, powerUp);
 

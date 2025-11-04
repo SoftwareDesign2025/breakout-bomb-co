@@ -1,13 +1,9 @@
 package Game.Galaga;
 
 import Game.LevelMaker;
-import Game.Levels.GalagaLevel;
-import Game.Levels.Level;
 import Objects.Galaga.GalagaEnemy;
 import Objects.Galaga.Ship;
 import javafx.scene.Group;
-import javafx.scene.paint.Color;
-import javafx.scene.shape.Rectangle;
 
 import java.util.List;
 
