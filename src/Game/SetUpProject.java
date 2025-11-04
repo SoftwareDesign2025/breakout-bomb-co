@@ -27,7 +27,8 @@ public class SetUpProject extends Application {
     private static final int GAME_WIDTH = 800;
     private static final int GAME_HEIGHT = 600;
     private static final int FRAMES_PER_SECOND = 60;
-    public static final int MILLISECOND_DELAY = 1000 / FRAMES_PER_SECOND;
+    private static final int MILLISECOND_DELAY = 1000 / FRAMES_PER_SECOND;
+    private static final int LEVEL = 1;
 
     private Stage stage;
     private GameLoop gameLoop;
@@ -116,7 +117,7 @@ public class SetUpProject extends Application {
      * Authors: Murph
      */
     private void startBreakout() {
-        BreakoutScreen breakoutScreen = new BreakoutScreen();
+        BreakoutScreen breakoutScreen = new BreakoutScreen(LEVEL);
         gameLoop = new BreakoutLoop(breakoutScreen);
         startGame(breakoutScreen);
     }
@@ -125,7 +126,7 @@ public class SetUpProject extends Application {
      * Authors: Murph
      */
     private void startGalaga() {
-        GalagaScreen galagaScreen = new GalagaScreen();
+        GalagaScreen galagaScreen = new GalagaScreen(LEVEL);
         gameLoop = new GalagaLoop(galagaScreen);
         startGame(galagaScreen);
         }

@@ -22,9 +22,11 @@ public abstract class Screen {
     protected Group root;
     protected Text scoreboard;
     protected List<Level> levels;
+    protected int level;
 
-    public Screen() {
+    public Screen(int level) {
         root = new Group();
+        this.level = level;
         scoreboard = new Text(10, 20, "High Score: 0 Score: 0 Lives: 5");
         scoreboard.setFill(Color.GREEN);
         scoreboard.setFont(new Font(23));

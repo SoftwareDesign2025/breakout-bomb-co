@@ -104,13 +104,14 @@ public class BreakoutLoop extends GameLoop {
 	 * Checks if a powerUp should be dropped and makes one if so
 	 */
 	private void spawnPowerUpsFromBricks() {
+		double widthDivider = 2.0;
 		for (Brick brick: bricks.getBricksList()) {
 			if (!brick.isActive()) {
 				PowerUp powerUp = brick.getPowerUp();
 				if (powerUp != null) {
 					PowerUp newPowerUp = powerUp.spawnAt(
-							brick.getBrick().getX() + brick.getBrick().getWidth() / 2.0,
-							brick.getBrick().getY() + brick.getBrick().getHeight() / 2.0
+							brick.getBrick().getX() + brick.getBrick().getWidth() / widthDivider,
+							brick.getBrick().getY() + brick.getBrick().getHeight() / widthDivider
 					);
 					addPowerUp(newPowerUp);
 					brick.setPowerUp(null);
@@ -185,14 +186,11 @@ public class BreakoutLoop extends GameLoop {
 		Ball freshBall;
 		freshBall = new Ball(10, LEVEL_MAKER.getBallX(), LEVEL_MAKER.getBallY());
 		BALLS.add(freshBall);
-
 		breakoutScreen.getRoot().getChildren().add(freshBall.getBall());
-
 		freshBall.changeSpeed(resetBallSpeed);
 		freshBall.changeXDirection(resetXDirection);
 		freshBall.changeYDirection(resetYDirection);
 	}
-
 
 	/**
 	 * Authors: Murph
@@ -295,7 +293,6 @@ public class BreakoutLoop extends GameLoop {
 		}
 		return true;
 	}
-
 
 	/**
 	 * Authors: Murph
