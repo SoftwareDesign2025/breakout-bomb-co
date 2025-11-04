@@ -7,8 +7,11 @@ package Game.Galaga;
 
 import Game.CollisionDetector;
 import Game.GameLoop;
+import Objects.Galaga.GalagaEnemy;
 import Objects.Galaga.Ship;
 import Objects.Galaga.GalagaEnemies;
+import Objects.HittableObject;
+import Objects.HittableObjects;
 import Objects.Laser;
 import Objects.Lasers;
 import javafx.scene.input.KeyCode;
@@ -42,11 +45,10 @@ public class GalagaLoop extends GameLoop {
     @Override
     public void step() {
         showScreen();
-        handleKeyInput();
-
         if (gameOn()) return;
-
         runGame();
+        handleKeyInput();
+        checkLevel();
         checkLives();
         checkWin();
         lasers.update();
@@ -123,12 +125,19 @@ public class GalagaLoop extends GameLoop {
 
     @Override
     public boolean levelOver() {
+        int enemyCount = 0;
+        for (HittableObject enemy: enemies.getHittableObjects()) {
+            enemyCount++;
+        }
+        System.out.println(enemyCount);
         return enemies.isCleared();
     }
 
     @Override
     public void resetLevel() {
         moving = false;
+        lasers.clear();
+        galagaScreen.loadLevel(level);
         ship = galagaScreen.getShip();
     }
 
