@@ -20,6 +20,7 @@ public class GalagaLoop extends GameLoop {
         galagaScreen.loadLevel(0);
         this.enemies = galagaScreen.getEnemies();
         this.lasers = galagaScreen.getLasers();
+        //this.ship = ship.getShip();
         this.collisionDetector = new CollisionDetector(lasers, enemies);
         this.ship = galagaScreen.getShip();
     }
@@ -29,8 +30,18 @@ public class GalagaLoop extends GameLoop {
         showScreen();
         runGame();
         checkLives();
+        checkWin();
         lasers.update();
-        collisionDetector.checkLaserEnemyCollisions();
+        points += collisionDetector.checkLaserEnemyCollisions();
+        
+        Laser enemyLaser = enemies.tryShoot();
+        if (enemyLaser != null) {
+            lasers.addLaser(enemyLaser);
+        }
+        if (collisionDetector.checkLaserShipCollisions(ship)) {
+            lives--;
+            System.out.println("Ship hit! Lives remaining: " + lives);
+        }
     }
 
     @Override
@@ -48,10 +59,10 @@ public class GalagaLoop extends GameLoop {
                     true
                 );
                 lasers.addLaser(laser);
-            }
+            } 
         }
         if (code == KeyCode.B) {
-            clearHittableObjects();
+            enemies.clearObjects(screen);
         }
        
     }
@@ -75,5 +86,12 @@ public class GalagaLoop extends GameLoop {
 
     @Override
     public void startMoving(){}
-}
+
 	
+    private void checkWin() {
+    	if (levelOver()) {
+    		gameOverLogic();
+    		screen.gameWinScreen();
+    	}
+    }
+}

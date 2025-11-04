@@ -28,7 +28,7 @@ public class GalagaScreen extends Screen {
         root.getChildren().add(0, bg);
         enemyList = new ArrayList<>();
         galagaLevelMaker = new GalagaLevelMaker(root, enemyList);
-        enemies = new GalagaEnemies(enemyList);
+        enemies = new GalagaEnemies(enemyList,60);//edit difficulty with 2nd parameter
         lasers = new Lasers(root);
         
         loadLevel(1);

@@ -4,18 +4,23 @@ import Objects.GalagaEnemy;
 import Objects.HittableObject;
 import Objects.Laser;
 import Objects.Lasers;
+import Objects.Ship;
 import Objects.GalagaEnemies;
 
 public class CollisionDetector {
     private Lasers lasers;
     private GalagaEnemies enemies;
+    private int points;
+    private Ship ship;
     
     public CollisionDetector(Lasers lasers, GalagaEnemies enemies) {
         this.lasers = lasers;
         this.enemies = enemies;
+        this.points = 0;
     }
     
-    public void checkLaserEnemyCollisions() {
+    public int checkLaserEnemyCollisions() {
+    	int pointsEarned = 0;
         for (Laser laser : lasers.getActiveLasers()) {
             if (!laser.isPlayerLaser()) continue;
             
@@ -32,9 +37,30 @@ public class CollisionDetector {
                 )) {
                     laser.destroy();
                     enemy.deactivate();
+                    pointsEarned += 1;
                     break;
                 }
             }
         }
+        return pointsEarned;
     }
+    
+    public boolean checkLaserShipCollisions(Ship ship) {
+        for (Laser laser : lasers.getActiveLasers()) {
+            if (laser.isPlayerLaser()) continue;  // Only enemy lasers hit ship
+            
+            if (laser.collidesWith(
+                ship.getShip().getLayoutX(),
+                ship.getShip().getLayoutY(),
+                ship.getShip().getFitWidth(),
+                ship.getShip().getFitHeight()
+            )) {
+                laser.destroy();
+                return true;  // Ship was hit!
+            }
+        }
+        return false;  // Ship safe
+    }
+   
+
 }
