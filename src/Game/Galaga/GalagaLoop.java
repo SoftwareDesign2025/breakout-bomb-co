@@ -129,7 +129,6 @@ public class GalagaLoop extends GameLoop {
         for (HittableObject enemy: enemies.getHittableObjects()) {
             enemyCount++;
         }
-        System.out.println(enemyCount);
         return enemies.isCleared();
     }
 
