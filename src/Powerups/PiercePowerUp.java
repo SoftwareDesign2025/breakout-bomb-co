@@ -20,7 +20,7 @@ public class PiercePowerUp extends PowerUp {
     private boolean finished = false;
 
     /**
-     * Authors:
+     * Authors:Farmer
      * @param x
      * @param y
      */
@@ -30,7 +30,7 @@ public class PiercePowerUp extends PowerUp {
     }
 
     /**
-     * Authors:
+     * Authors:Farmer
      * @param sliders
      */
     @Override
@@ -41,7 +41,7 @@ public class PiercePowerUp extends PowerUp {
     }
 
     /**
-     * Authors:
+     * Authors:Farmer
      */
     public static void tryActivate() {
         if (charges > 0 && framesLeft == 0) {
@@ -51,7 +51,7 @@ public class PiercePowerUp extends PowerUp {
     }
 
     /**
-     * Authors:
+     * Authors:Farmer
      * called once per frame
      */
     public static void tickGlobal() {
@@ -59,7 +59,7 @@ public class PiercePowerUp extends PowerUp {
     }
 
     /**
-     * Authors:
+     * Authors:Farmer
      * Brick uses this to decide wether to skip the bounce
      * @return
      */
@@ -68,13 +68,15 @@ public class PiercePowerUp extends PowerUp {
     }
 
     /**
-     * Authors:
+     * Authors:Farmer
      * @return
      */
-    public boolean isPowerUpOver() { return finished; }
+    public boolean isPowerUpOver() {
+    	return finished; 
+    	}
 
     /**
-     * Authors:
+     * Authors:Farmer
      * @param ball
      */
 	public void setBall(Ball ball) {
@@ -82,7 +84,7 @@ public class PiercePowerUp extends PowerUp {
 	}
 
     /**
-     * Authors:
+     * Authors:Farmer
      * @param x
      * @param y
      * @return

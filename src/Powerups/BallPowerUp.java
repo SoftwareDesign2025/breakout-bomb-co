@@ -18,7 +18,7 @@ public class BallPowerUp extends PowerUp {
     private boolean finished = false;
 
     /**
-     * Authors:
+     * Authors:Farmer
      * @param x
      * @param y
      */
@@ -28,7 +28,7 @@ public class BallPowerUp extends PowerUp {
     }
 
     /**
-     * Authors:
+     * Authors:Farmer
      * set right after spawning (so it knows where to put the new ball)
      * @param screen
      * @param balls
@@ -39,7 +39,7 @@ public class BallPowerUp extends PowerUp {
     }
 
     /**
-     * Authors:
+     * Authors:Farmer
      * @param sliders
      */
     void startEffect(ArrayList<Slider> sliders) {
@@ -67,7 +67,7 @@ public class BallPowerUp extends PowerUp {
     }
 
     /**
-     * Authors:
+     * Authors:Farmer
      * @return
      */
     public double randomDirection() {
@@ -81,7 +81,7 @@ public class BallPowerUp extends PowerUp {
     }
 
     /**
-     * Authors:
+     * Authors:Farmer
      * @param x
      * @param y
      * @return
@@ -91,13 +91,13 @@ public class BallPowerUp extends PowerUp {
     	}
 
     /**
-     * Authors
+     * Authors:Farmer
      * @return
      */
     public boolean isPowerUpOver() { return finished; }
 
     /**
-     * Authors:
+     * Authors:Farmer
      * @param sliders
      */
     @Override
@@ -106,7 +106,7 @@ public class BallPowerUp extends PowerUp {
     }
 
     /**
-     * Authors:
+     * Authors:Farmer
      * @param myScreen
      * @param myBalls
      */

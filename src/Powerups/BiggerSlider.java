@@ -20,7 +20,7 @@ public class BiggerSlider extends PowerUp {
     private boolean over = false;
 
     /**
-     * Authors:
+     * Authors:Farmer
      * @param x
      * @param y
      */
@@ -30,7 +30,7 @@ public class BiggerSlider extends PowerUp {
     }
 
     /**
-     * Authors:
+     * Authors:Farmer
      * @param sliders
      */
     @Override
@@ -53,7 +53,7 @@ public class BiggerSlider extends PowerUp {
     }
 
     /**
-     * Authors:
+     * Authors:Farmer
      */
     @Override
     public void tick() {
@@ -67,7 +67,7 @@ public class BiggerSlider extends PowerUp {
     }
 
     /**
-     * Authors:
+     * Authors:Farmer
      * @param x
      * @param y
      * @return
@@ -77,7 +77,7 @@ public class BiggerSlider extends PowerUp {
     	}
 
     /**
-     * Authors:
+     * Authors:Farmer
      */
     @Override
     public void stopPowerUp() {
@@ -93,7 +93,7 @@ public class BiggerSlider extends PowerUp {
     }
 
     /**
-     * Authors:
+     * Authors:Farmer
      * @return
      */
     public boolean isPowerUpOver() { return over; }

@@ -12,18 +12,21 @@ import Objects.Laser;
 import Objects.Lasers;
 import Objects.Galaga.Ship;
 
-public class CollisionDetector {
+public class CollisionDetector {	//declare object variables needed in class
     private Lasers lasers;
     private GalagaEnemies enemies;
     private int points;
     private Ship ship;
     
+    //constructor
     public CollisionDetector(Lasers lasers, GalagaEnemies enemies) {
         this.lasers = lasers;
         this.enemies = enemies;
         this.points = 0;
     }
     
+
+    //detects collisions between ship lasers and enemies
     public int checkLaserEnemyCollisions() {
     	int pointsEarned = 0;
         for (Laser laser : lasers.getActiveLasers()) {
@@ -53,9 +56,11 @@ public class CollisionDetector {
         return pointsEarned;
     }
     
+
+    //detects collisions between enemy lasers and ship
     public boolean checkLaserShipCollisions(Ship ship) {
         for (Laser laser : lasers.getActiveLasers()) {
-            if (laser.isPlayerLaser()) continue;  // Only enemy lasers hit ship
+            if (laser.isPlayerLaser()) continue;  // Only enemy lasers hit ship, we dont want enemies killing each other
             
             if (laser.collidesWith(
                 ship.getShip().getLayoutX(),

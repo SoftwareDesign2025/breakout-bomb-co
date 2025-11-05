@@ -36,7 +36,7 @@ public class PowerUp {
 	private int countdownFrames = -1;
 
 	/**
-	 * Authors:
+	 * Authors:Farmer
 	 * @param x
 	 * @param y
 	 */
@@ -44,42 +44,26 @@ public class PowerUp {
 		powerUp = new Circle(WIDTH, Color.POWDERBLUE);
 		powerUp.setCenterX(x);		
         powerUp.setCenterY(y);
-        xpos = (int)x;
-        ypos = (int)y;
+        
 	}
 	
 	
 	
-	/*
-	 * original design for unstructured levels
-	//if brick is destroyed, drop power up DROP_RATE of the time
-	public PowerUp maybeDropPowerUp(double x, double y) {
-		double chance = Math.random()*20;
-		if(chance< DROP_RATE) {
-			return new BiggerSlider(x,y);
-		}
-		return null;
-		
-	}
 	
-	*/
 	
-	//new powerup design for structured levels
-
 	/**
-	 * Authors:
+	 * Authors:Farmer
 	 */
 	public void update_position() {
 		if (activated) 
 			return;
 		powerUp.setCenterY(powerUp.getCenterY()+FALL_SPEED);
-		xpos = (int) powerUp.getCenterX();
-	    ypos= (int) powerUp.getCenterY();
+		
 	}
 
 
 	/**
-	 * Authors:
+	 * Authors:Farmer
 	 * @param sliders
 	 */
     public void onPickup(ArrayList<Slider> sliders) {
@@ -89,15 +73,15 @@ public class PowerUp {
     }
 
 	/**
-	 * Authors:
+	 * Authors:Farmer
 	 * @param sliders
 	 */
     void startEffect(ArrayList<Slider> sliders) {
-        // base no-op; BiggerSlider overrides
+        // BiggerSlider overrides
     }
 
 	/**
-	 * Authors:
+	 * Authors:Farmer
 	 */
 	public void stopPowerUp() {
 		activated = false;
@@ -105,7 +89,7 @@ public class PowerUp {
 	}
 
 	/**
-	 * Authors
+	 * Authors: Farmer
 	 * @param frames
 	 */
     void beginCountdown(int frames) { 
@@ -114,7 +98,7 @@ public class PowerUp {
 
 
 	/**
-	 * Authors:
+	 * Authors:Farmer
 	 * @return
 	 */
 	public boolean isactivated() {
@@ -122,7 +106,7 @@ public class PowerUp {
 	}
 
 	/**
-	 * Authors:
+	 * Authors:Farmer
 	 * @return
 	 */
 	 public boolean isPowerUpOver() {
@@ -130,7 +114,7 @@ public class PowerUp {
 	}
 
 	/**
-	 * Authors:
+	 * Authors:Farmer
 	 * @return
 	 */
 	public Circle getNode() { 
@@ -139,7 +123,7 @@ public class PowerUp {
 
 
 	/**
-	 * Authors:
+	 * Authors:Farmer
 	 * @param x
 	 * @param y
 	 * @return

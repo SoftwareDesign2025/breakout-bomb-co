@@ -2,6 +2,7 @@
 Authors:
 Ben Farmer
 
+This class is to create the functionality of the laser which will be shot by ship and enemies
  */
 
 package Objects;
@@ -22,11 +23,20 @@ public class Laser {
     // Speed constants
     private static final double PLAYER_SPEED = 12;
     private static final double ALIEN_SPEED = 4;
-
+    /**
+     * Authors: Farmer
+     * @param x
+     * @param y
+     */
     public Laser(double x, double y) {
         this(x, y, true);
     }
-
+    /**
+     * Authors: Farmer
+     * @param x
+     * @param y
+     * @param isPlayeLaser
+     */
     public Laser(double x, double y, boolean isPlayerLaser) {
         this.isPlayerLaser = isPlayerLaser;
         this.speed = isPlayerLaser ? PLAYER_SPEED : ALIEN_SPEED;
@@ -43,7 +53,9 @@ public class Laser {
             rectangle.setStroke(Color.PINK);
         }
     }
-
+    /**
+     * Authors: Farmer
+     */
     public void update() {
         if (isPlayerLaser) {
             rectangle.setY(rectangle.getY() - speed);
@@ -51,12 +63,21 @@ public class Laser {
             rectangle.setY(rectangle.getY() + speed);
         }
     }
-
+    /**
+     * Authors: Farmer
+     * @param  screenHeight
+     */
     public boolean isOffScreen(double screenHeight) {
         return rectangle.getY() + rectangle.getHeight() < 0 || 
                rectangle.getY() > screenHeight;
     }
-
+    /**
+     * Authors: Farmer
+     * @param objX
+     * @param objY
+     * @param objWidth
+     * @param objHeight
+     */
     public boolean collidesWith(double objX, double objY, double objWidth, double objHeight) {
         if (!active) return false;
         
@@ -65,11 +86,15 @@ public class Laser {
                rectangle.getY() < objY + objHeight &&
                rectangle.getY() + rectangle.getHeight() > objY;
     }
-
+    /**
+     * Authors: Farmer
+     */
     public void destroy() {
         this.active = false;
     }
-
+    /**
+     * Authors: Farmer
+     */
     // Getters
     public Rectangle getRectangle() { return rectangle; }
     public double getX() { return rectangle.getX(); }
