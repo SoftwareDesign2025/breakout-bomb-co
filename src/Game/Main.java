@@ -1,7 +1,5 @@
-/*
-Authors:
-Murph Lennemann
-
+/**
+ * @Author Murph Lennemann
  */
 
 package Game;

@@ -1,18 +1,14 @@
-/*
-Authors:
-Murph Lennemann
-Oscar Kardon
+/**
+ * @author Murph Lenneman
+ * @author Oscar Kardon
  */
 
 package Game.Galaga;
 
 import Game.CollisionDetector;
 import Game.GameLoop;
-import Objects.Galaga.GalagaEnemy;
 import Objects.Galaga.Ship;
 import Objects.Galaga.GalagaEnemies;
-import Objects.HittableObject;
-import Objects.HittableObjects;
 import Objects.Laser;
 import Objects.Lasers;
 import javafx.scene.input.KeyCode;
@@ -24,8 +20,7 @@ public class GalagaLoop extends GameLoop {
     private final GalagaScreen galagaScreen;
     private Ship ship;
 
-    private long lastShotTime = 0;
-    private final int laserCooldown = 300; // ms between shots
+    private long lastShotTime = 0;// ms between shots
 
     /**
      * Creates the Galaga game loop
@@ -52,9 +47,14 @@ public class GalagaLoop extends GameLoop {
         handleKeyInput();
         checkLevel();
         checkLives();
-        checkWin();
         lasers.update();
+        handleColllisions();
+    }
 
+    /**
+     * Authors:
+     */
+    public void handleColllisions() {
         // handle collisions
         points += collisionDetector.checkLaserEnemyCollisions();
 
@@ -96,8 +96,9 @@ public class GalagaLoop extends GameLoop {
      * Handles laser shooting with cooldown
      */
     public void lastShot(Ship ship) {
+        int laserCooldownMS = 300;
         long now = System.currentTimeMillis();
-        if (now - lastShotTime >= laserCooldown) {
+        if (now - lastShotTime >= laserCooldownMS) {
             Laser laser = new Laser(
                     ship.getShip().getLayoutX() + ship.getShip().getFitWidth() / 2,
                     ship.getShip().getLayoutY(),
@@ -123,25 +124,10 @@ public class GalagaLoop extends GameLoop {
 
     /**
      * Authors: Murph
-     * checks if the game is won
-     */
-    private void checkWin() {
-        if (levelOver()) {
-            gameOverLogic();
-            screen.gameWinScreen();
-        }
-    }
-
-    /**
-     * Authors: Murph
      * @return if the level is over
      */
     @Override
     public boolean levelOver() {
-        int enemyCount = 0;
-        for (HittableObject enemy: enemies.getHittableObjects()) {
-            enemyCount++;
-        }
         return enemies.isCleared();
     }
 
