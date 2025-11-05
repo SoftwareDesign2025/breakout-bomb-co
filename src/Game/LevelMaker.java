@@ -23,7 +23,7 @@ public abstract class LevelMaker {
     protected final Random RAND = new Random();
 
     /**
-     * Authors:
+     * Authors: Oscar Kardon
      * @param root
      */
     public LevelMaker(Group root) {
@@ -69,7 +69,7 @@ public abstract class LevelMaker {
     }
 
     /**
-     * Authors:
+     * Authors: Oscar Kardon
      * @param level
      */
     public void loadLevel(Level level) {
