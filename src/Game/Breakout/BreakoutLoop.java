@@ -1,7 +1,5 @@
-/*
-Authors:
-Murph Lennemann
-
+/**
+ * @author Murph Lennemann
  */
 
 package Game.Breakout;
@@ -16,14 +14,13 @@ import java.util.*;
 import Powerups.*;
 
 public class BreakoutLoop extends GameLoop {
-	private final ArrayList<Ball> BALLS;
-	private ArrayList<PowerUp> powerUpList;
-	private final BreakoutLevelMaker LEVEL_MAKER;
-	private long lastEasterEgg = 0;
-	private final long EASTER_EGG_COOLDOWN = 1000;
+	private final ArrayList<Ball> balls;
+	private final ArrayList<PowerUp> powerUpList;
+	private final BreakoutLevelMaker levelMaker;
 	private final Bricks bricks;
 	private ArrayList<Slider> sliderList;
-	private BreakoutScreen breakoutScreen;
+	private final BreakoutScreen breakoutScreen;
+	private long lastEasterEgg;
 
 	/**
 	 * Authors: Murph
@@ -32,10 +29,10 @@ public class BreakoutLoop extends GameLoop {
 	public BreakoutLoop(BreakoutScreen breakoutScreen) {
 		super(breakoutScreen, breakoutScreen.getBricks());
 		this.breakoutScreen = breakoutScreen;
-		this.BALLS = new ArrayList<>();
+		this.balls = new ArrayList<>();
 		this.bricks = breakoutScreen.getBricks();
 		this.powerUpList = new ArrayList<>();
-		this.LEVEL_MAKER = breakoutScreen.getBreakoutLevelMaker();
+		this.levelMaker = breakoutScreen.getBreakoutLevelMaker();
 		this.sliderList = breakoutScreen.getSliderList();
 		initBall();
 	}
@@ -61,7 +58,7 @@ public class BreakoutLoop extends GameLoop {
 	 */
 	private void updateScreen() {
 		ArrayList<Ball> toRemove = new ArrayList<>();
-		for (Ball ball : BALLS) {
+		for (Ball ball : balls) {
 			ball.updateBallLocation();
 			handleSliderCollisions(ball);
 			breakoutScreen.checkBallToWall(ball);
@@ -104,14 +101,14 @@ public class BreakoutLoop extends GameLoop {
 	 * Checks if a powerUp should be dropped and makes one if so
 	 */
 	private void spawnPowerUpsFromBricks() {
-		double widthDivider = 2.0;
+		double powerUpSpawnDivisor = 2.0;
 		for (Brick brick: bricks.getBricksList()) {
 			if (!brick.isActive()) {
 				PowerUp powerUp = brick.getPowerUp();
 				if (powerUp != null) {
 					PowerUp newPowerUp = powerUp.spawnAt(
-							brick.getBrick().getX() + brick.getBrick().getWidth() / widthDivider,
-							brick.getBrick().getY() + brick.getBrick().getHeight() / widthDivider
+							brick.getBrick().getX() + brick.getBrick().getWidth() / powerUpSpawnDivisor,
+							brick.getBrick().getY() + brick.getBrick().getHeight() / powerUpSpawnDivisor
 					);
 					addPowerUp(newPowerUp);
 					brick.setPowerUp(null);
@@ -146,14 +143,15 @@ public class BreakoutLoop extends GameLoop {
 	 */
 
 	private void updatePowerUps() {
+		double powerUpDespawnY = 600.0;
 		for (int i = powerUpList.size() - 1; i >= 0; i--) {
-			PowerUp pu = powerUpList.get(i);
-			pu.update_position();
-			if (!pu.isactivated() && pu.getNode().getBoundsInParent().getMinY() > 600) {
+			PowerUp powerUp = powerUpList.get(i);
+			powerUp.update_position();
+			if (!powerUp.isactivated() && powerUp.getNode().getBoundsInParent().getMinY() > powerUpDespawnY) {
 				powerUpList.remove(i);
 			}
-			pu.tick();
-			if (pu.isPowerUpOver()) {
+			powerUp.tick();
+			if (powerUp.isPowerUpOver()) {
 				powerUpList.remove(i);
 			}
 		}
@@ -166,12 +164,12 @@ public class BreakoutLoop extends GameLoop {
 	 * @param toRemove The list of balls that have left the screen
 	 */
 	private void handleBallRemovals(ArrayList<Ball> toRemove) {
-		BALLS.addAll(breakoutScreen.consumeQueuedBalls());
+		balls.addAll(breakoutScreen.consumeQueuedBalls());
 		for (Ball ball : toRemove) {
 			breakoutScreen.getRoot().getChildren().remove(ball.getBall());
-			BALLS.remove(ball);
+			balls.remove(ball);
 		}
-		if (BALLS.isEmpty()) handleLifeLost();
+		if (balls.isEmpty()) handleLifeLost();
 	}
 
 	/**
@@ -180,16 +178,17 @@ public class BreakoutLoop extends GameLoop {
 	 */
 
 	private void initBall() {
-		double resetBallSpeed = 1;
-		double resetXDirection = 0.2;
-		double resetYDirection = 2;
+		double initialBallSpeed = 1.0;
+		double ballRadius = 10.0;
+		double initialBallXDirection = 0.2;
+		double initialBallYDirection = 2.0;
 		Ball freshBall;
-		freshBall = new Ball(10, LEVEL_MAKER.getBallX(), LEVEL_MAKER.getBallY());
-		BALLS.add(freshBall);
+		freshBall = new Ball(ballRadius, levelMaker.getBallX(), levelMaker.getBallY());
+		balls.add(freshBall);
 		breakoutScreen.getRoot().getChildren().add(freshBall.getBall());
-		freshBall.changeSpeed(resetBallSpeed);
-		freshBall.changeXDirection(resetXDirection);
-		freshBall.changeYDirection(resetYDirection);
+		freshBall.changeSpeed(initialBallSpeed);
+		freshBall.changeXDirection(initialBallXDirection);
+		freshBall.changeYDirection(initialBallYDirection);
 	}
 
 	/**
@@ -218,10 +217,10 @@ public class BreakoutLoop extends GameLoop {
 	@Override
 	public void resetLevel() {
 		moving = false;
-		for (Ball ball: BALLS) {
+		for (Ball ball: balls) {
 			breakoutScreen.getRoot().getChildren().remove(ball.getBall());
 		}
-		BALLS.clear();
+		balls.clear();
 		for (PowerUp powerUp: powerUpList) {
 			breakoutScreen.getRoot().getChildren().remove(powerUp.getNode());
 		}
@@ -256,16 +255,16 @@ public class BreakoutLoop extends GameLoop {
 	 * Handles creating test powerups
 	 */
 	private void handleTestPowerUps() {
-		double bx = 400;
-		double by = 200;
+		double testPowerUpX = 400.0;
+		double testPowerUpY = 200.0;
 		if (pressedKeys.contains(KeyCode.Z)) {
-			tryActivatePowerUp(new BiggerSlider(bx, by));
+			tryActivatePowerUp(new BiggerSlider(testPowerUpX, testPowerUpY));
 		}
 		if (pressedKeys.contains(KeyCode.X)) {
-			tryActivatePowerUp(new BallPowerUp(bx, by));
+			tryActivatePowerUp(new BallPowerUp(testPowerUpX, testPowerUpY));
 		}
 		if  (pressedKeys.contains(KeyCode.C)) {
-			tryActivatePowerUp(new PiercePowerUp(bx, by));
+			tryActivatePowerUp(new PiercePowerUp(testPowerUpX, testPowerUpY));
 		}
 	}
 
@@ -274,7 +273,7 @@ public class BreakoutLoop extends GameLoop {
 	 * @param powerUp is a powerUp being added to the screen
 	 */
 	private void addPowerUp(PowerUp powerUp) {
-		powerUp.onSpawn(breakoutScreen, BALLS);
+		powerUp.onSpawn(breakoutScreen, balls);
 		breakoutScreen.getRoot().getChildren().add(powerUp.getNode());
 		powerUpList.add(powerUp);
 	}
@@ -310,8 +309,9 @@ public class BreakoutLoop extends GameLoop {
 	 * @param powerUp a powerUp to be generated
 	 */
 	public void tryActivatePowerUp(PowerUp powerUp) {
-		now = System.currentTimeMillis();
-		if (now - lastEasterEgg >= EASTER_EGG_COOLDOWN) {
+		long easterEggCooldownMS = 1000L;
+		long now = System.currentTimeMillis();
+		if (now - lastEasterEgg >= easterEggCooldownMS) {
 			addPowerUp(powerUp);
 			lastEasterEgg = now;
 		}
