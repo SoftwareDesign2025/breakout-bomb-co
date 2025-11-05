@@ -104,6 +104,7 @@ public class GalagaEnemies implements HittableObjects {
     }
 
     //Oscar Kardon
+    //Checks if enemies have reached the bottom and updates lives accordingly
     public int enemiesReachedBottom() {
         int livesLost = 0;
         for (GalagaEnemy enemy : enemies) {

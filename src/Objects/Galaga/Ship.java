@@ -6,8 +6,10 @@ Authors:
 package Objects.Galaga;
 
 import Objects.SideMover;
+import javafx.animation.PauseTransition;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.util.Duration;
 
 public class Ship extends SideMover {
 
@@ -65,9 +67,14 @@ public class Ship extends SideMover {
     }
 
     /**
-     * Authors:
+     * Authors:Oscar Kardon
+     * Simple function to make the ship transparent briefly when hit
      */
-    public void shootLaser() {
-        System.out.println("Shoot laser!");
+    public void shipHit(){
+        shipImage.setOpacity(0.5);
+        PauseTransition pause = new PauseTransition(Duration.seconds(0.3));
+        pause.setOnFinished(e -> shipImage.setOpacity(1.0));
+        pause.play();
+
     }
 }

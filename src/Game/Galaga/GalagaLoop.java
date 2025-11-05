@@ -67,7 +67,7 @@ public class GalagaLoop extends GameLoop {
         // ship hit detection
         if (collisionDetector.checkLaserShipCollisions(ship)) {
             lives--;
-            System.out.println("Ship hit! Lives remaining: " + lives);
+            ship.shipHit();
         }
     }
 
