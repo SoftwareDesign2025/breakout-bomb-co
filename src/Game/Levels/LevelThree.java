@@ -37,7 +37,7 @@ public class LevelThree implements Level<BreakoutLevelMaker> {
         double centerCol = cols / 2.0;
         double radius = 5.2;
 
-        // Circle pattern
+        // Circle pattern for bomb
         for (int row = 0; row < rows; row++) {
             for (int col = 0; col < cols; col++) {
                 double dx = col - centerCol;
@@ -54,8 +54,7 @@ public class LevelThree implements Level<BreakoutLevelMaker> {
                     else color = Color.rgb(45, 45, 45);
 
                     Brick brick = new Brick(brickWidth - 2, brickHeight - 2, x, y, 1, color, null);
-                    int val = maker.randomizeBrick(1);
-                    maker.assignPowerUp(brick, val, x, y);
+                    maker.randomizeBrick(brick, false);
                     maker.addBrick(brick);
                 }
             }
@@ -66,10 +65,11 @@ public class LevelThree implements Level<BreakoutLevelMaker> {
         double fuseY = startY + (centerRow - radius - 1) * brickHeight;
 
         for (int i = 0; i < 4; i++) {
-            PowerUp powerUp = null;
+            PowerUp powerUp;
             double y = fuseY - i * brickHeight;
             Color color;
 
+            //alternate powerups along fuse
             if (i == 0) {
                 color = Color.YELLOW;
                 powerUp = new PiercePowerUp(fuseX, y);

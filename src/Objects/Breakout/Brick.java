@@ -41,11 +41,11 @@ public class Brick extends HittableObject {
     }
 
     /**
-     * Authors:Oscar Kardon
-     * @param value
+     * Authors:
+     * @param unbreakable, if brick is unbreakable
      */
-    public void setUnbreakable(boolean value) {
-        unbreakable = value;
+    public void setUnbreakable(boolean unbreakable) {
+        this.unbreakable = unbreakable;
     }
 
     /**
@@ -79,7 +79,7 @@ public class Brick extends HittableObject {
     }
 
     /**
-     * Authors:
+     * Authors: Oscar Kardon
      * @param ball
      */
     public void connectWithBall(Ball ball) {

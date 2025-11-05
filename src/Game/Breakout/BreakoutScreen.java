@@ -25,17 +25,19 @@ public class BreakoutScreen extends Screen {
     private BreakoutLevelMaker breakoutLevelMaker;
     private Bricks bricks;
     protected List<Ball> queuedBalls = new ArrayList<>();
-
+    private final double MESSAGE_X = 300;
+    private final double MESSAGE_Y = 300;
+    private final double MESSAGE_FONT_SIZE = 40;
 
     /**
      * Authors: Murph
      * Creates a screen used for breakout
      */
-    public BreakoutScreen() {
-        super();
+    public BreakoutScreen(int level) {
+        super(level);
         bricks = new Bricks(new ArrayList<>());
         this.breakoutLevelMaker = new BreakoutLevelMaker(root, bricks.getBricksList());
-        loadLevel(1);
+        loadLevel(level);
     }
 
     /**
@@ -50,7 +52,7 @@ public class BreakoutScreen extends Screen {
      * Authors:
      * @return
      */
-    public List<Ball> consumeQueuedBalls() {
+    protected List<Ball> consumeQueuedBalls() {
         List<Ball> list = new ArrayList<>(queuedBalls);
         queuedBalls.clear();
         return list;
@@ -61,7 +63,7 @@ public class BreakoutScreen extends Screen {
      * creates the list of levels to be played
      */
     @Override
-    public void createLevelList() {
+    protected void createLevelList() {
         levels = new ArrayList<>();
         levels.add(new LevelOne());
         levels.add(new LevelTwo());
@@ -73,7 +75,7 @@ public class BreakoutScreen extends Screen {
      * @param level The current level being played
      */
     @Override
-    public void loadLevel(int level) {
+    protected void loadLevel(int level) {
         int index = level - 1;
         breakoutLevelMaker.loadLevel(levels.get(index));
     }
@@ -83,53 +85,53 @@ public class BreakoutScreen extends Screen {
      * Getter
      * @return the list of sliders currently used in the level
      */
-    public ArrayList<Slider> getSliderList() { return breakoutLevelMaker.getSliderList(); }
+    protected ArrayList<Slider> getSliderList() { return breakoutLevelMaker.getSliderList(); }
 
     /**
-     * Authors:
+     * Authors: Gavin
      */
 
     @Override
-    public void gameOverScreen() {
-        Text over = new Text(300, 300, "GAME OVER");
+    protected void gameOverScreen() {
+        Text over = new Text(MESSAGE_X, MESSAGE_Y, "GAME OVER");
         over.setFill(Color.RED);
-        over.setFont(new Font(40));
+        over.setFont(new Font(MESSAGE_FONT_SIZE));
         root.getChildren().add(over);
     }
 
     /**
-     * Authors:
+     * Authors: Gavin
      */
     @Override
-    public void gameWinScreen() {
-        Text win = new Text(300, 300, "YOU WIN!");
+    protected void gameWinScreen() {
+        Text win = new Text(MESSAGE_X, MESSAGE_Y, "YOU WIN!");
         win.setFill(Color.GREEN);
-        win.setFont(new Font(40));
+        win.setFont(new Font(MESSAGE_FONT_SIZE));
         root.getChildren().add(win);
     }
 
-
     /**
-     * Authors:
+     * Authors: Gavin
      * @param ball
      */
 
-    public void checkBallToWall(Ball ball) {
+    protected void checkBallToWall(Ball ball) {
+        double screenWidth = 800;
         double ballX = ball.getBall().getCenterX();
         double ballY = ball.getBall().getCenterY();
         double radius = ball.getBall().getRadius();
-        if (ballX - radius <= 0 || ballX + radius >= 800) {
+        if (ballX - radius <= 0 || ballX + radius >= screenWidth) {
             ball.reverseXDirection(); }
         if (ballY - radius <= 0) { ball.reverseYDirection(); }
     }
 
     /**
-     * Authors:
+     * Authors: Gavin
      * @param ball
      * @return
      */
 
-    public boolean ballOutOfBounds(Ball ball) {
+    protected boolean ballOutOfBounds(Ball ball) {
         for (javafx.scene.shape.Rectangle bounds : breakoutLevelMaker.getOutOfBounds()) {
             if (ball.getBall().getBoundsInParent().intersects(bounds.getBoundsInParent())) {
                 return true;
@@ -143,7 +145,7 @@ public class BreakoutScreen extends Screen {
      * Getter
      * @return the bricks currently used in the level
      */
-    public Bricks getBricks() {
+    protected Bricks getBricks() {
         return bricks;
     }
 
@@ -152,7 +154,7 @@ public class BreakoutScreen extends Screen {
      * Getter
      * @return the levelMaker being used
      */
-    public BreakoutLevelMaker getBreakoutLevelMaker(){
+    protected BreakoutLevelMaker getBreakoutLevelMaker(){
         return breakoutLevelMaker;
     }
 

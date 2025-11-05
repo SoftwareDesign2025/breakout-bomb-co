@@ -70,10 +70,10 @@ public class BreakoutLevelMaker extends LevelMaker {
      * @param startY is the y location of a slider
      */
     public void addSlider(double startX, double startY) {
-        Slider s = new Slider(startX, startY);
-        SLIDER_LIST.add(s);
-        ROOT.getChildren().add(s.getNode());
-        NODE_LIST.add(s.getNode());
+        Slider slider = new Slider(startX, startY);
+        SLIDER_LIST.add(slider);
+        ROOT.getChildren().add(slider.getNode());
+        NODE_LIST.add(slider.getNode());
     }
 
     /**
@@ -106,31 +106,30 @@ public class BreakoutLevelMaker extends LevelMaker {
         return 1;
     }
 
-    /**
-     * Authors:
-     * @param val
-     * @param color
-     * @return
-     */
-    private Color getBrickColor(int val, Color color) {
-        if (val == 2) return Color.YELLOW;
-        if (val == 3) return Color.LIMEGREEN;
-        if (val == 4) return Color.BLACK;
-        return color;
-    }
 
     /**
-     * Authors:
-     * @param brick
-     * @param val
-     * @param x
-     * @param y
+     * Author: Oscar Kardon
+     * Randomly assigns a powerup to a brick, with optional color change.
+     * Cleaning earlier code
+     * @param brick the brick to modify
+     * @param changeColor whether the brick color should reflect the powerup
      */
-    public void assignPowerUp(Brick brick, int val, double x, double y) {
-        if (val == 2) brick.setPowerUp(new BiggerSlider(x, y));
-        if (val == 3) brick.setPowerUp(new PiercePowerUp(x, y));
-        if (val == 4) brick.setPowerUp(new BallPowerUp(x, y));
+    public void randomizeBrick(Brick brick, boolean changeColor) {
+        int chance = RAND.nextInt(100);
+        if (chance < 10) {
+            brick.setPowerUp(new BiggerSlider(brick.getBrick().getLayoutX(), brick.getBrick().getY()));
+            if (changeColor) brick.getBrick().setFill(Color.YELLOW);
+        }
+        else if (chance < 15) {
+            brick.setPowerUp(new PiercePowerUp(brick.getBrick().getLayoutX(), brick.getBrick().getY()));
+            if (changeColor) brick.getBrick().setFill(Color.LIMEGREEN);
+        }
+        else if (chance < 20) {
+            brick.setPowerUp(new BallPowerUp(brick.getBrick().getLayoutX(), brick.getBrick().getY()));
+            if (changeColor) brick.getBrick().setFill(Color.BLACK);
+        }
     }
+
 
     /**
      * Authors: Murph
@@ -153,10 +152,7 @@ public class BreakoutLevelMaker extends LevelMaker {
                     double x = startX + column * (brickWidth + brickGap);
                     double y = startY + row * (brickHeight + brickGap);
                     Brick brick = new Brick(brickWidth, brickHeight, x, y, pointValue, color, null);
-                    if (colorChange) {
-                        brick.getBrick().setFill(getBrickColor(value, color));
-                    }
-                    assignPowerUp(brick, value, x, y);
+                    randomizeBrick(brick, colorChange);
                     BRICKS.add(brick);
                     ROOT.getChildren().add(brick.getBrick());
                 }

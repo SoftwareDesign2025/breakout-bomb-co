@@ -37,7 +37,7 @@ public class Bricks implements HittableObjects {
 
     /**
      * Authors: Oscar Kardon
-     * @return
+     * @return List<Brick>
      */
     public List<Brick> getBricksList() {
         return bricks;
@@ -46,7 +46,7 @@ public class Bricks implements HittableObjects {
     /**
      * Authors: Oscar Kardon
      * @param ball
-     * @return
+     * @return how many points to give
      */
     public int resolveCollisions(Ball ball){
         int pointsUpdate = 0;

@@ -8,8 +8,10 @@ package Objects.Galaga;
 import Objects.HittableObject;
 import Powerups.PowerUp;
 
+import javafx.animation.PauseTransition;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.util.Duration;
 
 public class GalagaEnemy extends HittableObject {
     private ImageView imageView;
@@ -106,4 +108,14 @@ public class GalagaEnemy extends HittableObject {
     public int getLives(){
         return lives;
     }
+    /**
+     * Authors:Oscar Kardon
+     */
+    public void enemeyHit(){
+        imageView.setOpacity(0.5);
+        PauseTransition pause = new PauseTransition(Duration.seconds(0.3));
+        pause.setOnFinished(e -> imageView.setOpacity(1.0));
+        pause.play();
+    }
+
 }

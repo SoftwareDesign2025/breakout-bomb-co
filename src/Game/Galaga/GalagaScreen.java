@@ -23,59 +23,76 @@ public class GalagaScreen extends Screen {
     private List<GalagaEnemy> enemyList;
     private GalagaEnemies enemies;
 
+    private final double SCREEN_WIDTH = 800;
+    private final double SCREEN_HEIGHT = 600;
+
     // Canvas and variables for star background
     private Canvas starCanvas;
-    private List<double[]> stars = new ArrayList<>(); // Each star: {x, y, speed, size}
-    private List<Color> starColors = new ArrayList<>(); // Colors of each star
+    private List<Double> starX = new ArrayList<>();
+    private List<Double> starY = new ArrayList<>();
+    private List<Double> starSpeed = new ArrayList<>();
+    private List<Double> starSize = new ArrayList<>();
+    private List<Color> starColor = new ArrayList<>();
+
     private Random rand = new Random();
     private Lasers lasers = new Lasers(root);
 
     /**
      * Constructor
      */
-    public GalagaScreen() {
-        super();
-
-        // Black background rectangle
-        Rectangle bg = new Rectangle(0, 0, 800, 600);
-        bg.setFill(Color.BLACK);
-        root.getChildren().add(0, bg);
-
-        // Star canvas (drawn behind gameplay elements)
-        starCanvas = new Canvas(800, 600);
-        root.getChildren().add(1, starCanvas);
-
-        // Create and start star animation
-        initStars(200);
-        animateStars();
-
+    public GalagaScreen(int level) {
+        super(level);
+        createBackground();
         // Original Galaga setup
         enemyList = new ArrayList<>();
         galagaLevelMaker = new GalagaLevelMaker(root, enemyList);
         enemies = new GalagaEnemies(enemyList);
-        loadLevel(1);
+        loadLevel(level);
+
+    }
+
+    protected void createBackground() {
+        // Black background rectangle
+        int starCount = 200;
+        Rectangle background = new Rectangle(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT);
+        background.setFill(Color.BLACK);
+        root.getChildren().add(0, background);
+
+        // Star canvas (drawn behind gameplay elements)
+        starCanvas = new Canvas(SCREEN_WIDTH, SCREEN_HEIGHT);
+        root.getChildren().add(1, starCanvas);
+
+        // Create and start star animation
+        createStars(starCount);
+        animateStars();
     }
 
     /**
+     * Author: Gavin
      * Initialize stars with random positions, speeds, sizes, and colors
-     * @param count number of stars
+     *
      */
-    private void initStars(int count) {
-        for (int i = 0; i < count; i++) {
-            double x = rand.nextDouble() * 800;
-            double y = rand.nextDouble() * 600;
-            double speed = 1 + rand.nextDouble() * 3; // vertical speed
-            double size = 1 + rand.nextDouble() * 3;  // size of star
-            stars.add(new double[]{x, y, speed, size});
-            starColors.add(getRandomColor()); // assign a random color
+    protected void createStars(int numberOfStars) {
+        double starSpeedVariation = 3;
+        double starSizeVariation = 3;
+        double starMinSpeed = 1;
+        double starMinSize = 2;
+        for (int i = 0; i < numberOfStars; i++) {
+            starX.add(rand.nextDouble() * SCREEN_WIDTH);
+            starY.add(rand.nextDouble() * SCREEN_HEIGHT);
+            starSpeed.add(starMinSpeed + rand.nextDouble() * starSpeedVariation); // Random speed between 1–4
+            starSize.add(starMinSize + rand.nextDouble() * starSizeVariation); // Random size between 2–5
+            starColor.add(getRandomColor());
         }
     }
 
+
     /**
+     * Author: Gavin
      * Return a random star color from a set of bright colors
      * @return Color
      */
-    private Color getRandomColor() {
+    protected Color getRandomColor() {
         Color[] colors = {
                 Color.WHITE, Color.CYAN, Color.YELLOW, Color.LIGHTPINK,
                 Color.LIGHTBLUE, Color.ORANGE, Color.VIOLET, Color.LIME
@@ -84,35 +101,44 @@ public class GalagaScreen extends Screen {
     }
 
     /**
+     * Author: Gavin
      * Continuously animate stars falling to create space effect
      */
-    private void animateStars() {
-        GraphicsContext gc = starCanvas.getGraphicsContext2D();
+    // Animates stars falling down the screen
+    protected void animateStars() {
+        GraphicsContext graphics = starCanvas.getGraphicsContext2D();
+
         new AnimationTimer() {
             @Override
             public void handle(long now) {
-                gc.clearRect(0, 0, 800, 600); // clear previous frame
-                for (int i = 0; i < stars.size(); i++) {
-                    double[] s = stars.get(i);
-                    s[1] += s[2]; // move star down by speed
-                    if (s[1] > 600) { // reset star to top if it goes off screen
-                        s[1] = 0;
-                        s[0] = rand.nextDouble() * 800;
-                        starColors.set(i, getRandomColor());
+
+                graphics.clearRect(0, 0, 800, 600);
+                // Moves the stars downwards
+                for (int i = 0; i < starX.size(); i++) {
+                    starY.set(i, starY.get(i) + starSpeed.get(i));
+
+                    // If the star moves off the bottom, reset it to the top
+                    if (starY.get(i) > 600) {
+                        starY.set(i, 0.0);
+                        starX.set(i, rand.nextDouble() * 800); // rand position
+                        starColor.set(i, getRandomColor());
                     }
-                    gc.setFill(starColors.get(i));
-                    gc.fillOval(s[0], s[1], s[3], s[3]); // draw star
+
+                    // Draw the star
+                    graphics.setFill(starColor.get(i));
+                    graphics.fillOval(starX.get(i), starY.get(i), starSize.get(i), starSize.get(i));
                 }
             }
         }.start();
     }
+
 
     /**
      * Load a level
      * @param level level number
      */
     @Override
-    public void loadLevel(int level) {
+    protected void loadLevel(int level) {
         int levelIndex = level - 1;
         galagaLevelMaker.loadLevel(levels.get(levelIndex));
         ship = galagaLevelMaker.getShip();
@@ -122,20 +148,31 @@ public class GalagaScreen extends Screen {
      * Return the player ship
      * @return ship
      */
-    public Ship getShip() {
+    protected Ship getShip() {
         return ship;
     }
 
-    public GalagaEnemies getEnemies() {
+    /**
+     * Author: Gavin
+     *  Returns the enemies
+     * @return enemies
+     */
+
+
+    protected GalagaEnemies getEnemies() {
         return enemies;
     }
 
-    public Lasers getLasers() {
+    protected Lasers getLasers() {
         return lasers;
     }
 
+    /**
+     * Author: Gavin
+     */
+
     @Override
-    public void gameOverScreen() {
+    protected void gameOverScreen() {
         Text over = new Text(300, 300, "GAME OVER LOSER");
         over.setFill(Color.RED);
         over.setFont(Font.font("Impact", 40));
@@ -145,15 +182,20 @@ public class GalagaScreen extends Screen {
     /**
      * Create a list of levels to be moved through
      */
-    public void createLevelList() {
+    @Override
+    protected void createLevelList() {
         levels = new ArrayList<>();
         levels.add(new GalagaLevelOne());
         levels.add(new GalagaLevelTwo());
         levels.add(new GalagaLevelThree());
     }
 
+    /**
+     * Author: Gavin
+     */
+
     @Override
-    public void gameWinScreen() {
+    protected void gameWinScreen() {
         Text win = new Text(300, 300, "YOU WIN!");
         win.setFill(Color.GREEN);
         win.setFont(Font.font("Impact", 40));

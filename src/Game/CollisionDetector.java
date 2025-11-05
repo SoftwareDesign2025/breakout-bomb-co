@@ -44,6 +44,7 @@ public class CollisionDetector {	//declare object variables needed in class
                 )) {
                     laser.destroy();
                     enemy.loseLife();
+                    enemy.enemeyHit();
                     if(enemy.getLives() <= 0) {
                         enemy.deactivate();
                     }

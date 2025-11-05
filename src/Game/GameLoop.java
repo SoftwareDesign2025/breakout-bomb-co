@@ -1,7 +1,7 @@
-/*
-Authors:
-Murph Lennemann
-
+/**
+ *
+ * @author Murph Lennemann
+ *
  */
 
 package Game;
@@ -19,18 +19,22 @@ import java.util.Set;
 public abstract class GameLoop {
 
     protected Screen screen;
-    protected int lives = 5;
     protected int points = 0;
     protected int highScore;
-    protected int level = 1;
     protected boolean gameOver = false;
     protected final String fileName;
     protected boolean moving = false;
     protected final Set<KeyCode> pressedKeys = new HashSet<>();
+    protected HittableObjects hittableObjects;
     protected long now;
     protected long lastSkip = 0;
-    protected final int SKIP_COOLDOWN = 1000;
-    protected HittableObjects hittableObjects;
+    protected final int DEFAULT_LIVES = 5;
+    protected int level = 1;
+    protected final long SKIP_COOLDOWN_MS = 1000L;
+    protected final int DEFAULT_TOTAL_LEVELS = 3;
+    protected int lives = DEFAULT_LIVES;
+    protected int totalLevels = DEFAULT_TOTAL_LEVELS;
+
 
     /**
      * Authors: Murph
@@ -62,7 +66,7 @@ public abstract class GameLoop {
     public void checkLevel() {
         if (levelOver()) {
             level++;
-            if (level <= 3){
+            if (level <= totalLevels) {
                 resetLevel();
             }
             else {
@@ -162,7 +166,7 @@ public abstract class GameLoop {
      */
     public void tryLevelSkip() {
         now = System.currentTimeMillis();
-        if (now - lastSkip >= SKIP_COOLDOWN) {
+        if (now - lastSkip >= SKIP_COOLDOWN_MS) {
             hittableObjects.clearObjects(screen);
             lastSkip = now;
         }
