@@ -1,7 +1,6 @@
-/*
-Authors:
-Murph Lennemann
-
+/**
+ * @author Murph Lennemann
+ * @author Gavin Collins
  */
 
 package Game;
@@ -14,8 +13,6 @@ import javafx.scene.paint.Color;
 import java.util.ArrayList;
 import java.util.List;
 import Objects.Breakout.Ball;
-import Objects.Breakout.Bricks;
-import Objects.SideMover;
 
 public abstract class Screen {
 
@@ -25,11 +22,16 @@ public abstract class Screen {
     protected int level;
 
     public Screen(int level) {
+        double scoreboardX = 10.0;
+        double scoreboardY = 20.0;
+        double scoreboardFontSize = 23.0;
+        String scoreboardText = "High Score: 0 Score: 0 Lives: 5";
         root = new Group();
         this.level = level;
-        scoreboard = new Text(10, 20, "High Score: 0 Score: 0 Lives: 5");
+        this.levels = new ArrayList<>();
+        scoreboard = new Text(scoreboardX, scoreboardY, scoreboardText);
         scoreboard.setFill(Color.GREEN);
-        scoreboard.setFont(new Font(23));
+        scoreboard.setFont(new Font(scoreboardFontSize));
         root.getChildren().add(scoreboard);
         createLevelList();
     }
@@ -39,7 +41,7 @@ public abstract class Screen {
      * @param ball
      * @return
      */
-    public boolean ballOutOfBounds(Ball ball) {
+    protected boolean ballOutOfBounds(Ball ball) {
         return false;
     }
 
@@ -58,7 +60,7 @@ public abstract class Screen {
      * @param score
      * @param lives
      */
-    public void displayScoreBoard(int highScore, int score, int lives) {
+    protected void displayScoreBoard(int highScore, int score, int lives) {
         scoreboard.setText("High Score: " + highScore + " Score: " + score + " Lives: " + lives);
     }
 
@@ -66,10 +68,10 @@ public abstract class Screen {
      * Authors: Gavin
      * @param ball
      */
-    public void checkBallToWall(Ball ball) {}
-    public abstract void createLevelList();
-    public abstract void gameOverScreen();
-    public abstract void loadLevel(int level);
-    public abstract void gameWinScreen();
+    protected void checkBallToWall(Ball ball) {}
+    protected abstract void createLevelList();
+    protected abstract void gameOverScreen();
+    protected abstract void loadLevel(int level);
+    protected abstract void gameWinScreen();
 
 }
